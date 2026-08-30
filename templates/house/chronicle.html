@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ article.title }} — Chronicles · VOLGO{% endblock %}
+
+{% block content %}
+<article class="reading-room" style="padding-top:160px; padding-bottom:var(--s9);">
+  <div class="container narrow">
+    <p class="meta"><a href="/chronicles/" style="border-bottom:0;">Chronicles</a> · {{ article.published_at|date:"j F Y" }} · {{ article.reading_minutes }} min</p>
+    <h1 style="font-size:clamp(40px,5.5vw,76px); margin-top:16px;">{{ article.title }}</h1>
+    {% if article.standfirst %}<p class="lede" style="margin-top:24px;">{{ article.standfirst }}</p>{% endif %}
+    <hr class="rule-double">
+    <div class="article-body">
+      {% autoescape off %}
+      {{ article.body_rendered|default:article.body|linebreaks }}
+      {% endautoescape %}
+    </div>
+    {% if article.object_ref %}
+    <hr class="rule-double">
+    <p class="label-number">Referenced object</p>
+    <a href="/objects/{{ article.object_ref.object_number }}/" style="display:block; margin-top:12px;">
+      <h3>{{ article.object_ref.label_number }} — {{ article.object_ref.name }}</h3>
+      <p class="meta" style="margin-top:8px;">{{ article.object_ref.region }} · {{ article.object_ref.period }} · {{ article.object_ref.material }}</p>
+    </a>
+    {% endif %}
+    <hr class="rule-double">
+    <a href="/chronicles/" class="btn">Return to the reading room</a>
+  </div>
+</article>
+{% endblock %}

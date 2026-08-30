@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact — VOLGO{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top:160px;">
+  <div class="container two-col">
+    <div>
+      <p class="label-number">Contact</p>
+      <h1 style="font-size:clamp(40px,5vw,72px);">Write to<br>the house</h1>
+      <p class="lede" style="margin-top:24px; max-width:46ch;">
+        For enquiries about an object, documentation, or private viewing.
+      </p>
+      <div style="margin-top:var(--s6);">
+        <p class="meta" style="display:block; margin-bottom:6px;">The House</p>
+        <p>By appointment only.</p>
+        <p class="meta" style="display:block; margin:var(--s4) 0 6px;">Correspondence</p>
+        <p><a href="mailto:house@volgo.example" style="border-bottom:1px solid var(--hairline-dark);">house@volgo.example</a></p>
+        <p class="meta" style="display:block; margin:var(--s4) 0 6px;">Hours</p>
+        <p>Correspondence is answered within one working day.</p>
+      </div>
+    </div>
+    <div>
+      <div id="enquiry-cta"></div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block head %}
+<link rel="preload" href="{% static 'css/post.css' %}" as="style">
+<link rel="preload" href="{% static 'js/post.js' %}" as="script">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/enquiry.js' %}" defer></script>
+<script src="{% static 'js/post.js' %}" defer></script>
+{% endblock %}

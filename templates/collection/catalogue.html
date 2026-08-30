@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}The Collection — VOLGO{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top:160px;">
+  <div class="container">
+    <p class="label-number">La Collection</p>
+    <h1 style="font-size:clamp(44px,6vw,88px);">Catalogue</h1>
+    <p class="lede" style="max-width:60ch; margin-top:24px;">
+      The collection is small by intention. Each object is catalogued, photographed in full rotation, and offered once.
+    </p>
+
+    <hr class="rule" style="margin: var(--s7) 0 var(--s5);">
+
+    <!-- Filters — restrained, archival -->
+    <div class="catalogue-controls" id="catalogue-controls" style="display:flex; flex-wrap:wrap; gap:var(--s5); align-items:flex-end;">
+      <div class="field" style="margin:0; min-width:180px;">
+        <label for="f-region">Region</label>
+        <select id="f-region"><option value="">All regions</option></select>
+      </div>
+      <div class="field" style="margin:0; min-width:180px;">
+        <label for="f-category">Category</label>
+        <select id="f-category"><option value="">All categories</option></select>
+      </div>
+      <div class="field" style="margin:0; min-width:180px;">
+        <label for="f-material">Material</label>
+        <select id="f-material"><option value="">All materials</option></select>
+      </div>
+      <div class="field" style="margin:0; min-width:200px;">
+        <label for="f-q">Search</label>
+        <input type="search" id="f-q" placeholder="Name, region, maker…" autocomplete="off">
+      </div>
+      <div class="field" style="margin:0; min-width:180px;">
+        <label for="f-sort">Order</label>
+        <select id="f-sort">
+          <option value="number">By accession number</option>
+          <option value="period">Oldest first</option>
+          <option value="-period">Newest first</option>
+        </select>
+      </div>
+      <button class="btn" id="f-clear" style="align-self:center;">Clear</button>
+    </div>
+
+    <p class="meta" id="catalogue-count" style="margin-top:var(--s6);"></p>
+    <div class="grid-objects" id="catalogue-grid" style="margin-top:var(--s6);"></div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/catalogue.js' %}" defer></script>
+{% endblock %}

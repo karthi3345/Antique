@@ -1,0 +1,91 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0C0A08">
+  <title>{% block title %}VOLGO — Maison d'Antiquités{% endblock %}</title>
+  <meta name="description" content="{% block description %}A private house of antiquities. Each object examined, documented, and offered — one collector at a time.{% endblock %}">
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/volgo.css' %}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <a href="/" class="wordmark" aria-label="Volgo — home">VOLGO</a>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="/collection/" data-nav="collection"><span class="nav-idx" aria-hidden="true">01</span>Collection</a>
+        <a href="/the-house/" data-nav="the-house"><span class="nav-idx" aria-hidden="true">02</span>The House</a>
+        <a href="/chronicles/" data-nav="chronicles"><span class="nav-idx" aria-hidden="true">03</span>Journal</a>
+      </nav>
+      <div class="nav-right">
+        <a href="/acquisition/" class="nav-acquisition">Private Acquisition</a>
+        <button class="nav-search" id="nav-search" aria-label="Search the collection">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14 14"/></svg>
+          Search
+        </button>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18"/></svg>
+        <span class="nav-toggle-label">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Search overlay -->
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search the collection" hidden>
+    <button class="search-close" id="search-close">Close</button>
+    <div class="search-panel">
+      <span class="label-number">The Archive</span>
+      <form id="search-form" role="search" action="/collection/" method="get">
+        <input type="search" id="search-input" name="q" placeholder="Name, region, maker, material…" autocomplete="off">
+      </form>
+      <div class="search-hints">
+        <button type="button" data-term="astrolabe">Astrolabe</button>
+        <button type="button" data-term="Persia">Persia</button>
+        <button type="button" data-term="bronze">Bronze</button>
+        <button type="button" data-term="Ming">Ming</button>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+    {% block plate %}{% endblock %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-col">
+        <span class="wordmark">VOLGO</span>
+        <p class="meta" style="margin-top:12px">Maison d'Antiquités · EST. MMXXVI</p>
+      </div>
+      <div class="footer-col">
+        <span class="meta gold">The House</span>
+        <p>Every object examined, documented, and offered with its history intact — including what is not known.</p>
+      </div>
+      <div class="footer-col">
+        <span class="meta gold">Enquiries</span>
+        <p><a href="/acquisition/">Private acquisition</a> · <a href="/contact/">Contact the house</a></p>
+      </div>
+      <div class="footer-col">
+        <span class="meta gold">Rooms</span>
+        <p><a href="/collection/">The collection</a> · <a href="/chronicles/">The journal</a></p>
+      </div>
+      <div class="footer-bottom" style="flex-basis:100%;">
+        <span class="meta">© {% now "Y" %} Volgo · Objects of distinction, privately acquired.</span>
+        <span class="meta">By appointment only</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/app.js' %}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,140 @@
+/* ==========================================================================
+   VOLGO - The Letter & The Post (digital to analog, 1990s)
+   Full-screen overlay animation fired after a successful enquiry.
+   Pure CSS / SVG / canvas. Loaded on contact + acquisition pages.
+   ========================================================================== */
+
+.vp-stage { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: radial-gradient(120% 90% at 50% 18%, #1c150d 0%, #120d08 44%, #0a0705 100%); opacity: 0; animation: vp-fade-in 520ms var(--ease) forwards; overflow: hidden; padding: 64px 20px; }
+.vp-stage::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 46% at 50% 24%, rgba(217,178,108,.14), transparent 70%), radial-gradient(140% 120% at 50% 110%, rgba(0,0,0,.62), transparent 55%); pointer-events: none; }
+@keyframes vp-fade-in { to { opacity: 1; } }
+.vp-stage.is-shaking { animation: vp-shake 300ms linear; }
+@keyframes vp-shake { 0%,100% { transform: translate(0,0); } 20% { transform: translate(-3px,2px); } 40% { transform: translate(3px,-2px); } 75% { transform: translate(-2px,1px); } }
+.vp-skip { position: absolute; top: 22px; right: 26px; background: none; border: 1px solid rgba(217,196,138,.35); color: #9A9078; font-family: var(--font-utility); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; padding: 9px 16px; cursor: pointer; border-radius: 2px; transition: color 200ms, border-color 200ms; }
+.vp-skip:hover { color: var(--ivory); border-color: rgba(217,190,130,.8); }
+.vp-chip { position: absolute; top: 26px; left: 28px; display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-utility); font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: #9A9078; }
+.vp-chip .vp-led { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px rgba(195,162,75,.9); animation: vp-led-blink 1.6s steps(2) infinite; }
+@keyframes vp-led-blink { 50% { opacity: .25; } }
+
+/* ---------- Scene 1: the 1990s CRT monitor ---------- */
+.vp-monitor { position: relative; width: min(92vw, 640px); aspect-ratio: 10 / 8.4; background: linear-gradient(178deg, #3a2f1d 0%, #2b2314 18%, #241d10 50%, #1d170c 100%); border-radius: 26px 26px 34px 34px; padding: 26px 26px 0; box-shadow: inset 0 2px 0 rgba(255,235,190,.09), inset 0 -3px 0 rgba(0,0,0,.55), 0 34px 80px -18px rgba(0,0,0,.85), 0 0 0 1px rgba(0,0,0,.6); }
+.vp-monitor::after { content: ""; position: absolute; left: 50%; bottom: -34px; width: 190px; height: 36px; transform: translateX(-50%); background: linear-gradient(180deg, #2b2314, #171208); clip-path: polygon(24% 0, 76% 0, 100% 70%, 92% 100%, 8% 100%, 0 70%); border-radius: 0 0 10px 10px; }
+.vp-desk { position: absolute; left: -6vw; right: -6vw; bottom: -120px; height: 200px; background: linear-gradient(6deg, #21180f 0%, #150f09 80%); box-shadow: 0 -1px 0 rgba(217,196,138,.12); }
+.vp-desk::before { content: ""; position: absolute; inset: 0; background: radial-gradient(40% 130% at 50% -8%, rgba(233,190,116,.16), transparent 70%); }
+.vp-screen { position: relative; height: calc(100% - 64px); background: linear-gradient(160deg, #10100c 0%, #191910 40%, #131207 100%); border-radius: 18px 18px 8px 8px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,.8), inset 0 0 44px rgba(0,0,0,.66), inset 0 0 18px rgba(112,150,90,.06); }
+.vp-screen::before { content: ""; position: absolute; inset: 0; z-index: 8; pointer-events: none; background: linear-gradient(115deg, transparent 42%, rgba(255,250,224,.05) 46%, transparent 53%), radial-gradient(80% 60% at 50% -10%, rgba(255,250,224,.05), transparent 60%); }
+.vp-screen::after { content: ""; position: absolute; inset: 0; z-index: 9; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 1px, transparent 1px 3px); mix-blend-mode: multiply; }
+.vp-screen .vp-scan { position: absolute; left: 0; right: 0; height: 22%; z-index: 7; pointer-events: none; background: linear-gradient(180deg, transparent, rgba(255,250,210,.055) 45%, transparent); animation: vp-scan-move 5.2s linear infinite; }
+@keyframes vp-scan-move { from { top: -24%; } to { top: 102%; } }
+.vp-monitor.is-flickering { animation: vp-flicker 110ms steps(2) infinite; }
+@keyframes vp-flicker { 0% { filter: brightness(1); } 50% { filter: brightness(1.12); } }
+.vp-term { position: absolute; inset: 0; z-index: 4; padding: 20px 22px 12px; display: flex; flex-direction: column; font-family: "Courier New", ui-monospace, "Cascadia Mono", monospace; color: #d8d3ba; }
+.vp-term-head { display: flex; justify-content: space-between; align-items: baseline; font-size:  10px; letter-spacing: .22em; color: #8a7f5f; border-bottom: 1px solid rgba(217,196,138,.22); padding-bottom: 8px; margin-bottom: 12px; text-transform: uppercase; }
+.vp-term-title { color: #b7ab84; }
+.vp-term-row { display: flex; gap: 10px; font-size: 12px; line-height: 2.1; }
+.vp-term-row .k { color: #8a7f5f; width: 5.2em; flex: none; letter-spacing: .08em; }
+.vp-term-row .v { color: #e6ddc2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vp-term-status { margin-top: auto; font-size: 11px; color: #a89a6d; letter-spacing: .06em; display: flex; gap: 10px; align-items: center; min-height: 22px; }
+.vp-term-status .bar { color: #d9c48a; }
+.vp-term-cursor { display: inline-block; width: 7px; height: 13px; vertical-align: -2px; background: #d9c48a; animation: vp-caret 840ms steps(2) infinite; }
+@keyframes vp-caret { 50% { opacity: 0; } }
+.vp-submit { margin-top: 14px; align-self: flex-start; font-family: "Courier New", ui-monospace, monospace; font-size: 12px; font-weight: 700; letter-spacing: .28em; color: #241d10; background: linear-gradient(180deg, #e5d6ac 0%, #d3bf8a 48%, #c0a96f 100%); border: 1px solid #241d10; border-radius: 3px; padding: 9px 22px; cursor: default; box-shadow: inset 0 1px 0 rgba(255,255,240,.75), 0 3px 0 #7a6a3f; }
+.vp-submit.is-pressed { animation: vp-submit-press 460ms var(--ease) forwards; }
+@keyframes vp-submit-press { 0% { transform: translateY(0) scale(1); } 35% { transform: translateY(3px) scale(.97,.94); box-shadow: inset 0 1px 0 rgba(255,255,240,.5), 0 1px 0 #7a6a3f; } 70% { transform: translateY(0) scale(1.04); } 100% { transform: translateY(0) scale(1); } }
+.vp-monitor.is-off .vp-screen { animation: vp-crt-off 640ms var(--ease) forwards; }
+@keyframes vp-crt-off { 0% { transform: scaleY(1); filter: brightness(1); } 55% { transform: scaleY(.012); filter: brightness(2.6); } 75% { transform: scaleY(.012) scaleX(.6); filter: brightness(2.2); } 100% { transform: scaleY(.006) scaleX(0); filter: brightness(0); opacity: 0; } }
+
+/* ---------- Scene 2: the letter ---------- */
+.vp-paper-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 20; pointer-events: none; }
+.vp-paper { width: min(78vw, 460px); height: 520px; background: repeating-linear-gradient(180deg, transparent 0 30px, rgba(60,44,18,.10) 30px 31px), linear-gradient(168deg, #f3ead2 0%, #ecdfbf 46%, #e2d2ab 100%); border-radius: 4px; padding: 38px 40px 30px; transform-origin: 50% 100%; animation: vp-paper-in 800ms var(--ease) forwards; }
+@keyframes vp-paper-in { from { transform: translateY(46px) scale(.94); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+.vp-paper-lines { font-family: "Courier New", ui-monospace, monospace; font-size: 14.5px; line-height: 30px; color: #3d3423; white-space: pre-wrap; overflow: hidden; }
+.vp-caret-lg { display: inline-block;  width: 9px; height: 16px; vertical-align: -2px; background: #7a2e1d; margin-left: 2px; animation: vp-caret 760ms steps(2) infinite; }
+.vp-paper.is-rolling { animation: vp-roll 1180ms cubic-bezier(.55,0,.9,.4) forwards; }
+@keyframes vp-roll { 0% { transform: perspective(700px) rotateX(0) scaleY(1); filter: brightness(1); } 45% { filter: brightness(1.06); } 100% { transform: perspective(700px) rotateX(6deg) scaleY(.10) translateY(-52px); filter: brightness(1.14); } }
+@keyframes vp-gone { from { transform: perspective(700px) rotateX(6deg) scaleY(.10) translateY(-52px); opacity: 1; } to { transform: perspective(700px) rotateX(10deg) scaleY(.06) translateY(96px); opacity: 0; } }
+.vp-paper.is-gone { animation: vp-gone 520ms var(--ease) forwards; }
+
+/* ---------- Scene 3: the kraft envelope ---------- */
+.vp-env-wrap { position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.vp-env { position: relative; width: min(84vw, 470px); height: 300px; background: linear-gradient(172deg, #caa06a 0%, #bd8f57 52%, #a87b46 100%); border-radius: 5px; box-shadow: 0 3px 0 rgba(40,20,0,.35) inset, 0 30px 70px -20px rgba(0,0,0,.78); animation: vp-env-in 640ms var(--ease) forwards; }
+@keyframes vp-env-in { from { transform: translateY(26px) scale(.95); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+.vp-env::before { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, #d4ab73, #b08350); clip-path: polygon(0 0, 50% 50%, 0 100%); border-radius: 5px 0 0 5px; }
+.vp-env::after { content: ""; position: absolute; inset: 0; background: linear-gradient(20deg, #cf9f66, #ac7f4c); clip-path: polygon(100% 0, 50% 50%, 100% 100%); border-radius: 0 5px 5px 0; }
+.vp-flap { position: absolute; left: 0; right: 0; top: -2px; height: 56%; background: linear-gradient(180deg, #d8b078 0%, #c39460 100%); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top center; z-index: 3; box-shadow: 0 6px 18px rgba(0,0,0,.28); }
+@keyframes vp-flap { from { transform: rotateX(0); } to { transform: rotateX(172deg); } }
+.vp-flap.is-open { animation: vp-flap 700ms var(--ease) forwards; }
+@keyframes vp-flap-close { from { transform: rotateX(172deg); } to { transform: rotateX(0); } }
+.vp-flap.is-closed { animation: vp-flap-close 560ms var(--ease) forwards; }
+.vp-letter-sliver { position: absolute; left: 50%; top: 18%; width: 76%; height: 26px; margin-left: -38%; background: linear-gradient( 90deg, #6d5c39 0%, #ece0c2 18%, #d8c8a4 50%, #ece0c2 82%, #6d5c39 100%); border-radius: 13px; box-shadow: 0 3px 10px rgba(0,0,0,.4); z-index: 2; animation: vp-sliver 620ms cubic-bezier(.3,.7,.4,1) forwards; }
+@keyframes vp-sliver { from { transform: translateY(-160px); opacity: 0; } 30% { opacity: 1; } 85% { transform: translateY(30px) scaleY(.9); } 100% {  transform: translateY(26px) scaleY(.4); opacity: 0; } }
+.vp-env-face { position: absolute; left: 7%; top: 40%; right: 7%; font-family: "Courier New", ui-monospace, monospace; color: #33261a; z-index: 4; }
+.vp-env-face .row { display: flex; gap: 8px; align-items: baseline; font-size: clamp(12px, 2.6vw, 15px); line-height: 1.9; letter-spacing: .02em; }
+.vp-env-face .k { opacity: .62; font-size: .82em; letter-spacing: .18em; }
+.vp-env-face .addr { color: #241a10; font-weight: 700; }
+.vp-env-face .typ-caret { display: inline-block;  width: 8px;  height: 14px;  vertical-align: -1px; background: #241a10; animation: vp-caret 700ms steps(2) infinite; }
+.vp-airmail { position: absolute; left: 6%; right: 6%; bottom: 7%; height: 7px; background: repeating-linear-gradient(90deg, #7a2e1d 0 18px, #e5d6ac 18px 36px, #2c2a26 36px 54px, #e5d6ac 54px 72px); opacity: .85; border-radius: 2px; transform: skewX(-18deg); }
+.vp-stamp { position: absolute; top: 8%; right: 7%; width: 52px; height: 62px; background: #efe6cd; border: 1px dashed #8a7a58; border-radius: 2px; display: grid; place-items: center; z-index: 4; }
+.vp-stamp .val { font-family: var(--font-utility); font-size: 9px; letter-spacing: .08em; color: #6d5c39; text-align: center; line-height: 1.5; }
+.vp-stamp .val b { display: block; font-size: 13px; letter-spacing: .02em; color: #7a2e1d; }
+.vp-seal { position: absolute; right: 9%; bottom: -36px; z-index: 5; width: 74px; height: 74px; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #a94431 0%, #8e3323 46%, #6e2317 100%); box-shadow: inset 0 2px 6px rgba(255,190,160,.28), inset 0 -4px 8px rgba(30,5,0,.6), 0 6px 18px rgba(0,0,0,.55); display: grid; place-items: center; transform: scale(0); opacity: 0; animation: vp-seal-stamp 560ms cubic-bezier(.34,1.56,.64,1) forwards; }
+@keyframes vp-seal-stamp { 0% { transform: scale(0); opacity: 0; } 60% { transform:  scale(1.18); opacity: 1; } 80% { transform: scale(.94); } 100% { transform: scale(1); } }
+.vp-seal::before { content: ""; position: absolute; inset: 6px; border-radius: 50%; border: 1px dashed rgba(255,214,190,.35); }
+.vp-seal .vp-seal-v { font-family: var(--font-display); font-size: 34px; font-weight: 500; color: #f0cdb3; text-shadow: 0 1px 2px rgba(40,5,0,.6); transform: translateY(1px); }
+.vp-seal.is-pressed { animation: vp-seal-press 340ms var(--ease); }
+@keyframes vp-seal-press { 0% { transform: scale(1); } 35% { transform: scale(1.12,.9); } 70% { transform: scale(.97,1.04); } 100% { transform: scale(1); } }
+
+/* ---------- Scene 4: the post box ---------- */
+.vp-post-wrap { position: absolute; inset: 0; z-index: 40; display: flex; align-items: flex-end; justify-content: center; pointer-events: none; padding-bottom: 8vh; }
+.vp-post { position: relative; width: min(74vw, 330px); animation: vp-post-in 640ms var(--ease) forwards; }
+@keyframes vp-post-in { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.vp-post svg { display: block; width: 100%; height: auto; }
+.vp-post-label { position: absolute; left: 50%; bottom: -64px; transform: translateX(-50%); font-family: var(--font-utility); font-size: 10px; letter-spacing: .3em; color: #8a7f5f; text-transform: uppercase; white-space: nowrap; }
+.vp-env-fly { position: absolute; left: 62%; top: 34%; width: 210px; height: 132px; transform-origin: 50% 100%; z-index: 45; opacity: 0; animation: vp-fly 880ms cubic-bezier(.32,0,.8,.46) forwards; }
+@keyframes vp-fly { 0% { transform: translate(0,0) rotate(0) scale(1); opacity: 0; } 12% { opacity: 1; } 46% { transform: translate(-74px,-10px) rotate(-34deg) scale(.94); } 74% { transform: translate(-150px,44px) rotate(-74deg) scale(.8); } 88% { transform: translate(-178px,84px) rotate(-84deg) scale(.62); } 100% { transform: translate(-186px,108px) rotate(-86deg) scale(.55); opacity: 1; } }
+.vp-env-fly .vp-fly-body { position: absolute; inset: 0; background: linear-gradient(172deg, #caa06a, #a87b46); border-radius: 4px; box-shadow: 0 10px 26px rgba(0,0,0,.5); }
+.vp-env-fly .vp-fly-flap { position: absolute; left: 0; right: 0; top: 0; height: 54%; background: linear-gradient(180deg, #d8b078, #c39460); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.vp-env-fly .vp-fly-seal { position: absolute; right: 10%; bottom: 12%; width: 30px; height: 30px; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #a94431, #6e2317); box-shadow: inset 0 1px 3px rgba(255,190,160,.3), 0 2px 6px rgba(0,0,0,.5); }
+.vp-env-fly.is-dropping { animation: vp-drop 420ms cubic-bezier(.5,0,.7,1) forwards; }
+@keyframes vp-drop { 0% { transform: translate(-186px,108px) rotate(-86deg) scale(.55); } 30% { transform: translate(-190px,118px) rotate(-90deg) scale(.62,.34); } 100% { transform: translate(-196px,150px) rotate(-90deg) scale(.3,.12); opacity: 0; } }
+.vp-slot-flag { position: absolute; left: 50%; top: 96px; width: 116px; height: 10px; margin-left: -58px; border-radius: 6px; background: linear-gradient(180deg, #14100b, #050302); box-shadow: inset 0 2px 4px rgba(0,0,0,.9); z-index: 48; transform-origin: center; }
+.vp-slot-flag.is-flipped { animation: vp-flag-flip 700ms var(--ease); }
+@keyframes vp-flag-flip { 40% { transform: rotateX(64deg); } 100% { transform: rotateX(0); } }
+
+/* ---------- Receipt ---------- */
+.vp-receipt { position: absolute; z-index: 60; width: min(88vw, 420px); background: linear-gradient(176deg, #f3ead2, #e6d7b4); color: #33261a; border-radius: 4px; padding: 30px 30px 24px; box-shadow: 0 2px 0 rgba(255,252,240,.7) inset, 0 40px 90px -20px rgba(0,0,0,.8); font-family: var(--font-utility); display: none; }
+.vp-receipt.is-visible { display: block; animation: vp-receipt-in 620ms var(--ease) forwards; }
+@keyframes vp-receipt-in { from { transform: translateY(26px) rotate(-1.2deg); opacity: 0; } to { transform: translateY(0) rotate(-.6deg); opacity: 1; } }
+.vp-receipt .vp-r-label { font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: #8a7a58; }
+.vp-receipt .vp-r-title { font-family: var(--font-display); font-size: 34px; font-weight: 500; margin: 10px 0 4px; color: #241a10; letter-spacing: .01em; }
+.vp-receipt .vp-r-num { font-family: "Courier New", ui-monospace, monospace; font-size: 12.5px; letter-spacing: .14em; color: #7a2e1d; margin-bottom: 14px; }
+.vp-receipt .vp-r-rule { height: 1px; background: rgba(60,44,18,.28); margin: 14px 0; }
+.vp-receipt .vp-r-reply { font-family: var(--font-body); font-size: 15.5px; line-height: 1.65; color: #3d3423; }
+.vp-receipt .vp-r-actions { display: flex; gap: 12px; margin-top: 20px; }
+.vp-receipt .vp-r-btn { font-family: var(--font-utility); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; cursor: pointer; padding: 11px 18px; border-radius: 2px; border: 1px solid #241a10; background: transparent; color: #241a10; transition: background 200ms, color 200ms; }
+.vp-receipt .vp-r-btn:hover { background: #241a10; color: #f3ead2; }
+.vp-receipt .vp-r-btn--solid { background: #241a10; color: #f3ead2; }
+.vp-receipt .vp-r-btn--solid:hover { background: #3a2c1c; }
+.vp-receipt .vp-r-mark { margin-top: 18px; display: flex; align-items: center; gap: 10px; font-size: 9.5px; letter-spacing: .24em; text-transform: uppercase; color: #8a7a58; }
+.vp-receipt .vp-r-mark .dot { width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #a94431, #6e2317); display: grid; place-items: center; color: #f0cdb3; font-family: var(--font-display); font-size: 14px; }
+#vp-particles { position: absolute; inset: 0; z-index: 15; width: 100%; height: 100%; pointer-events: none; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 720px) {
+  .vp-stage { padding: 70px 14px 90px; }
+  .vp-monitor { width: min(94vw, 480px); padding: 18px 18px 0; border-radius: 18px; }
+  .vp-paper { width: 88vw; height: 440px; padding: 26px 22px; }
+  .vp-paper-lines { font-size: 12.5px; }
+  .vp-env { width: 92vw; height: 250px; }
+  .vp-env-face .row { font-size: 12px; }
+  .vp-seal { width: 60px; height: 60px; bottom: -30px; }
+  .vp-seal .vp-seal-v { font-size: 27px; }
+  .vp-post { width: min(78vw, 270px); }
+  .vp-env-fly { width: 160px; height: 100px; left: 58%; }
+  .vp-slot-flag { width: 96px; top: 78px; margin-left: -48px; }
+  .vp-chip { left: 16px; top: 20px; }
+  .vp-skip { top: 16px; right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vp-stage, .vp-stage * { animation: none !important; transition: none !important; }
+  .vp-receipt.is-visible { opacity: 1; }
+}

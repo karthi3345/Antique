@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Chronicles — VOLGO{% endblock %}
+
+{% block content %}
+<section class="reading-room" style="padding-top:160px; padding-bottom:var(--s9);">
+  <div class="container narrow">
+    <p class="label-number">Chronicles</p>
+    <h1 style="font-size:clamp(44px,6vw,84px);">The reading room</h1>
+    <p class="lede" style="margin-top:24px; max-width:58ch;">
+      Essays on craftsmanship, provenance, and the long lives of objects.
+    </p>
+    <hr class="rule-double" style="margin: var(--s7) 0;">
+    <div class="chronicle-index">
+      {% for c in articles %}
+      <a href="/chronicles/{{ c.slug }}/" class="chronicle-entry" style="display:block; padding:var(--s5) 0; border-bottom:1px solid var(--hairline);">
+        <span class="meta" style="display:block; margin-bottom:8px;">{{ c.published_at|date:"j F Y" }} · {{ c.reading_minutes }} min</span>
+        <h3 style="font-size:clamp(22px,3vw,32px);">{{ c.title }}</h3>
+        {% if c.standfirst %}<p style="margin-top:10px; color:var(--text-muted);">{{ c.standfirst }}</p>{% endif %}
+      </a>
+      {% empty %}
+      <p class="form-note">The first chronicle is being prepared.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

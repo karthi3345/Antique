@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}VOLGO — Maison d'Antiquités · Objects That Remember{% endblock %}
+
+{% block plate %}
+<div class="palace-plate" aria-hidden="true"></div>
+{% endblock %}
+
+{% block content %}
+<!-- ============ HERO — one exceptional object ============ -->
+{% if hero %}
+<link rel="preload" as="image" href="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp" fetchpriority="high">
+<section class="hero" id="hero" aria-label="Featured object — {{ hero.name }}">
+  <div class="hero-media">
+    <img src="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp"
+         alt="{{ hero.name }} — {{ hero.region }}, {{ hero.period }}"
+         fetchpriority="high" width="1120" height="1400" decoding="async">
+  </div>
+  <div class="hero-shade" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-content">
+      <p class="hero-eyebrow">{{ hero.label_number }} — {% if hero.featured %}Object of the Season{% else %}Recent Accession{% endif %}</p>
+      <h1>{{ hero.name }}</h1>
+      <p class="hero-desc">{{ hero.subtitle|default:"An object examined, documented, and offered — with its history intact." }}</p>
+      <p class="meta meta-line">{{ hero.region }}<span class="sep">·</span>{{ hero.period }}<span class="sep">·</span>{{ hero.material }}</p>
+      <div class="hero-ctas">
+        <a href="/collection/" class="btn btn--gold">Explore the Collection</a>
+        <a href="/acquisition/" class="btn btn--outline">Private Acquisition</a>
+      </div>
+    </div>
+  </div>
+  <span class="hero-scroll" aria-hidden="true">Scroll</span>
+</section>
+{% endif %}
+
+<!-- ============ THE ROOMS — category archive ============ -->
+<section class="section" id="collection-carousel" aria-label="Browse the collection by category">
+  <div class="container">
+    <div class="rooms-head reveal">
+      <div class="section-head" style="margin-bottom:0;">
+        <span class="label-number">La Collection</span>
+        <h2>The Rooms of the House</h2>
+      </div>
+      <a href="/collection/" class="btn">View the full catalogue</a>
+    </div>
+
+    <div class="carousel-frame reveal">
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="carousel-track">
+          {% for item in categories %}
+          <a href="/collection/?category={{ item.cat|urlencode }}" class="carousel-card">
+            <div class="carousel-figure">
+              <img src="{{ item.hero }}" alt="{{ item.cat }}" loading="lazy" width="480" height="480" decoding="async">
+            </div>
+            <div class="carousel-body">
+              <span class="carousel-cat">{{ item.cat }}</span>
+              <span class="meta">{{ item.count }} object{{ item.count|pluralize }}</span>
+              <span class="carousel-explore">Explore
+                <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M1 5h14M11 1l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      <button class="carousel-arrow" id="carousel-prev" type="button" aria-label="Previous categories">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M17 6H1M6 1L1 6l5 5"/></svg>
+      </button>
+      <button class="carousel-arrow carousel-arrow--next" id="carousel-next" type="button" aria-label="Next categories">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M1 6h16M12 1l5 5-5 5"/></svg>
+      </button>
+      <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Carousel page"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RECENT ACQUISITIONS ============ -->
+{% if recent %}
+<section class="section-tight" id="recent">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label-number">Les Récents</span>
+      <h2>Recent Acquisitions</h2>
+      <p>The newest arrivals at the house — examined, documented, and presented for consideration.</p>
+    </div>
+    <div class="grid-strip reveal-group">
+      {% for obj in recent %}
+      <a href="/objects/{{ obj.object_number }}/" class="card">
+        <div class="card-figure">
+          <img src="/static/img/objects/{{ obj.object_number|stringformat:'03d' }}/{{ obj.hero_frame|stringformat:'02d' }}.webp"
+               alt="{{ obj.name }} — {{ obj.region }}, {{ obj.period }}" loading="lazy" width="480" height="600" decoding="async">
+        </div>
+        <div class="object-label">
+          <span class="label-number">{{ obj.label_number }}</span>
+          <span class="name">{{ obj.name }}</span>
+          <span class="meta meta-line">{{ obj.region }}<span class="sep">·</span>{{ obj.period }}</span>
+          {% if obj.status == 'reserved' %}<span class="status">{{ obj.status_line }}</span>{% endif %}
+          <span class="card-examine">Examine Object
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M1 5h14M11 1l4 4-4 4"/></svg>
+          </span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ============ PRIVATE ACQUISITION ============ -->
+<section class="private-acquisition" id="private-acquisition" aria-label="Private acquisition services">
+  <div class="container">
+    <div class="pa-layout">
+      <div class="reveal">
+        <p class="label-number" style="margin-bottom:var(--s4);">Private Acquisition</p>
+        <h2>Objects of distinction,<br>privately acquired.</h2>
+        <p>Volgo offers discreet acquisition services for collectors, designers, institutions, and private clients. Each object is examined in person, photographed in full rotation, and documented with its provenance — including the gaps.</p>
+        <ul class="pa-services">
+          <li><span class="meta">I</span>Private viewing, by appointment</li>
+          <li><span class="meta">II</span>Condition documentation</li>
+          <li><span class="meta">III</span>Provenance information</li>
+          <li><span class="meta">IV</span>Secure worldwide shipping</li>
+          <li><span class="meta">V</span>Collector consultation</li>
+          <li><span class="meta">VI</span>Discreet acquisition process</li>
+        </ul>
+        <div class="pa-cta">
+          <a href="/acquisition/" class="btn btn--solid">Begin a Private Enquiry</a>
+          <a href="/contact/" class="btn">Contact the house</a>
+        </div>
+      </div>
+      <figure class="pa-image reveal-clip" aria-hidden="true">
+        <span class="reveal-clip-media" style="display:block; height:100%;">
+          <img src="/static/img/objects/043/00.webp"
+               alt="A medieval bronze aquamanile in the form of a unicorn — one of the house's reference objects"
+               loading="lazy" width="800" height="1000" decoding="async" style="height:100%; object-fit:cover;">
+        </span>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-head section-head--center reveal">
+      <span class="label-number">Le Livre d'Or</span>
+      <h2>Collector Notes</h2>
+    </div>
+    <div class="testimonial reveal" id="testimonial">
+      <span class="mark">“</span>
+      <p class="quote" id="t-quote"></p>
+      <p class="who"><span class="meta" id="t-name"></span><br><span class="meta" id="t-place" style="color: var(--gold-deep);"></span></p>
+    </div>
+    <div class="testimonial-nav reveal" id="testimonial-nav"></div>
+  </div>
+</section>
+
+<!-- ============ THE HOUSE STRIP ============ -->
+<section class="section" id="house-strip">
+  <div class="container">
+    <div class="house-strip-layout">
+      <figure class="house-strip-image reveal-clip" aria-hidden="true">
+        <span class="reveal-clip-media" style="display:block; height:100%;">
+          <img src="/static/img/objects/013/00.webp" alt="A Renaissance marble bust of Emperor Antoninus Pius in the house's viewing room"
+               loading="lazy" width="720" height="960" decoding="async" style="height:100%; object-fit:cover;">
+        </span>
+      </figure>
+      <div class="reveal">
+        <p class="label-number">La Maison</p>
+        <h2 style="margin-top:16px; font-size:clamp(30px,3.6vw,48px);">A young house<br>with an old discipline</h2>
+        <p style="margin-top:var(--s4);">Volgo verifies everything, presents honestly, and lets the object speak first. Every object is photographed in full rotation and documented with its provenance — including the gaps.</p>
+        <div style="margin-top:28px;"><a href="/the-house/" class="btn">Read about the house</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // ---- Category rooms carousel: paged, arrows disabled at ends ----
+  (function () {
+    var track = document.getElementById('carousel-track');
+    var viewport = track && track.parentElement;
+    if (!track || !viewport) return;
+    var cards = Array.prototype.slice.call(track.children);
+    var prev = document.getElementById('carousel-prev');
+    var next = document.getElementById('carousel-next');
+    var dotsEl = document.getElementById('carousel-dots');
+    var page = 0, pages = 1;
+
+    function perPage() {
+      var w = window.innerWidth;
+      return w <= 720 ? 1 : (w <= 1080 ? 2 : 4);
+    }
+    function pageCount() { return Math.max(1, Math.ceil(cards.length / perPage())); }
+    function update() {
+      pages = pageCount();
+      if (page > pages - 1) page = pages - 1;
+      track.style.transform = 'translateX(-' + (page * 100) + '%)';
+      prev.disabled = page === 0;
+      next.disabled = page === pages - 1;
+      if (dotsEl) {
+        dotsEl.innerHTML = '';
+        for (var i = 0; i < pages; i++) {
+          (function (idx) {
+            var b = document.createElement('button');
+            b.setAttribute('aria-label', 'Page ' + (idx + 1));
+            if (idx === page) b.classList.add('is-active');
+            b.addEventListener('click', function () { page = idx; update(); });
+            dotsEl.appendChild(b);
+          })(i);
+        }
+      }
+    }
+    prev.addEventListener('click', function () { if (page > 0) { page -= 1; update(); } });
+    next.addEventListener('click', function () { if (page < pages - 1) { page += 1; update(); } });
+    var rt = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { page = 0; update(); }, 120);
+    });
+    // Touch swipe
+    var startX = null;
+    viewport.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    viewport.addEventListener('touchend', function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) {
+        if (dx < 0 && page < pages - 1) { page += 1; update(); }
+        if (dx > 0 && page > 0) { page -= 1; update(); }
+      }
+      startX = null;
+    }, { passive: true });
+    update();
+  })();
+
+  // ---- Testimonials rotation ----
+  (function () {
+    var data = [
+      {% for t in testimonials %}
+      { quote: "{{ t.text|escapejs }}", name: "{{ t.name|escapejs }}", place: "{{ t.place|escapejs }}" },
+      {% endfor %}
+    ];
+    var el = document.getElementById('t-quote');
+    if (!el || !data.length) return;
+    var i = 0;
+    var nav = document.getElementById('testimonial-nav');
+    data.forEach(function (_, idx) {
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Note ' + (idx + 1));
+      b.addEventListener('click', function () { show(idx); });
+      if (idx === 0) b.classList.add('is-active');
+      nav.appendChild(b);
+    });
+    function show(n) {
+      i = n;
+      el.textContent = data[n].quote;
+      document.getElementById('t-name').textContent = data[n].name;
+      document.getElementById('t-place').textContent = data[n].place;
+      nav.querySelectorAll('button').forEach(function (b, k) { b.classList.toggle('is-active', k === n); });
+    }
+    show(0);
+    setInterval(function () { show((i + 1) % data.length); }, 8000);
+  })();
+</script>
+{% endblock %}

@@ -1,0 +1,7 @@
+# Volgo environment
+.env
+staticfiles/
+media/
+__pycache__/
+*.pyc
+.DS_Store

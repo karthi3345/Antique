@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Private Acquisition — VOLGO{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top:160px;">
+  <div class="container narrow">
+    <p class="label-number">Private Acquisition</p>
+    <h1 style="font-size:clamp(44px,6vw,84px);">Conducted<br>personally</h1>
+    <p class="lede" style="margin-top:28px; max-width:58ch;">
+      Acquisitions at Volgo are conversations, not checkouts. Discover, examine, verify — then enquire, and a member of the house will respond personally.
+    </p>
+  </div>
+</section>
+
+<section class="section" style="border-top:1px solid var(--hairline-dark);">
+  <div class="container narrow">
+    <p class="label-number reveal">The process</p>
+    <ol class="timeline" style="margin-top:var(--s5);">
+      <li class="reveal"><div class="year" style="font-size:26px;">I</div><p><strong>Discover</strong> — the collection is presented as a catalogue: number, origin, period, material.</p></li>
+      <li class="reveal"><div class="year" style="font-size:26px;">II</div><p><strong>Examine</strong> — study the photograph, read the inspection notes.</p></li>
+      <li class="reveal"><div class="year" style="font-size:26px;">III</div><p><strong>Verify</strong> — provenance, condition, and documentation are open on every page.</p></li>
+      <li class="reveal"><div class="year" style="font-size:26px;">IV</div><p><strong>Enquire</strong> — write to the house; a member responds, usually within one working day.</p></li>
+      <li class="reveal"><div class="year" style="font-size:26px;">V</div><p><strong>Discuss</strong> — the object, its records, private viewing, and delivery are arranged personally.</p></li>
+      <li class="reveal is-current"><div class="year" style="font-size:26px;">VI</div><p><strong>Acquire</strong> — the object, its documentation, and its provenance record pass to you.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" style="border-top:1px solid var(--hairline-dark);">
+  <div class="container narrow">
+    <p class="label-number reveal">Begin</p>
+    <h2 class="reveal" style="margin:16px 0 var(--s5);">Write to the house</h2>
+    <div class="reveal" id="enquiry-cta"></div>
+  </div>
+</section>
+{% endblock %}
+
+{% block head %}
+<link rel="preload" href="{% static 'css/post.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'css/post.css' %}">
+<script src="{% static 'js/post.js' %}" defer></script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/enquiry.js' %}" defer></script>
+{% endblock %}

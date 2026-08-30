@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="preload" href="{% static 'css/post.css' %}" as="style">
+<script src="{% static 'js/post.js' %}" defer></script>
+{% endblock %}
+
+{% block title %}{{ artifact.label_number }} — {{ artifact.name }} · VOLGO{% endblock %}
+{% block description %}{{ artifact.name }} — {{ artifact.region }}, {{ artifact.period }}. {{ artifact.story|truncatewords:24 }}{% endblock %}
+
+{% block content %}
+<article class="artifact" data-object-number="{{ artifact.object_number }}" data-frame-count="{{ artifact.frame_count }}">
+
+  <!-- LABEL BLOCK -->
+  <header class="section" style="padding-top:160px;">
+    <div class="container">
+      <div class="object-label">
+        <span class="label-number">{{ artifact.label_number }}</span>
+        <span class="name" style="font-size:clamp(34px,5vw,64px);">{{ artifact.name }}</span>
+        <span class="meta meta-line">{{ artifact.region }}<span class="sep">·</span>{{ artifact.period }}<span class="sep">·</span>{{ artifact.material }}</span>
+        {% if artifact.attribution %}<span class="meta">{{ artifact.attribution }}</span>{% endif %}
+        {% if artifact.status != 'available' %}<span class="meta status">{{ artifact.status_line }}</span>{% endif %}
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:var(--s6); align-items:center; margin-top:var(--s5);">
+        {% if artifact.status == 'available' %}
+        <a href="#enquire" class="btn btn--gold">Enquire about this object</a>
+        {% elif artifact.status == 'reserved' %}
+        <span class="meta status" style="font-style:italic;">{{ artifact.status_line }}</span>
+        {% endif %}
+        <a href="#enquire" class="btn" style="margin-left:auto;">Enquire privately</a>
+      </div>
+      <p class="meta" style="margin-top:20px; color:var(--text-muted);">Accession {{ artifact.accession_code }}</p>
+    </div>
+  </header>
+
+  <!-- EXAMINE — the photograph and inspection notes -->
+  <section class="section-tight" id="examine">
+    <div class="container">
+      <p class="label-number" style="margin-bottom:var(--s4);">Examine</p>
+      <figure class="examine-photo">
+        <img src="/static/img/objects/{{ artifact.object_number|stringformat:'03d' }}/{{ artifact.hero_frame|stringformat:'02d' }}.webp"
+             alt="{{ artifact.name }} — {{ artifact.region }}, {{ artifact.period }}"
+             loading="lazy" decoding="async">
+      </figure>
+      {% if artifact.image_source %}
+      <p class="img-credit">
+        Reference photograph — <a href="{{ artifact.image_source_url }}" rel="noopener" target="_blank">{{ artifact.image_source }}</a>
+        {% if artifact.image_license %} · {{ artifact.image_license }}{% endif %}
+        {% if artifact.image_credit %} · {{ artifact.image_credit }}{% endif %}
+      </p>
+      {% endif %}
+      {% if artifact.inspection_points.all %}
+      <div class="inspect-list" style="margin-top:var(--s5);">
+        <p class="label-number reveal" style="margin-bottom:var(--s4);">Inspection Notes</p>
+        <ul>
+          {% for ip in artifact.inspection_points.all %}
+          <li class="reveal">
+            <span class="meta gold">{{ ip.kind }}</span>
+            <p style="margin:6px 0 0;"><strong>{{ ip.label }}</strong></p>
+            <p class="meta" style="margin:4px 0 0;">{{ ip.detail }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- STORY -->
+  {% if artifact.story %}
+  <section class="section" id="story">
+    <div class="container narrow">
+      <p class="label-number reveal">The Story</p>
+      <h2 class="reveal" style="margin:16px 0 var(--s5);">A record of this object</h2>
+      <div class="article-body reveal">
+        {% if artifact.story_lede %}<p class="lede">{{ artifact.story_lede }}</p>{% endif %}
+        {{ artifact.story|linebreaks }}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- PROVENANCE -->
+  {% if artifact.provenance.all %}
+  <section class="section" id="provenance" style="border-top:1px solid var(--hairline-dark);">
+    <div class="container narrow">
+      <p class="label-number reveal">Provenance</p>
+      <h2 class="reveal" style="margin:16px 0 var(--s6);">The record of keepers</h2>
+      <ol class="timeline">
+        {% for p in artifact.provenance.all %}
+        <li class="reveal {% if forloop.last %}is-current{% endif %}">
+          <div class="year">{{ p.year }}</div>
+          <p style="margin-bottom:6px;">{{ p.event }}</p>
+          {% if p.evidence %}<p class="evidence">{{ p.evidence }}</p>{% endif %}
+          {% if p.undocumented %}<p class="evidence undocumented">This passage of the record is not documented.</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="form-note" style="margin-top:var(--s6);">Where documentation is absent, the entry says so plainly.</p>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- CONDITION & SPECIFICATIONS -->
+  <section class="section" style="border-top:1px solid var(--hairline-dark);">
+    <div class="container two-col">
+      <div>
+        <p class="label-number reveal">Condition</p>
+        <h2 class="reveal" style="font-size:clamp(26px,3vw,36px); margin:16px 0 var(--s4);">{% if artifact.condition_grade %}{{ artifact.condition_grade }}{% else %}Condition report{% endif %}</h2>
+        <div class="reveal">{{ artifact.condition|default:"Condition photographs are available on request."|linebreaks }}</div>
+      </div>
+      <div>
+        <p class="label-number reveal">Specifications</p>
+        <h2 class="reveal" style="font-size:clamp(26px,3vw,36px); margin:16px 0 var(--s4);">Object details</h2>
+        <div class="reveal spec-table">
+          <dl style="display:grid; grid-template-columns:auto 1fr; gap:14px var(--s5); margin:0;">
+            <dt class="meta">Object</dt><dd style="margin:0;">{{ artifact.label_number }}</dd>
+            <dt class="meta">Accession</dt><dd style="margin:0;">{{ artifact.accession_code }}</dd>
+            {% if artifact.maker %}<dt class="meta">Maker</dt><dd style="margin:0;">{{ artifact.maker }}</dd>{% endif %}
+            {% if artifact.attribution %}<dt class="meta">Attribution</dt><dd style="margin:0;">{{ artifact.attribution }}</dd>{% endif %}
+            <dt class="meta">Period</dt><dd style="margin:0;">{{ artifact.period }}</dd>
+            <dt class="meta">Region</dt><dd style="margin:0;">{{ artifact.region }}</dd>
+            <dt class="meta">Materials</dt><dd style="margin:0;">{{ artifact.material }}</dd>
+            {% if artifact.dimensions %}<dt class="meta">Dimensions</dt><dd style="margin:0;">{{ artifact.dimensions }}</dd>{% endif %}
+            {% if artifact.weight %}<dt class="meta">Weight</dt><dd style="margin:0;">{{ artifact.weight }}</dd>{% endif %}
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACQUISITION -->
+  <section class="section" style="border-top:1px solid var(--hairline-dark);">
+    <div class="container narrow">
+      <p class="label-number reveal">Acquisition</p>
+      <h2 class="reveal" style="margin:16px 0 var(--s4);">Private acquisition</h2>
+      <p class="reveal">Acquisitions are conducted personally. Enquire, and a member of the house will respond — usually within one working day — to discuss the object, its documentation, and private delivery.</p>
+      <div class="reveal" style="margin-top:var(--s5);" id="enquiry-cta"></div>
+    </div>
+  </section>
+
+  <!-- RELATED OBJECTS -->
+  {% if related %}
+  <section class="section-tight" style="border-top:1px solid var(--hairline-dark);">
+    <div class="container">
+      <p class="label-number">Related objects</p>
+      <div class="grid-strip reveal" style="margin-top:var(--s5);">
+        {% for r in related %}
+        <a href="{{ r.get_absolute_url }}" class="card">
+          <div class="card-img"><img src="/static/img/objects/{{ r.object_number|stringformat:'03d' }}/00.webp" alt="{{ r.name }} — {{ r.region }}, {{ r.period }}" loading="lazy" decoding="async"></div>
+          <div class="card-meta">
+            <span class="meta gold">{{ r.category }}</span>
+            <span class="card-name">{{ r.name }}</span>
+            <span class="meta">{{ r.region }} · {{ r.period }}</span>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Related chronicle -->
+  {% with chronicle=artifact.chronicles.first %}
+  {% if chronicle %}
+  <section class="section-tight" style="border-top:1px solid var(--hairline-dark);">
+    <div class="container narrow">
+      <p class="label-number">Related chronicle</p>
+      <a href="/chronicles/{{ chronicle.slug }}/" class="reveal" style="display:block; margin-top:12px;">
+        <h3 style="font-size:clamp(24px,3vw,32px);">{{ chronicle.title }}</h3>
+        <p class="meta" style="margin-top:8px;">{{ chronicle.published_at }} · {{ chronicle.reading_minutes }} min read</p>
+      </a>
+    </div>
+  </section>
+  {% endif %}
+  {% endwith %}
+</article>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/enquiry.js' %}" defer></script>
+{% endblock %}
