@@ -7,8 +7,31 @@ from dotenv import load_dotenv
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-# .env is canonical: it wins over any stale process env injected at boot.
+
+# --- Database (DATABASE_URL, if provided, wins over individual DB_* vars) -
+def _db_from_url(url):
+    """Parse mysql://user:pass@host:port/dbname into Django DATABASES."""
+    from urllib.parse import urlparse, unquote
+    p = urlparse(url)
+    return {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": unquote(p.path.lstrip("/")),
+        "USER": unquote(p.username or ""),
+        "PASSWORD": unquote(p.password or ""),
+        "HOST": p.hostname or "127.0.0.1",
+        "PORT": str(p.port or 3306),
+        "OPTIONS": {"charset": "utf8mb4"},
+    }
+
+
+_DJANGO_DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
+
+# .env is canonical for local dev: it wins over any stale process env.
 load_dotenv(BASE_DIR / ".env", override=True)
+
+# A DATABASE_URL from the platform (Vercel) survives the .env override above.
+if _DJANGO_DATABASE_URL:
+    os.environ["DATABASE_URL"] = _DJANGO_DATABASE_URL
 
 # --- Security -----------------------------------------------------------
 SECRET_KEY = os.environ.get(
@@ -18,10 +41,14 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
 ALLOWED_HOSTS = ["*"]
 
 # Trust the domains we are served from for CSRF (wildcard; no hostnames in source).
-CSRF_TRUSTED_ORIGINS = os.environ.get(
-    "CSRF_TRUSTED_ORIGINS",
-    "https://*.drytis.dev",
-).split(",")
+CSRF_TRUSTED_ORIGINS = [
+    o.strip()
+    for o in os.environ.get(
+        "CSRF_TRUSTED_ORIGINS",
+        "https://*.drytis.dev,https://*.vercel.app",
+    ).split(",")
+    if o.strip()
+]
 
 # --- Applications -------------------------------------------------------
 INSTALLED_APPS = [
@@ -71,23 +98,26 @@ import pymysql  # noqa: E402
 
 pymysql.install_as_MySQLdb()
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("DB_NAME", "volgo"),
-        "USER": os.environ.get("DB_USER", "root"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", ""),
-        "HOST": os.environ.get("DB_HOST", "127.0.0.1"),
-        "PORT": os.environ.get("DB_PORT", "3306"),
-        "OPTIONS": {
-            "charset": "utf8mb4",
-        },
+if _DJANGO_DATABASE_URL:
+    DATABASES = {"default": _db_from_url(_DJANGO_DATABASE_URL)}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ.get("DB_NAME", "volgo"),
+            "USER": os.environ.get("DB_USER", "root"),
+            "PASSWORD": os.environ.get("DB_PASSWORD", ""),
+            "HOST": os.environ.get("DB_HOST", "127.0.0.1"),
+            "PORT": os.environ.get("DB_PORT", "3306"),
+            "OPTIONS": {
+                "charset": "utf8mb4",
+            },
+        }
     }
-}
 
 # --- Password validation ------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeValidator"},
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
 ]
 
 # --- Internationalisation -----------------------------------------------
@@ -102,7 +132,13 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+    "staticfiles": {
+        "BACKEND": (
+            "whitenoise.storage.CompressedManifestStaticFilesStorage"
+            if os.path.exists(BASE_DIR / "staticfiles" / "staticfiles.json")
+            else "whitenoise.storage.CompressedStaticFilesStorage"
+        )
+    },
 }
 
 # --- Media (artifact imagery) -------------------------------------------
