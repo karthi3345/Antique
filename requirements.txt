@@ -1,6 +1,7 @@
 Django==5.1.15
 gunicorn==26.2.0
 PyMySQL==1.2.0
+psycopg[binary]==3.2.9
 whitenoise==6.12.0
 Pillow==12.3.0
 python-dotenv==1.0.1

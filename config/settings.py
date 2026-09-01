@@ -10,17 +10,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- Database (DATABASE_URL, if provided, wins over individual DB_* vars) -
 def _db_from_url(url):
-    """Parse mysql://user:pass@host:port/dbname into Django DATABASES."""
+    """Parse a database URL into Django DATABASES config.
+
+    Supports mysql:// (PyMySQL) and postgres:// / postgresql:// (psycopg)
+    so the app runs against whichever platform database is provided.
+    """
     from urllib.parse import urlparse, unquote
     p = urlparse(url)
+    scheme = (p.scheme or "mysql").split("+", 1)[0].lower()
+    if scheme in ("postgres", "postgresql"):
+        engine = "django.db.backends.postgresql"
+        # Neon (and most managed PG) require TLS and run behind a
+        # pgBouncer-style pooler that breaks server-side prepared
+        # statements — disable them.
+        options = {"sslmode": "require", "prepare_threshold": None}
+    else:
+        engine = "django.db.backends.mysql"
+        options = {"charset": "utf8mb4"}
     return {
-        "ENGINE": "django.db.backends.mysql",
+        "ENGINE": engine,
         "NAME": unquote(p.path.lstrip("/")),
         "USER": unquote(p.username or ""),
         "PASSWORD": unquote(p.password or ""),
         "HOST": p.hostname or "127.0.0.1",
-        "PORT": str(p.port or 3306),
-        "OPTIONS": {"charset": "utf8mb4"},
+        "PORT": str(p.port or (5432 if engine.endswith("postgresql") else 3306)),
+        "OPTIONS": options,
     }
 
 

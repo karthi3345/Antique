@@ -1,14 +1,14 @@
 #!/bin/sh
-# Vercel build: migrate + seed when a database is reachable, then collectstatic.
-# Keeps the deployment green even if DATABASE_URL is unset or the DB is down;
-# runtime DB failures surface as Django errors, not broken builds.
+# Vercel build: try DB setup (migrate + seed) when a database is reachable,
+# then collectstatic. DB steps are best-effort: the WSGI cold-start
+# bootstrap retries them at runtime, so a sandboxed/unreachable DB at
+# build time must never fail the deployment.
 set -e
 
 if [ -n "$DATABASE_URL" ]; then
-  echo "DATABASE_URL set -- applying migrations"
-  python3 manage.py migrate --noinput
-  echo "Seeding collection (idempotent)"
-  python3 manage.py seed_volgo
+  echo "DATABASE_URL set -- attempting migrations + seed"
+  python3 manage.py migrate --noinput || echo "WARN: migrate failed at build time; will retry at runtime"
+  python3 manage.py seed_volgo || echo "WARN: seed failed at build time; will retry at runtime"
 else
   echo "No DATABASE_URL -- skipping database steps"
 fi
