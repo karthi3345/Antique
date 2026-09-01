@@ -10,17 +10,18 @@ class PostAnimationAssetsTest(TestCase):
         r = self.client.get("/contact/")
         self.assertEqual(r.status_code, 200)
         html = r.content.decode()
-        # Manifest storage hashes filenames (post.31365cb47663.css) —
-        # assert on the path prefix rather than the literal filename.
-        self.assertRegex(html, r"css/post\.[0-9a-f]+\.css")
-        self.assertRegex(html, r"js/post\.[0-9a-f]+\.js")
+        # Accept both manifest-hashed (post.31365cb47663.css) and plain
+        # (post.css) filenames — the storage backend depends on whether
+        # collectstatic produced a manifest in this environment.
+        self.assertRegex(html, r"css/post(\.[0-9a-f]+)?\.css")
+        self.assertRegex(html, r"js/post(\.[0-9a-f]+)?\.js")
 
     def test_acquisition_page_references_post_assets(self):
         r = self.client.get("/acquisition/")
         self.assertEqual(r.status_code, 200)
         html = r.content.decode()
-        self.assertRegex(html, r"css/post\.[0-9a-f]+\.css")
-        self.assertRegex(html, r"js/post\.[0-9a-f]+\.js")
+        self.assertRegex(html, r"css/post(\.[0-9a-f]+)?\.css")
+        self.assertRegex(html, r"js/post(\.[0-9a-f]+)?\.js")
 
     def test_post_assets_resolve_via_finders(self):
         from django.contrib.staticfiles import finders
