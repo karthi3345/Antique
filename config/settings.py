@@ -144,6 +144,77 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
+# --- Unfold Admin Theme Config --------------------------------------------
+from django.templatetags.static import static
+
+UNFOLD = {
+    "SITE_TITLE": "Volgo Admin",
+    "SITE_HEADER": "Volgo Dasher",
+    "SITE_URL": "/",
+    "SITE_ICON": {
+        "light": lambda request: static("img/favicon.svg"),
+        "dark": lambda request: static("img/favicon.svg"),
+    },
+    "COLORS": {
+        "primary": {
+            "50": "#eff6ff",
+            "100": "#dbeafe",
+            "200": "#bfdbfe",
+            "300": "#93c5fd",
+            "400": "#60a5fa",
+            "500": "#3b82f6",  # Dasher Blue
+            "600": "#2563eb",
+            "700": "#1d4ed8",
+            "800": "#1e40af",
+            "900": "#1e3a8a",
+            "950": "#172554",
+        },
+    },
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+        "navigation": [
+            {
+                "title": "House Operations",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Artifacts",
+                        "icon": "inventory_2",
+                        "link": "/admin/collection/artifact/",
+                    },
+                    {
+                        "title": "Enquiries",
+                        "icon": "forum",
+                        "link": "/admin/collection/enquiry/",
+                    },
+                    {
+                        "title": "Chronicles",
+                        "icon": "history_edu",
+                        "link": "/admin/collection/chronicle/",
+                    },
+                ],
+            },
+            {
+                "title": "Access & Security",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Users",
+                        "icon": "person",
+                        "link": "/admin/auth/user/",
+                    },
+                    {
+                        "title": "Groups",
+                        "icon": "group",
+                        "link": "/admin/auth/group/",
+                    },
+                ],
+            },
+        ],
+    },
+}
+
 # --- Static files --------------------------------------------------------
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
