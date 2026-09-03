@@ -1,3 +1,6 @@
+
+/* Desktop defaults */
+.mobile-menu-only { display: none !important; }
 /* ==========================================================================
    VOLGO — Maison d'Antiquités · The Private House
    Ultra-luxury European antique gallery. Dark warm charcoal, ivory, muted
@@ -1264,7 +1267,16 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   .carousel-track { --per: 1; }
 
   /* Full-screen editorial mobile menu */
-  .site-header .container { grid-template-columns: auto 1fr auto; }
+  
+    /* Mobile Header Fixes */
+    .desktop-menu-only { display: none !important; }
+    .mobile-menu-only { display: block !important; }
+    .site-header .container { 
+      grid-template-columns: 1fr auto !important; 
+    }
+    .header-right { gap: 16px !important; }
+    .site-nav { overflow-y: auto; }
+
   .site-nav {
     position: fixed; inset: 0;
     background: #0A0806;
