@@ -361,8 +361,29 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   overflow: hidden;
   aspect-ratio: 4 / 5;
   background: var(--cream);
-  border: 1px solid var(--hairline);
-  transition: border-color var(--t-medium) var(--ease);
+  /* ── Golden frame ── */
+  border: 6px solid var(--gold);
+  box-shadow:
+    inset 0 0 0 2px var(--gold-deep),      /* inner bevel */
+    inset 0 0 8px rgba(195, 162, 75, 0.25), /* inner glow  */
+    0 2px 12px rgba(0, 0, 0, 0.35);         /* drop shadow */
+  transition: border-color var(--t-medium) var(--ease),
+              box-shadow var(--t-medium) var(--ease);
+}
+/* ── Glass overlay ── */
+.card .card-figure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    rgba(255, 255, 255, 0)    60%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
 }
 .card .card-figure img {
   width: 100%; height: 100%; object-fit: cover;
@@ -382,7 +403,13 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   transition: opacity var(--t-medium) var(--ease), transform var(--t-medium) var(--ease);
 }
 .card:hover .card-figure,
-.card:focus-visible .card-figure { border-color: var(--hairline-strong); }
+.card:focus-visible .card-figure {
+  border-color: var(--gold-pale);
+  box-shadow:
+    inset 0 0 0 2px var(--gold),
+    inset 0 0 10px rgba(217, 196, 138, 0.3),
+    0 4px 20px rgba(0, 0, 0, 0.4);
+}
 .card:hover .card-figure img,
 .card:focus-visible .card-figure img { transform: scale(1.035); opacity: 1; }
 .card:hover .object-label .label-number,
@@ -757,6 +784,29 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   position: relative; overflow: hidden;
   aspect-ratio: 1 / 1;
   background: var(--parchment);
+  /* ── Golden frame ── */
+  border: 6px solid var(--gold);
+  box-shadow:
+    inset 0 0 0 2px var(--gold-deep),
+    inset 0 0 8px rgba(195, 162, 75, 0.25),
+    0 2px 12px rgba(0, 0, 0, 0.35);
+  transition: border-color var(--t-medium) var(--ease),
+              box-shadow var(--t-medium) var(--ease);
+}
+/* ── Glass overlay on carousel figures ── */
+.carousel-figure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    rgba(255, 255, 255, 0)    60%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
 }
 .carousel-figure img {
   position: absolute; inset: 0;
