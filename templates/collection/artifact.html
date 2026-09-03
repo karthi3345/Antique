@@ -484,5 +484,144 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/enquiry.js' %}" defer></script>
-{% endblock %}
+  <script src="{% static 'js/enquiry.js' %}" defer></script>
+  <script>
+  (function () {
+    if (!window.speechSynthesis) return;
+
+    // Build the narration text from page content
+    const name = "{{ artifact.name|escapejs }}";
+    const label = "{{ artifact.label_number|escapejs }}";
+    const region = "{{ artifact.region|escapejs }}";
+    const period = "{{ artifact.period|escapejs }}";
+    const material = "{{ artifact.material|escapejs }}";
+    const attribution = "{{ artifact.attribution|escapejs }}";
+    const condition = "{{ artifact.condition_grade|escapejs }}";
+    const conditionDetail = "{{ artifact.condition|escapejs|truncatechars:300 }}";
+    const story = document.querySelector('#story .article-body')?.innerText?.replace(/\s+/g,' ').trim() || '';
+    const accession = "{{ artifact.accession_code|escapejs }}";
+    const maker = "{{ artifact.maker|escapejs }}";
+    const dimensions = "{{ artifact.dimensions|escapejs }}";
+
+    const narrator = [
+      `Welcome to Volgo. You are now listening to a guided narration of object ${label}.`,
+      `This piece is known as: ${name}.`,
+      region ? `It originates from ${region}.` : '',
+      period ? `Dating to ${period}.` : '',
+      material ? `The materials used are: ${material}.` : '',
+      attribution ? `Attribution: ${attribution}.` : '',
+      maker ? `Maker: ${maker}.` : '',
+      dimensions ? `Dimensions: ${dimensions}.` : '',
+      story ? `Here is the story of this object. ${story}` : '',
+      condition ? `Condition: ${condition}. ${conditionDetail}` : '',
+      `Accession number: ${accession}.`,
+      `To enquire about this object privately, scroll down and use the acquisition form, or contact the house directly. Thank you.`
+    ].filter(Boolean).join(' ');
+
+    // Inject the voice button into the header action bar
+    const labelBlock = document.querySelector('.object-label');
+    if (!labelBlock) return;
+
+    const voiceBtn = document.createElement('button');
+    voiceBtn.id = 'voice-btn';
+    voiceBtn.innerHTML = `
+      <span class="voice-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" class="wave-outer"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" class="wave-inner"/>
+        </svg>
+      </span>
+      <span class="voice-label">Listen to this object</span>
+    `;
+
+    voiceBtn.style.cssText = `
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      padding: 14px 28px;
+      background: transparent;
+      border: 1px solid rgba(195, 162, 75, 0.4);
+      color: var(--gold, #C3A24B);
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      transition: all 0.3s ease;
+    `;
+
+    voiceBtn.onmouseenter = () => {
+      voiceBtn.style.background = 'rgba(195,162,75,0.1)';
+      voiceBtn.style.boxShadow = '0 0 20px rgba(195,162,75,0.2)';
+    };
+    voiceBtn.onmouseleave = () => {
+      if (!speechSynthesis.speaking) {
+        voiceBtn.style.background = 'transparent';
+        voiceBtn.style.boxShadow = 'none';
+      }
+    };
+
+    let utterance = null;
+    let playing = false;
+
+    voiceBtn.addEventListener('click', () => {
+      if (playing) {
+        speechSynthesis.cancel();
+        playing = false;
+        voiceBtn.querySelector('.voice-label').textContent = 'Listen to this object';
+        voiceBtn.style.background = 'transparent';
+        voiceBtn.style.boxShadow = 'none';
+        voiceBtn.style.borderColor = 'rgba(195,162,75,0.4)';
+        return;
+      }
+
+      utterance = new SpeechSynthesisUtterance(narrator);
+      utterance.rate = 0.88;
+      utterance.pitch = 0.95;
+      utterance.volume = 1;
+
+      // Pick a premium-sounding voice if available
+      const voices = speechSynthesis.getVoices();
+      const preferred = voices.find(v =>
+        /Google UK|Daniel|Samantha|Karen|Moira|en-GB|en-AU/.test(v.name + v.lang)
+      );
+      if (preferred) utterance.voice = preferred;
+
+      utterance.onstart = () => {
+        playing = true;
+        voiceBtn.querySelector('.voice-label').textContent = 'Stop narration';
+        voiceBtn.style.background = 'rgba(195,162,75,0.15)';
+        voiceBtn.style.boxShadow = '0 0 30px rgba(195,162,75,0.3)';
+        voiceBtn.style.borderColor = 'rgba(195,162,75,0.8)';
+        voiceBtn.querySelector('.wave-outer').style.animation = 'wavePulse 1.2s infinite';
+        voiceBtn.querySelector('.wave-inner').style.animation = 'wavePulse 0.8s infinite alternate';
+      };
+
+      utterance.onend = utterance.onerror = () => {
+        playing = false;
+        voiceBtn.querySelector('.voice-label').textContent = 'Listen to this object';
+        voiceBtn.style.background = 'transparent';
+        voiceBtn.style.boxShadow = 'none';
+        voiceBtn.style.borderColor = 'rgba(195,162,75,0.4)';
+      };
+
+      speechSynthesis.speak(utterance);
+    });
+
+    labelBlock.appendChild(voiceBtn);
+
+    // CSS wave animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes wavePulse {
+        0% { opacity: 0.4; }
+        100% { opacity: 1; }
+      }
+      #voice-btn svg path { transition: opacity 0.3s; }
+    `;
+    document.head.appendChild(style);
+  })();
+  </script>
+  {% endblock %}
