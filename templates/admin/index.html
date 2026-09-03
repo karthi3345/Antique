@@ -8,27 +8,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta content="Codescandy" name="author">
   <title>Volgo Antique Admin Dashboard</title>
-  <link rel="stylesheet" href="{% static 'dasher/libs/swiper/swiper-bundle.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'dasher/assets/libs/swiper/swiper-bundle.min.css' %}" />
   <!-- Favicon icon-->
-<link rel="apple-touch-icon" sizes="57x57" href="{% static 'dasher/images/favicon/apple-icon-57x57.png' %}" />
-<link rel="apple-touch-icon" sizes="60x60" href="{% static 'dasher/images/favicon/apple-icon-60x60.png' %}" />
-<link rel="apple-touch-icon" sizes="72x72" href="{% static 'dasher/images/favicon/apple-icon-72x72.png' %}" />
-<link rel="apple-touch-icon" sizes="76x76" href="{% static 'dasher/images/favicon/apple-icon-76x76.png' %}" />
-<link rel="apple-touch-icon" sizes="114x114" href="{% static 'dasher/images/favicon/apple-icon-114x114.png' %}" />
-<link rel="apple-touch-icon" sizes="120x120" href="{% static 'dasher/images/favicon/apple-icon-120x120.png' %}" />
-<link rel="apple-touch-icon" sizes="144x144" href="{% static 'dasher/images/favicon/apple-icon-144x144.png' %}" />
-<link rel="apple-touch-icon" sizes="152x152" href="{% static 'dasher/images/favicon/apple-icon-152x152.png' %}" />
-<link rel="apple-touch-icon" sizes="180x180" href="{% static 'dasher/images/favicon/apple-icon-180x180.png' %}" />
-<link rel="icon" type="image/png" sizes="192x192" href="{% static 'dasher/images/favicon/android-icon-192x192.png' %}" />
-<link rel="icon" type="image/png" sizes="32x32" href="{% static 'dasher/images/favicon/favicon-32x32.png' %}" />
-<link rel="icon" type="image/png" sizes="96x96" href="{% static 'dasher/images/favicon/favicon-96x96.png' %}" />
-<link rel="icon" type="image/png" sizes="16x16" href="{% static 'dasher/images/favicon/favicon-16x16.png' %}" />
+<link rel="apple-touch-icon" sizes="57x57" href="{% static 'dasher/assets/images/favicon/apple-icon-57x57.png' %}" />
+<link rel="apple-touch-icon" sizes="60x60" href="{% static 'dasher/assets/images/favicon/apple-icon-60x60.png' %}" />
+<link rel="apple-touch-icon" sizes="72x72" href="{% static 'dasher/assets/images/favicon/apple-icon-72x72.png' %}" />
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'dasher/assets/images/favicon/apple-icon-76x76.png' %}" />
+<link rel="apple-touch-icon" sizes="114x114" href="{% static 'dasher/assets/images/favicon/apple-icon-114x114.png' %}" />
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'dasher/assets/images/favicon/apple-icon-120x120.png' %}" />
+<link rel="apple-touch-icon" sizes="144x144" href="{% static 'dasher/assets/images/favicon/apple-icon-144x144.png' %}" />
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'dasher/assets/images/favicon/apple-icon-152x152.png' %}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'dasher/assets/images/favicon/apple-icon-180x180.png' %}" />
+<link rel="icon" type="image/png" sizes="192x192" href="{% static 'dasher/assets/images/favicon/android-icon-192x192.png' %}" />
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'dasher/assets/images/favicon/favicon-32x32.png' %}" />
+<link rel="icon" type="image/png" sizes="96x96" href="{% static 'dasher/assets/images/favicon/favicon-96x96.png' %}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'dasher/assets/images/favicon/favicon-16x16.png' %}" />
 
 <meta name="msapplication-TileColor" content="#ffffff" />
 <meta name="msapplication-TileImage" content="./assets/images/favicon/ms-icon-144x144.png" />
 <meta name="theme-color" content="#ffffff" />
 <!-- Color modes -->
-<script src="{% static 'dasher/js/vendors/color-modes.js' %}"></script>
+<script src="{% static 'dasher/assets/js/vendors/color-modes.js' %}"></script>
 <script>
   if (localStorage.getItem('sidebarExpanded') === 'false') {
     document.documentElement.classList.add('collapsed');
@@ -42,11 +42,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" />
-<link rel="stylesheet" href="{% static 'dasher/libs/simplebar/dist/simplebar.min.css' %}" />
-<link rel="stylesheet" href="{% static 'dasher/libs/@tabler/icons-webfont/tabler-icons.min.css' %}" />
+<link rel="stylesheet" href="{% static 'dasher/assets/libs/simplebar/dist/simplebar.min.css' %}" />
+<link rel="stylesheet" href="{% static 'dasher/assets/libs/@tabler/icons-webfont/tabler-icons.min.css' %}" />
 
 <!-- Theme CSS -->
-<link rel="stylesheet" href="{% static 'dasher/css/theme.min.css' %}">
+<link rel="stylesheet" href="{% static 'dasher/assets/css/theme.min.css' %}">
 
 </head>
 
@@ -56,7 +56,7 @@
     <div id="miniSidebar">
   <div class="brand-logo">
     <a class="d-none d-md-flex align-items-center gap-2" href="/admin/collection/artifact/">
-      <img src="{% static 'dasher/images/brand/logo/logo-icon.svg' %}" alt="" />
+      <img src="{% static 'dasher/assets/images/brand/logo/logo-icon.svg' %}" alt="" />
       <span class="fw-bold fs-4  site-logo-text">Volgo Antique</span>
     </a>
   </div>
@@ -265,7 +265,7 @@
     <li>
       <div class="text-center py-5 upgrade-ui ">
         <div>
-          <img src="{% static 'dasher/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle">
+          <img src="{% static 'dasher/assets/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle">
           <div class="my-3">
             <h5 class="mb-1 fs-6">Admin</h5>
             <span class="text-secondary">Free Version - 1 Month</span>
@@ -288,7 +288,7 @@
   <div class="offcanvas-header">
 
     <a class="d-flex align-items-center gap-2" href="/admin/collection/artifact/">
-      <img src="{% static 'dasher/images/brand/logo/logo-icon.svg' %}" alt="" />
+      <img src="{% static 'dasher/assets/images/brand/logo/logo-icon.svg' %}" alt="" />
       <span class="fw-bold fs-4  site-logo-text">Volgo Antique</span>
     </a>
 
@@ -993,7 +993,7 @@
       <li>
         <div class="text-center py-5 upgrade-ui ">
           <div>
-            <img src="{% static 'dasher/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle">
+            <img src="{% static 'dasher/assets/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle">
             <div class="my-3">
               <h5 class="mb-1 fs-6">Admin</h5>
               <span class="text-secondary">Free Version - 1 Month</span>
@@ -1061,7 +1061,7 @@
       <!-- Logo -->
       <!-- <div class="d-block d-md-none">
         <a href="/admin/collection/artifact/">
-          <img src="{% static 'dasher/images/brand/logo/logo-icon.svg' %}" alt="" />
+          <img src="{% static 'dasher/assets/images/brand/logo/logo-icon.svg' %}" alt="" />
         </a>
       </div> -->
     </div>
@@ -1136,12 +1136,12 @@
       <!-- Dropdown -->
       <li class="ms-3 dropdown">
         <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="{% static 'dasher/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-sm rounded-circle" />
+          <img src="{% static 'dasher/assets/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-sm rounded-circle" />
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-md p-0">
           <div>
             <div class="d-flex gap-3 align-items-center border-dashed border-bottom px-4 py-4">
-              <img src="{% static 'dasher/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
+              <img src="{% static 'dasher/assets/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
               <div>
                 <h4 class="mb-0 fs-5">Admin</h4>
                 <p class="mb-0 text-secondar small">@admin</p>
@@ -1322,7 +1322,7 @@
           <a href="#" class="list-group-item list-group-item-action p-5 border-dashed border-bottom">
             <div class="d-flex justify-content-between">
               <div class="d-flex gap-4 align-items-center">
-                <img src="{% static 'dasher/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
+                <img src="{% static 'dasher/assets/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
                 <div class="d-flex flex-column gap-1">
                   <div>Alice uploaded a new profile picture.</div>
                   <small class="text-secondary"> 1 hour ago</small>
@@ -1341,7 +1341,7 @@
           <a href="#" class="list-group-item list-group-item-action p-5 border-dashed border-bottom">
             <div class="d-flex justify-content-between">
               <div class="d-flex gap-4 align-items-center">
-                <img src="{% static 'dasher/images/avatar/avatar-2.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
+                <img src="{% static 'dasher/assets/images/avatar/avatar-2.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
                 <div class="d-flex flex-column gap-1">
                   <div>Mike sent you a friend request.</div>
                   <small class="text-secondary"> 5 minutes ago</small>
@@ -1364,7 +1364,7 @@
           <a href="#" class="list-group-item list-group-item-action p-5 border-dashed border-bottom">
             <div class="d-flex justify-content-between">
               <div class="d-flex gap-4 align-items-center">
-                <img src="{% static 'dasher/images/avatar/avatar-3.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
+                <img src="{% static 'dasher/assets/images/avatar/avatar-3.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
                 <div class="d-flex flex-column gap-1">
                   <div>Sophia commented on your post.</div>
                   <small class="text-secondary"> 20 minutes ago</small>
@@ -1476,7 +1476,7 @@
           <a href="#" class="list-group-item list-group-item-action p-5 border-dashed border-bottom">
             <div class="d-flex justify-content-between">
               <div class="d-flex gap-4 align-items-center">
-                <img src="{% static 'dasher/images/avatar/avatar-3.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
+                <img src="{% static 'dasher/assets/images/avatar/avatar-3.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
                 <div class="d-flex flex-column gap-1">
                   <div>Sophia commented on your post.</div>
                   <small class="text-secondary"> 20 minutes ago</small>
@@ -1659,7 +1659,7 @@
           <a href="#" class="list-group-item list-group-item-action p-5 border-dashed border-bottom">
             <div class="d-flex justify-content-between">
               <div class="d-flex gap-4 align-items-center">
-                <img src="{% static 'dasher/images/avatar/avatar-3.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
+                <img src="{% static 'dasher/assets/images/avatar/avatar-3.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
                 <div class="d-flex flex-column gap-1">
                   <div>Sophia commented on your post.</div>
                   <small class="text-secondary"> 20 minutes ago</small>
@@ -1807,7 +1807,7 @@
           <a href="#" class="list-group-item list-group-item-action p-5 border-dashed border-bottom">
             <div class="d-flex justify-content-between">
               <div class="d-flex gap-4 align-items-center">
-                <img src="{% static 'dasher/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
+                <img src="{% static 'dasher/assets/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
                 <div class="d-flex flex-column gap-1">
                   <div>Alice uploaded a new profile picture.</div>
                   <small class="text-secondary"> 1 hour ago</small>
@@ -1826,7 +1826,7 @@
           <a href="#" class="list-group-item list-group-item-action p-5 border-dashed border-bottom">
             <div class="d-flex justify-content-between">
               <div class="d-flex gap-4 align-items-center">
-                <img src="{% static 'dasher/images/avatar/avatar-2.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
+                <img src="{% static 'dasher/assets/images/avatar/avatar-2.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
                 <div class="d-flex flex-column gap-1">
                   <div>Mike sent you a friend request.</div>
                   <small class="text-secondary"> 5 minutes ago</small>
@@ -2583,11 +2583,11 @@
   </div>
 
   <!-- Libs JS -->
-<script src="{% static 'dasher/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'dasher/libs/simplebar/dist/simplebar.min.js' %}"></script>
+<script src="{% static 'dasher/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'dasher/assets/libs/simplebar/dist/simplebar.min.js' %}"></script>
 
 <!-- Theme JS -->
-<script src="{% static 'dasher/js/theme.min.js' %}"></script>
+<script src="{% static 'dasher/assets/js/theme.min.js' %}"></script>
 
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
@@ -2601,16 +2601,16 @@
 </html>
 
   <!-- jsvectormap -->
-  <script src="{% static 'dasher/js/vendors/sidebarnav.js' %}"></script>
-  <script src="{% static 'dasher/libs/jsvectormap/dist/js/jsvectormap.min.js' %}"></script>
-  <script src="{% static 'dasher/libs/jsvectormap/dist/maps/world.js' %}"></script>
-  <script src="{% static 'dasher/libs/jsvectormap/dist/maps/world-merc.js' %}"></script>
-  <script src="{% static 'dasher/libs/apexcharts/dist/apexcharts.min.js' %}"></script>
-  <script src="{% static 'dasher/js/vendors/chart.js' %}"></script>
-  <script src="{% static 'dasher/libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
-  <script src="{% static 'dasher/js/vendors/choice.js' %}"></script>
-  <script src="{% static 'dasher/libs/swiper/swiper-bundle.min.js' %}"></script>
-  <script src="{% static 'dasher/js/vendors/swiper.js' %}"></script>
+  <script src="{% static 'dasher/assets/js/vendors/sidebarnav.js' %}"></script>
+  <script src="{% static 'dasher/assets/libs/jsvectormap/dist/js/jsvectormap.min.js' %}"></script>
+  <script src="{% static 'dasher/assets/libs/jsvectormap/dist/maps/world.js' %}"></script>
+  <script src="{% static 'dasher/assets/libs/jsvectormap/dist/maps/world-merc.js' %}"></script>
+  <script src="{% static 'dasher/assets/libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+  <script src="{% static 'dasher/assets/js/vendors/chart.js' %}"></script>
+  <script src="{% static 'dasher/assets/libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
+  <script src="{% static 'dasher/assets/js/vendors/choice.js' %}"></script>
+  <script src="{% static 'dasher/assets/libs/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'dasher/assets/js/vendors/swiper.js' %}"></script>
 </body>
 
 </html>
