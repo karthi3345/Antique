@@ -24,19 +24,15 @@
         <a href="/the-house/" data-nav="the-house"><span class="nav-idx" aria-hidden="true">02</span>The House</a>
         <a href="/chronicles/" data-nav="chronicles"><span class="nav-idx" aria-hidden="true">03</span>Journal</a>
       </nav>
-      <div class="nav-right">
+      <div class="nav-right" style="display: flex; align-items: center; gap: 24px;">
         {% if user.is_authenticated %}
-          <span class="nav-search" style="color: var(--gold); cursor: default;">Hello, {{ user.username }}</span>
-          <form method="post" action="{% url 'logout' %}" style="display:inline; margin:0; padding:0;">
-            {% csrf_token %}
-            <button type="submit" class="nav-search">Logout</button>
-          </form>
+          <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">{% csrf_token %}</form>
+          <a href="#" onclick="document.getElementById('logout-form').submit(); return false;" class="nav-search" style="padding: 0; display: inline-block;">Logout</a>
         {% else %}
-          <a href="{% url 'login' %}" class="nav-search">Sign In</a>
-          <a href="{% url 'register' %}" class="nav-search">Register</a>
+          <a href="{% url 'login' %}" class="nav-search" style="padding: 0; display: inline-block;">Sign In</a>
         {% endif %}
         <a href="/acquisition/" class="nav-acquisition">Private Acquisition</a>
-        <button class="nav-search" id="nav-search" aria-label="Search the collection">
+        <button class="nav-search" id="nav-search" aria-label="Search the collection" style="padding: 0; margin-left: 8px;">
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14 14"/></svg>
           Search
         </button>
