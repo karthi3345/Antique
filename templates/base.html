@@ -26,11 +26,14 @@
       </nav>
       <div class="nav-right">
         {% if user.is_authenticated %}
-          <span style="color: var(--gold); font-size: 13px; margin-right: 15px; text-transform: uppercase; letter-spacing: 0.1em;">Hello, {{ user.username }}</span>
-          <form method="post" action="{% url 'logout' %}" style="display:inline;">{% csrf_token %}<button type="submit" style="margin-right: 20px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#C3A24B'" onmouseout="this.style.color='var(--text-muted)'">Logout</button></form>
+          <span class="nav-search" style="color: var(--gold); cursor: default;">Hello, {{ user.username }}</span>
+          <form method="post" action="{% url 'logout' %}" style="display:inline; margin:0; padding:0;">
+            {% csrf_token %}
+            <button type="submit" class="nav-search">Logout</button>
+          </form>
         {% else %}
-          <a href="{% url 'login' %}" style="margin-right: 15px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); transition: color 0.3s;" onmouseover="this.style.color='#C3A24B'" onmouseout="this.style.color='var(--text-muted)'">Sign In</a>
-          <a href="{% url 'register' %}" class="nav-acquisition" style="margin-right: 20px;">Register</a>
+          <a href="{% url 'login' %}" class="nav-search">Sign In</a>
+          <a href="{% url 'register' %}" class="nav-search">Register</a>
         {% endif %}
         <a href="/acquisition/" class="nav-acquisition">Private Acquisition</a>
         <button class="nav-search" id="nav-search" aria-label="Search the collection">
