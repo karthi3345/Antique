@@ -10,212 +10,179 @@
 {% if hero %}
 <link rel="preload" as="image" href="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp" fetchpriority="high">
 
-<section class="hero-gallery-full" style="
-  position: relative;
-  min-height: 90vh;
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: 80px;
-  background-image: url('/static/img/custom_gallery.jpg');
-  background-size: cover;
-  background-position: center;
-  border-bottom: 1px solid rgba(195, 162, 75, 0.2);
-">
-  <!-- Premium dark overlay to make it look luxurious and keep text readable -->
-  <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,8,6,0.1) 0%, rgba(10,8,6,0.6) 60%, rgba(10,8,6,0.95) 100%); pointer-events: none;"></div>
-  
-  <div class="container" style="position: relative; z-index: 2;">
-    <div style="max-width: 600px; animation: royalFadeInUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
-      <p class="hero-eyebrow" style="font-family: var(--font-utility); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
-        <span style="width: 30px; height: 1px; background: var(--gold);"></span>
-        Private Exhibition
-      </p>
-      <h1 style="font-size: clamp(40px, 5vw, 72px); color: #F1EBDD; line-height: 1.1; margin-bottom: 24px; font-family: var(--font-display);">
-        A curated collection, <br>offered privately.
-      </h1>
-      <div class="hero-ctas" style="display: flex; gap: 20px;">
-        <a href="/collection/" class="btn btn--gold">Enter Gallery</a>
-        <a href="/acquisition/" class="btn btn--outline" style="border-color: #C3A24B; color: #C3A24B;">Private Acquisition</a>
+
+<section class="hero-premium" id="hero" aria-label="Featured object — {{ hero.name }}">
+  <div class="premium-spotlight"></div>
+  <div class="container">
+    <div class="premium-layout">
+      
+      <div class="premium-text reveal">
+        <div class="eyebrow-line">
+          <span class="line"></span>
+          <span class="text">{{ hero.label_number|default:"VOLGO 001" }}</span>
+        </div>
+        <h1>{{ hero.name }}</h1>
+        <p class="premium-desc">{{ hero.subtitle|default:"An object examined, documented, and offered — with its history intact." }}</p>
+        
+        <div class="premium-meta">
+          <div class="meta-block">
+            <span class="meta-label">Origin</span>
+            <span class="meta-value">{{ hero.region }}</span>
+          </div>
+          <div class="meta-block">
+            <span class="meta-label">Period</span>
+            <span class="meta-value">{{ hero.period }}</span>
+          </div>
+        </div>
+
+        <div class="hero-ctas" style="margin-top: 40px;">
+          <a href="/collection/" class="btn btn--gold">Explore Collection</a>
+          <a href="/acquisition/" class="btn btn--outline" style="border-color: rgba(195,162,75,0.4); color: var(--gold-pale);">Private Acquisition</a>
+        </div>
       </div>
+
+      <div class="premium-media reveal">
+        <div class="image-wrapper">
+          <img src="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp" 
+               alt="{{ hero.name }}" fetchpriority="high" decoding="async">
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-
 <style>
-  /* The Museum Wall */
-  .hero-museum {
+  .hero-premium {
     position: relative;
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
-    background: #0a0806; /* Dark gallery base */
+    background: radial-gradient(circle at 70% 50%, #17130F 0%, #0A0806 80%);
     overflow: hidden;
     padding-top: var(--nav-h, 100px);
-  }
-  .museum-wall-texture {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 75% 50%, #221c16 0%, #0a0806 60%);
-    opacity: 0.9;
-  }
-  .museum-wall-texture::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
+    border-bottom: 1px solid rgba(195, 162, 75, 0.15);
   }
 
-  /* Grid Layout */
-  .hero-grid {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-    padding: 40px 0;
-  }
-
-  /* The Plaque (Text) */
-  .hero-plaque {
-    background: rgba(20, 17, 13, 0.6);
-    border: 1px solid rgba(195, 162, 75, 0.15);
-    border-radius: 4px;
-    padding: 48px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    animation: royalFadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  .hero-plaque h1 {
-    font-size: clamp(40px, 4.5vw, 64px);
-    color: #F1EBDD;
-    line-height: 1.1;
-    margin-bottom: 24px;
-    font-family: var(--font-display);
-  }
-  .hero-eyebrow {
-    font-family: var(--font-utility);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .hero-eyebrow::before {
-    content: "";
-    width: 30px; height: 1px;
-    background: var(--gold);
-  }
-  .hero-desc {
-    font-size: 18px;
-    color: rgba(241, 235, 221, 0.8);
-    line-height: 1.6;
-    margin-bottom: 32px;
-  }
-  .plaque-meta {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(195, 162, 75, 0.2);
-    margin-bottom: 40px;
-  }
-  .meta-item {
-    font-size: 14px;
-    color: rgba(241, 235, 221, 0.9);
-  }
-  .meta-item strong {
-    font-family: var(--font-utility);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold-pale);
-    display: block;
-    margin-bottom: 4px;
-  }
-  .hero-ctas {
-    display: flex;
-    gap: 20px;
-  }
-
-  /* The Exhibit (Image) */
-  .hero-exhibit {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1000px;
-    animation: royalFadeInUp 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  
-  .exhibit-spotlight {
+  .premium-spotlight {
     position: absolute;
     top: -20%; left: 50%;
-    transform: translateX(-50%);
-    width: 300px; height: 500px;
-    background: radial-gradient(ellipse at top, rgba(195, 162, 75, 0.15) 0%, rgba(0,0,0,0) 70%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(195, 162, 75, 0.08) 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
   }
 
-  .exhibit-frame {
+  .premium-layout {
     position: relative;
-    z-index: 1;
-    width: 80%;
-    max-width: 500px;
-    aspect-ratio: 4/5;
-    background: #111;
-    /* Museum Gold Frame */
-    border: 16px solid #1a1612;
-    box-shadow: 
-      0 0 0 4px var(--gold-deep),
-      inset 0 0 0 2px var(--gold),
-      0 30px 60px rgba(0,0,0,0.9),
-      -20px 20px 40px rgba(0,0,0,0.6);
-    border-radius: 2px;
-    transform: rotateY(-8deg) rotateX(4deg);
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .exhibit-frame:hover {
-    transform: rotateY(0deg) rotateX(0deg) scale(1.05);
-  }
-  
-  .exhibit-frame img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: contrast(1.1) saturate(1.1);
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding: 60px 0;
   }
 
-  .glass-reflection {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      135deg,
-      rgba(255,255,255,0.15) 0%,
-      rgba(255,255,255,0) 40%,
-      rgba(255,255,255,0.05) 100%
-    );
+  .eyebrow-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
   }
+  .eyebrow-line .line {
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+  .eyebrow-line .text {
+    font-family: var(--font-utility);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .premium-text h1 {
+    font-size: clamp(48px, 6vw, 84px);
+    color: #FBF8F1;
+    line-height: 1.05;
+    margin-bottom: 32px;
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  .premium-desc {
+    font-size: clamp(18px, 2vw, 22px);
+    color: rgba(241, 235, 221, 0.7);
+    line-height: 1.6;
+    max-width: 90%;
+    margin-bottom: 40px;
+  }
+
+  .premium-meta {
+    display: flex;
+    gap: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(195, 162, 75, 0.2);
+  }
+  .meta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .meta-label {
+    font-family: var(--font-utility);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(195, 162, 75, 0.6);
+  }
+  .meta-value {
+    font-size: 15px;
+    color: #F1EBDD;
+  }
+
+  .premium-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+  }
+  .image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .image-wrapper:hover img {
+    transform: scale(1.02);
+  }
+
+  /* Entrance Animations */
+  .reveal {
+    animation: royalFadeInUp 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .premium-text { animation-delay: 0.1s; }
+  .premium-media { animation-delay: 0.4s; }
 
   @media (max-width: 992px) {
-    .hero-grid {
+    .premium-layout {
       grid-template-columns: 1fr;
       text-align: center;
+      gap: 40px;
     }
-    .hero-plaque { padding: 32px 24px; }
-    .hero-eyebrow { justify-content: center; }
-    .hero-eyebrow::before { display: none; }
+    .eyebrow-line { justify-content: center; }
+    .eyebrow-line .line { display: none; }
+    .premium-meta { justify-content: center; }
     .hero-ctas { justify-content: center; }
-    .exhibit-frame { transform: none; width: 100%; }
+    .premium-desc { margin: 0 auto 40px; }
   }
 </style>
+
 
 {% endif %}
 
