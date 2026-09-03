@@ -35,7 +35,6 @@
       <div class="hero-exhibit">
         <div class="exhibit-spotlight"></div>
         <div class="exhibit-frame">
-          
           <model-viewer 
             src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb" 
             alt="3D model of an antique camera" 
@@ -45,7 +44,6 @@
             shadow-intensity="1.5"
             style="width: 100%; height: 100%; background: radial-gradient(circle at center, #1a1612 0%, #0a0806 100%); outline: none;">
           </model-viewer>
-
           
         </div>
       </div>
@@ -284,17 +282,8 @@
       {% for obj in recent %}
       <a href="/objects/{{ obj.object_number }}/" class="card">
         <div class="card-figure">
-          
-          <model-viewer 
-            src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb" 
-            alt="3D model of an antique camera" 
-            auto-rotate 
-            camera-controls 
-            exposure="1.2"
-            shadow-intensity="1.5"
-            style="width: 100%; height: 100%; background: radial-gradient(circle at center, #1a1612 0%, #0a0806 100%); outline: none;">
-          </model-viewer>
-
+          <img src="/static/img/objects/{{ obj.object_number|stringformat:'03d' }}/{{ obj.hero_frame|stringformat:'02d' }}.webp"
+               alt="{{ obj.name }} — {{ obj.region }}, {{ obj.period }}" loading="lazy" width="480" height="600" decoding="async">
         </div>
         <div class="object-label">
           <span class="label-number">{{ obj.label_number }}</span>
@@ -318,7 +307,7 @@
     <div class="pa-layout">
       <div class="reveal">
         <p class="label-number" style="margin-bottom:var(--s4);">Private Acquisition</p>
-        <h2>Objects of distinction,<br>privately acquired.</h2>
+        <h2>A curated collection,<br>offered privately.</h2>
         <p>Volgo offers discreet acquisition services for collectors, designers, institutions, and private clients. Each object is examined in person, photographed in full rotation, and documented with its provenance — including the gaps.</p>
         <ul class="pa-services">
           <li><span class="meta">I</span>Private viewing, by appointment</li>
@@ -335,17 +324,9 @@
       </div>
       <figure class="pa-image reveal-clip" aria-hidden="true">
         <span class="reveal-clip-media" style="display:block; height:100%;">
-          
-          <model-viewer 
-            src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb" 
-            alt="3D model of an antique camera" 
-            auto-rotate 
-            camera-controls 
-            exposure="1.2"
-            shadow-intensity="1.5"
-            style="width: 100%; height: 100%; background: radial-gradient(circle at center, #1a1612 0%, #0a0806 100%); outline: none;">
-          </model-viewer>
-
+          <img src="/static/img/objects/043/00.webp"
+               alt="A medieval bronze aquamanile in the form of a unicorn — one of the house's reference objects"
+               loading="lazy" width="800" height="1000" decoding="async" style="height:100%; object-fit:cover;">
         </span>
       </figure>
     </div>
@@ -374,17 +355,8 @@
     <div class="house-strip-layout">
       <figure class="house-strip-image reveal-clip" aria-hidden="true">
         <span class="reveal-clip-media" style="display:block; height:100%;">
-          
-          <model-viewer 
-            src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb" 
-            alt="3D model of an antique camera" 
-            auto-rotate 
-            camera-controls 
-            exposure="1.2"
-            shadow-intensity="1.5"
-            style="width: 100%; height: 100%; background: radial-gradient(circle at center, #1a1612 0%, #0a0806 100%); outline: none;">
-          </model-viewer>
-
+          <img src="/static/img/objects/013/00.webp" alt="A Renaissance marble bust of Emperor Antoninus Pius in the house's viewing room"
+               loading="lazy" width="720" height="960" decoding="async" style="height:100%; object-fit:cover;">
         </span>
       </figure>
       <div class="reveal">
