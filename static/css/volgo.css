@@ -357,39 +357,27 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   border: 0; border-radius: 0;
   background: none;
   position: relative;
-  perspective: 1200px; /* Enable 3D space */
 }
 .card .card-figure {
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 5;
   background: var(--cream);
+  /* ── Golden frame ── */
   border: 6px solid var(--gold);
   box-shadow:
-    inset 0 0 0 2px var(--gold-deep),
-    inset 0 0 8px rgba(195, 162, 75, 0.25),
-    0 4px 15px rgba(0, 0, 0, 0.4);
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-              box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-              border-color 0.6s ease;
-  will-change: transform;
-}
-.card:hover .card-figure {
-  transform: rotateX(6deg) rotateY(-8deg) translateY(-10px) translateZ(20px);
-  box-shadow:
-    inset 0 0 0 2px var(--gold-deep),
-    inset 0 0 15px rgba(195, 162, 75, 0.4),
-    -15px 25px 40px rgba(0, 0, 0, 0.9),
-    10px -10px 20px rgba(195, 162, 75, 0.15); /* golden backlight reflection */
-  border-color: #E6D29A;
+    inset 0 0 0 2px var(--gold-deep),      /* inner bevel */
+    inset 0 0 8px rgba(195, 162, 75, 0.25), /* inner glow  */
+    0 2px 12px rgba(0, 0, 0, 0.35);         /* drop shadow */
+  transition: border-color var(--t-medium) var(--ease),
+              box-shadow var(--t-medium) var(--ease);
 }
 /* ── Glass overlay ── */
 .card .card-figure::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 2;
   pointer-events: none;
   background: linear-gradient(
     135deg,
@@ -422,8 +410,16 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   opacity: 0; transform: translateY(4px);
   transition: opacity var(--t-medium) var(--ease), transform var(--t-medium) var(--ease);
 }
-
-
+.card:hover .card-figure,
+.card:focus-visible .card-figure {
+  border-color: var(--gold-pale);
+  box-shadow:
+    inset 0 0 0 2px var(--gold),
+    inset 0 0 10px rgba(217, 196, 138, 0.3),
+    0 4px 20px rgba(0, 0, 0, 0.4);
+}
+.card:hover .card-figure img,
+.card:focus-visible .card-figure img { transform: scale(1.035); opacity: 1; }
 .card:hover .object-label .label-number,
 .card:focus-visible .object-label .label-number { color: var(--gold-pale); }
 .card:hover .object-label .name,
@@ -702,7 +698,7 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
     linear-gradient(0deg, rgba(10,8,6,0.88) 0%, rgba(10,8,6,0) 42%);
 }
 .hero-content {
-  position: relative; z-index: 2; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative; z-index: 2;
   max-width: 680px;
   padding-bottom: clamp(var(--s7), 12vh, 140px);
 }
@@ -734,7 +730,7 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
 }
 .hero-scroll {
   position: absolute; right: clamp(var(--s4), 6vw, 96px); bottom: 44px;
-  z-index: 2; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 2;
   display: flex; align-items: center; gap: 12px;
   font-family: var(--font-utility); font-size: 10px; letter-spacing: 0.24em;
   text-transform: uppercase; color: rgba(241, 235, 221, 0.55);
@@ -812,7 +808,7 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 2;
   pointer-events: none;
   background: linear-gradient(
     135deg,
@@ -1392,18 +1388,7 @@ section:nth-child(3) { animation-delay: 0.5s; }
   filter: contrast(1.05) saturate(1.1);
   transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
 }
-.card:hover .card-figure img {
-  transform: scale(1.1) translateZ(40px); /* 3D pop inside the frame */
-  filter: contrast(1.15) saturate(1.2) brightness(1.1);
-}
-.card:hover .card-figure::before {
-  /* Shift the glass reflection on hover */
-  transform: translateX(20%) translateY(-20%) translateZ(60px);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.1) 40%,
-    rgba(255, 255, 255, 0)    60%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
+.card-figure:hover img {
+  transform: scale(1.03);
+  filter: contrast(1.1) saturate(1.2) brightness(1.1);
 }
