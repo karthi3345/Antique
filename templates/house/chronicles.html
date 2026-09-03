@@ -1,26 +1,81 @@
 {% extends "base.html" %}
 
-{% block title %}Chronicles — VOLGO{% endblock %}
+{% block title %}Chronicles - VOLGO{% endblock %}
+
+{% block head %}
+<style>
+  /* Physical Journal Aesthetic */
+  .reading-room {
+    padding-top: 180px; 
+    padding-bottom: var(--s9);
+    position: relative;
+  }
+  .journal-paper {
+    background: #e6dfcf; /* Antique parchment base */
+    /* Deep noise texture for paper grain */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+    color: #231f1c; /* Dark iron gall ink */
+    box-shadow: 
+      0 30px 60px rgba(0, 0, 0, 0.6), 
+      0 0 100px rgba(195, 162, 75, 0.05),
+      inset 0 0 100px rgba(139, 107, 74, 0.15); /* Vintage burned edge feel */
+    border: 1px solid rgba(139, 107, 74, 0.2);
+    border-radius: 2px;
+    padding: 80px 8%;
+    position: relative;
+  }
+  /* Ink typography overrides */
+  .journal-paper h1, .journal-paper h3 {
+    color: #120f0d; 
+    font-weight: 500;
+  }
+  .journal-paper .label-number, .journal-paper .meta {
+    color: #6a5745;
+    font-weight: 600;
+  }
+  .journal-paper .lede, .journal-paper p {
+    color: #2c2621;
+  }
+  .journal-paper .rule-double {
+    border-color: rgba(35, 31, 28, 0.15);
+  }
+  .chronicle-entry {
+    transition: background 0.3s, transform 0.3s;
+    border-color: rgba(35, 31, 28, 0.1) !important;
+  }
+  .chronicle-entry:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(10px);
+  }
+  
+  /* Make the header text dark when hovering over the light paper, or just keep it as is. 
+     Since the paper is contained within the container, the header is above it in fixed pos, 
+     so header text (white) on dark bg is fine. */
+</style>
+{% endblock %}
 
 {% block content %}
-<section class="reading-room" style="padding-top:160px; padding-bottom:var(--s9);">
+<section class="reading-room">
   <div class="container narrow">
-    <p class="label-number">Chronicles</p>
-    <h1 style="font-size:clamp(44px,6vw,84px);">The reading room</h1>
-    <p class="lede" style="margin-top:24px; max-width:58ch;">
-      Essays on craftsmanship, provenance, and the long lives of objects.
-    </p>
-    <hr class="rule-double" style="margin: var(--s7) 0;">
-    <div class="chronicle-index">
-      {% for c in articles %}
-      <a href="/chronicles/{{ c.slug }}/" class="chronicle-entry" style="display:block; padding:var(--s5) 0; border-bottom:1px solid var(--hairline);">
-        <span class="meta" style="display:block; margin-bottom:8px;">{{ c.published_at|date:"j F Y" }} · {{ c.reading_minutes }} min</span>
-        <h3 style="font-size:clamp(22px,3vw,32px);">{{ c.title }}</h3>
-        {% if c.standfirst %}<p style="margin-top:10px; color:var(--text-muted);">{{ c.standfirst }}</p>{% endif %}
-      </a>
-      {% empty %}
-      <p class="form-note">The first chronicle is being prepared.</p>
-      {% endfor %}
+    <div class="journal-paper">
+      <p class="label-number">Chronicles</p>
+      <h1 style="font-size:clamp(44px,6vw,84px);">The reading room</h1>
+      <p class="lede" style="margin-top:24px; max-width:58ch;">
+        Essays on craftsmanship, provenance, and the long lives of objects.
+      </p>
+      <hr class="rule-double" style="margin: var(--s7) 0;">
+      
+      <div class="chronicle-index">
+        {% for c in articles %}
+        <a href="/chronicles/{{ c.slug }}/" class="chronicle-entry" style="display:block; padding:var(--s5) 20px; margin: 0 -20px; border-bottom:1px solid var(--hairline);">
+          <span class="meta" style="display:block; margin-bottom:8px;">{{ c.published_at|date:"j F Y" }} A {{ c.reading_minutes }} min</span>
+          <h3 style="font-size:clamp(22px,3vw,32px);">{{ c.title }}</h3>
+          {% if c.standfirst %}<p style="margin-top:10px; color:#4a4138;">{{ c.standfirst }}</p>{% endif %}
+        </a>
+        {% empty %}
+        <p class="form-note" style="color: #6a5745;">The first chronicle is being prepared.</p>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </section>
