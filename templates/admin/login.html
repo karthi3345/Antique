@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta content="Codescandy" name="author">
+    <title>Sign In | Dasher - Responsive Bootstrap 5 Admin Dashboard</title>
+    <!-- Favicon icon-->
+<link rel="apple-touch-icon" sizes="57x57" href="{% static 'dasher/assets/images/favicon/apple-icon-57x57.png' %}" />
+<link rel="apple-touch-icon" sizes="60x60" href="{% static 'dasher/assets/images/favicon/apple-icon-60x60.png' %}" />
+<link rel="apple-touch-icon" sizes="72x72" href="{% static 'dasher/assets/images/favicon/apple-icon-72x72.png' %}" />
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'dasher/assets/images/favicon/apple-icon-76x76.png' %}" />
+<link rel="apple-touch-icon" sizes="114x114" href="{% static 'dasher/assets/images/favicon/apple-icon-114x114.png' %}" />
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'dasher/assets/images/favicon/apple-icon-120x120.png' %}" />
+<link rel="apple-touch-icon" sizes="144x144" href="{% static 'dasher/assets/images/favicon/apple-icon-144x144.png' %}" />
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'dasher/assets/images/favicon/apple-icon-152x152.png' %}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'dasher/assets/images/favicon/apple-icon-180x180.png' %}" />
+<link rel="icon" type="image/png" sizes="192x192" href="{% static 'dasher/assets/images/favicon/android-icon-192x192.png' %}" />
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'dasher/assets/images/favicon/favicon-32x32.png' %}" />
+<link rel="icon" type="image/png" sizes="96x96" href="{% static 'dasher/assets/images/favicon/favicon-96x96.png' %}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'dasher/assets/images/favicon/favicon-16x16.png' %}" />
+
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="../../assets/images/favicon/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff" />
+<!-- Color modes -->
+<script src="{% static 'dasher/assets/js/vendors/color-modes.js' %}"></script>
+<script>
+  if (localStorage.getItem('sidebarExpanded') === 'false') {
+    document.documentElement.classList.add('collapsed');
+    document.documentElement.classList.remove('expanded');
+  } else {
+    document.documentElement.classList.remove('collapsed');
+    document.documentElement.classList.add('expanded');
+  }
+</script>
+<!-- Libs CSS -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="{% static 'dasher/assets/libs/simplebar/dist/simplebar.min.css' %}" />
+<link rel="stylesheet" href="{% static 'dasher/assets/libs/@tabler/icons-webfont/tabler-icons.min.css' %}" />
+
+<!-- Theme CSS -->
+<link rel="stylesheet" href="{% static 'dasher/assets/css/theme.min.css' %}">
+
+  </head>
+
+  <body>
+    <main class="d-flex flex-column justify-content-center vh-100">
+      <!--Sign up start-->
+      <section>
+        <div class="container">
+          <div class="row mb-8">
+            <div class="col-xl-4 offset-xl-4 col-md-12 col-12">
+              <div class="text-center">
+                <a href="../../index.html" class="fs-2 fw-bold d-flex align-items-center gap-2 justify-content-center mb-6">
+                  <img src="{% static 'dasher/assets/images/brand/logo/logo-icon.svg' %}" alt="" />
+                  <span>Dasher</span>
+                </a>
+                <h1 class="mb-1">Welcome Back</h1>
+                <p class="mb-0">
+                  Don’t have an account yet?
+                  <a href="sign-up.html" class="text-primary">Register here</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-6 col-md-8 col-12">
+              <div class="card card-lg mb-6">
+                <div class="card-body p-6">
+                  <form method="post" action="{{ app_path }}">
+                  {% csrf_token %}
+
+{% if form.errors and not form.non_field_errors %}
+<p class="text-danger mb-3">Please correct the errors below.</p>
+{% endif %}
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="text-danger mb-3">{{ error }}</p>
+{% endfor %}
+{% endif %}
+
+                  <input type="hidden" name="next" value="{{ next }}">
+                    <div class="mb-3">
+                      <label for="signinEmailInput" class="form-label">
+                        Email
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input type="text" class="form-control" id="signinEmailInput" required />
+                      <div class="invalid-feedback">Please enter email.</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="formSignUpPassword" class="form-label">Password</label>
+                      <div class="password-field position-relative">
+                        <input type="password" class="form-control fakePassword" id="formSignUpPassword" required />
+                        <span><i class="ti ti-eye-off passwordToggler"></i></span>
+                        <div class="invalid-feedback">Please enter password.</div>
+                      </div>
+                    </div>
+
+                    <div class="mb-4 d-flex align-items-center justify-content-between">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMeCheckbox" />
+                        <label class="form-check-label" for="rememberMeCheckbox">Remember me</label>
+                      </div>
+
+                      <div><a href="forget-password.html" class="text-primary">Forgot Password</a></div>
+                    </div>
+
+                    <div class="d-grid">
+                      <button class="btn btn-primary" type="submit">Sign In</button>
+                    </div>
+                  </form>
+
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--Sign up end-->
+      <div class="position-absolute end-0 bottom-0 m-4">
+        <div class="dropdown">
+          <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+            <i class="bi theme-icon-active lh-1"><i class="bi theme-icon bi-sun-fill"></i></i>
+            <span class="visually-hidden bs-theme-text">Toggle theme</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li>
+              <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light" aria-pressed="true">
+                <i class="ti theme-icon ti ti-sun"></i>
+                <span class="ms-2">Light</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                <i class="ti theme-icon ti-moon-stars"></i>
+                <span class="ms-2">Dark</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+                <i class="ti theme-icon ti-circle-half-2"></i>
+                <span class="ms-2">Auto</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <!-- Libs JS -->
+<script src="{% static 'dasher/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'dasher/assets/libs/simplebar/dist/simplebar.min.js' %}"></script>
+
+<!-- Theme JS -->
+<script src="{% static 'dasher/assets/js/theme.min.js' %}"></script>
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <p class="text-center">© All rights reserved by <a href="https://codescandy.com" target="_blank">CodesCandy</a>. Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>.</p>
+</body>
+</html>
+
+    <script src="{% static 'dasher/assets/js/vendors/password.js' %}"></script>
+  </body>
+</html>
