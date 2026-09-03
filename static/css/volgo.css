@@ -351,7 +351,9 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
 
 /* Card — museum catalogue entry */
 .card {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   border: 0; border-radius: 0;
   background: none;
   position: relative;
@@ -391,11 +393,17 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   transform: scale(1);
   transition: transform var(--t-slow) var(--ease), opacity var(--t-medium) var(--ease);
 }
-.card .object-label { margin-top: var(--s4); }
+.card .object-label { 
+  margin-top: var(--s4); 
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 .card .card-sub { margin-top: 4px; font-size: 15px; color: var(--text-muted); }
 .card .card-examine {
   display: inline-flex; align-items: center; gap: 10px;
-  margin-top: var(--s3);
+  margin-top: auto;
+  padding-top: var(--s3);
   font-family: var(--font-utility); font-size: 11px; font-weight: 500;
   letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--gold-pale);
@@ -766,14 +774,15 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
 }
 .carousel-track {
   --per: 4;
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: calc((100% - (var(--per) - 1) * var(--s4)) / var(--per));
+  display: flex;
+  width: 100%;
   gap: var(--s4);
   transition: transform var(--t-medium) var(--ease);
   will-change: transform;
 }
 .carousel-card {
+  flex: 0 0 calc((100% - (var(--per) - 1) * var(--s4)) / var(--per));
+  width: calc((100% - (var(--per) - 1) * var(--s4)) / var(--per));
   display: flex; flex-direction: column;
   background: var(--cream);
   border: 1px solid var(--hairline);
@@ -827,7 +836,7 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
 .carousel-body .meta { color: var(--text-muted); margin-top: 2px; }
 .carousel-explore {
   display: inline-flex; align-items: center; gap: 8px;
-  margin-top: var(--s3);
+  margin-top: auto;
   font-family: var(--font-utility); font-size: 11px; font-weight: 500;
   letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--gold-pale);

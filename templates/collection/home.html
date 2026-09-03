@@ -195,7 +195,8 @@
     function update() {
       pages = pageCount();
       if (page > pages - 1) page = pages - 1;
-      track.style.transform = 'translateX(-' + (page * 100) + '%)';
+      // Shift by 100% of the viewport width PLUS one gap per page to align the next item to the left edge
+      track.style.transform = 'translateX(calc(-' + page + ' * (100% + var(--s4))))';
       prev.disabled = page === 0;
       next.disabled = page === pages - 1;
       if (dotsEl) {
