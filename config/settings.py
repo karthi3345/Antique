@@ -148,8 +148,8 @@ USE_TZ = True
 from django.templatetags.static import static
 
 UNFOLD = {
-    "SITE_TITLE": "Volgo Admin",
-    "SITE_HEADER": "Volgo Dasher",
+    "SITE_TITLE": "Volgo Antique Admin",
+    "SITE_HEADER": "Volgo Antique",
     "SITE_URL": "/",
     "SITE_ICON": {
         "light": lambda request: static("img/favicon.svg"),
