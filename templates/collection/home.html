@@ -9,40 +9,38 @@
 <!-- ============ HERO — one exceptional object ============ -->
 {% if hero %}
 <link rel="preload" as="image" href="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp" fetchpriority="high">
-<section class="hero-museum" id="hero" aria-label="Featured object — {{ hero.name }}">
-  <div class="museum-wall-texture"></div>
-  <div class="container">
-    <div class="hero-grid">
-      <!-- Left: Museum Plaque (Text) -->
-      <div class="hero-plaque">
-        <div class="plaque-inner">
-          <p class="hero-eyebrow">{{ hero.label_number }} &mdash; {% if hero.featured %}Exhibition Centerpiece{% else %}Recent Accession{% endif %}</p>
-          <h1>{{ hero.name }}</h1>
-          <p class="hero-desc">{{ hero.subtitle|default:"An object examined, documented, and offered — with its history intact." }}</p>
-          <div class="plaque-meta">
-            <span class="meta-item"><strong>Origin</strong><br>{{ hero.region }}</span>
-            <span class="meta-item"><strong>Era</strong><br>{{ hero.period }}</span>
-            <span class="meta-item"><strong>Medium</strong><br>{{ hero.material }}</span>
-          </div>
-          <div class="hero-ctas">
-            <a href="/collection/" class="btn btn--solid">Explore Exhibition</a>
-            <a href="/acquisition/" class="btn btn--outline" style="border-color: #C3A24B; color: #C3A24B;">Private Acquisition</a>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Right: The Framed Artifact -->
-      <div class="hero-exhibit">
-        <div class="exhibit-spotlight"></div>
-        <div class="exhibit-frame">
-          <img src="/static/img/custom_gallery.jpg" alt="Volgo Museum Gallery" fetchpriority="high" decoding="async">
-            <div class="glass-reflection"></div>
-          
-        </div>
+
+<section class="hero-gallery-full" style="
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 80px;
+  background-image: url('/static/img/custom_gallery.jpg');
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid rgba(195, 162, 75, 0.2);
+">
+  <!-- Premium dark overlay to make it look luxurious and keep text readable -->
+  <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,8,6,0.1) 0%, rgba(10,8,6,0.6) 60%, rgba(10,8,6,0.95) 100%); pointer-events: none;"></div>
+  
+  <div class="container" style="position: relative; z-index: 2;">
+    <div style="max-width: 600px; animation: royalFadeInUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+      <p class="hero-eyebrow" style="font-family: var(--font-utility); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
+        <span style="width: 30px; height: 1px; background: var(--gold);"></span>
+        Private Exhibition
+      </p>
+      <h1 style="font-size: clamp(40px, 5vw, 72px); color: #F1EBDD; line-height: 1.1; margin-bottom: 24px; font-family: var(--font-display);">
+        A curated collection, <br>offered privately.
+      </h1>
+      <div class="hero-ctas" style="display: flex; gap: 20px;">
+        <a href="/collection/" class="btn btn--gold">Enter Gallery</a>
+        <a href="/acquisition/" class="btn btn--outline" style="border-color: #C3A24B; color: #C3A24B;">Private Acquisition</a>
       </div>
     </div>
   </div>
 </section>
+
 
 <style>
   /* The Museum Wall */
