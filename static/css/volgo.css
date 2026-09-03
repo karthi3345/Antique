@@ -1345,3 +1345,50 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   .site-header, .site-footer, .whatsapp-float, .hero-scroll, .nav-toggle { display: none !important; }
   body { background: #fff; color: #111; }
 }
+
+/* Premium Animations & Museum Aesthetic */
+@keyframes royalFadeInUp {
+  0% { opacity: 0; transform: translateY(50px); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+section {
+  animation: royalFadeInUp 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+section:nth-child(1) { animation-delay: 0.1s; }
+section:nth-child(2) { animation-delay: 0.3s; }
+section:nth-child(3) { animation-delay: 0.5s; }
+
+/* Premium Header Glassmorphism */
+.site-header {
+  background: rgba(12, 10, 8, 0.55) !important;
+  backdrop-filter: blur(16px) saturate(200%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%);
+  border-bottom: 1px solid rgba(195, 162, 75, 0.12) !important;
+}
+
+/* Subtle Shimmer on Primary Buttons */
+.btn--solid {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--gold) 0%, #E6D29A 50%, var(--gold) 100%);
+  background-size: 200% auto;
+  color: #0c0a08 !important;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 600;
+  border: none;
+}
+.btn--solid:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -6px rgba(195, 162, 75, 0.25);
+}
+
+/* Image Premium Treatment */
+.card-figure img, .hero-carousel img {
+  filter: contrast(1.05) saturate(1.1);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
+}
+.card-figure:hover img {
+  transform: scale(1.03);
+  filter: contrast(1.1) saturate(1.2) brightness(1.1);
+}
