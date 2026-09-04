@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Client Profile - VOLGO{% endblock %}
+
+{% block head %}
+<style>
+  .profile-container {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    min-height: 80vh;
+  }
+  
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+  }
+  
+  @media (max-width: 768px) {
+    .profile-grid { grid-template-columns: 1fr; }
+  }
+
+  .profile-sidebar {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 8px;
+    padding: 32px 24px;
+    text-align: center;
+    align-self: start;
+  }
+
+  .profile-pic-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    padding: 4px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .profile-pic-wrapper:hover {
+    transform: scale(1.05);
+  }
+
+  .profile-pic {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #111;
+  }
+
+  .profile-pic-overlay {
+    position: absolute;
+    inset: 4px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    color: var(--ivory);
+    font-size: 13px;
+  }
+
+  .profile-pic-wrapper:hover .profile-pic-overlay {
+    opacity: 1;
+  }
+
+  .sidebar-name {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--ivory);
+    margin-bottom: 4px;
+  }
+  .sidebar-username {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .profile-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    border-top: 1px solid var(--hairline);
+    padding-top: 24px;
+  }
+
+  .profile-nav li {
+    margin-bottom: 12px;
+  }
+
+  .profile-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    padding: 10px 12px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .profile-nav a.active, .profile-nav a:hover {
+    background: rgba(195,162,75,0.1);
+    color: var(--gold);
+  }
+
+  .profile-content {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 8px;
+    padding: 40px;
+  }
+
+  .content-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--ivory);
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 16px;
+  }
+
+  .settings-form .field {
+    margin-bottom: 24px;
+  }
+
+  .settings-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .settings-form input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--hairline-strong);
+    color: var(--ivory);
+    padding: 8px 0;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+
+  .settings-form input:focus {
+    border-color: var(--gold);
+    outline: none;
+  }
+
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .btn-save {
+    background: var(--ivory);
+    color: #14110a;
+    padding: 14px 32px;
+    border: none;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 16px;
+  }
+
+  .btn-save:hover {
+    background: var(--gold-pale);
+  }
+
+  .btn-logout {
+    color: #ef4e7b !important;
+  }
+  .btn-logout:hover {
+    background: rgba(239, 78, 123, 0.1) !important;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="profile-container container">
+  <div class="profile-grid">
+    
+    <!-- Sidebar -->
+    <aside class="profile-sidebar">
+      <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+      <div class="profile-pic-wrapper" onclick="document.getElementById('profilePicInput').click();">
+        <img src="{% static 'img/default-avatar.png' %}" id="sidebarProfilePic" class="profile-pic" alt="Profile Picture" onerror="this.style.display='none'; document.getElementById('fallbackIcon').style.display='block';">
+        <svg id="fallbackIcon" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="display:none; width:100%; height:100%; color: var(--gold); padding: 15px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <div class="profile-pic-overlay">Change</div>
+      </div>
+      
+      <h2 class="sidebar-name">{{ user.first_name|default:user.username }}</h2>
+      <p class="sidebar-username">@{{ user.username }}</p>
+      
+      <ul class="profile-nav">
+        <li>
+          <a href="#settings" class="active">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Account Settings
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Acquisitions
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'logout' %}" class="btn-logout">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Sign Out
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <section class="profile-content">
+      <h2 class="content-title">Account Settings</h2>
+      
+      <form method="post" class="settings-form">
+        {% csrf_token %}
+        <div class="row-2">
+          <div class="field">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
+          </div>
+          <div class="field">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+          </div>
+        </div>
+        
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" value="{{ user.email }}">
+        </div>
+        
+        <div class="field">
+          <label for="password">Change Password</label>
+          <input type="password" id="password" placeholder="Leave blank to keep current password" disabled style="opacity: 0.5; cursor: not-allowed;">
+          <span style="font-size: 11px; color: var(--text-muted);">Password changes must be done via recovery right now.</span>
+        </div>
+
+        <button type="submit" class="btn-save">Save Changes</button>
+      </form>
+    </section>
+    
+  </div>
+</main>
+
+<script>
+  // Profile Picture Upload via LocalStorage (Frontend only to avoid db migration for now)
+  document.addEventListener('DOMContentLoaded', () => {
+    const profilePicInput = document.getElementById('profilePicInput');
+    const sidebarProfilePic = document.getElementById('sidebarProfilePic');
+    const fallbackIcon = document.getElementById('fallbackIcon');
+    const navProfilePic = document.getElementById('nav-profile-pic-desktop');
+    const navFallback = document.getElementById('nav-profile-fallback-desktop');
+
+    // Load from local storage
+    const savedPic = localStorage.getItem('userProfilePic');
+    if (savedPic) {
+      if(sidebarProfilePic) { sidebarProfilePic.src = savedPic; sidebarProfilePic.style.display = 'block'; fallbackIcon.style.display = 'none'; }
+      if(navProfilePic) { navProfilePic.src = savedPic; navProfilePic.style.display = 'block'; navFallback.style.display = 'none'; }
+    }
+
+    profilePicInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target.result;
+          // Save to local storage for persistence across tabs
+          localStorage.setItem('userProfilePic', result);
+          // Update images
+          if(sidebarProfilePic) { sidebarProfilePic.src = result; sidebarProfilePic.style.display = 'block'; fallbackIcon.style.display = 'none'; }
+          if(navProfilePic) { navProfilePic.src = result; navProfilePic.style.display = 'block'; navFallback.style.display = 'none'; }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  });
+</script>
+{% endblock %}

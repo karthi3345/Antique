@@ -60,3 +60,21 @@ def login_view(request):
 def logout_view(request):
     auth_logout(request)
     return redirect("home")
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def profile_view(request):
+    if request.method == "POST":
+        # Handle basic user updates
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        email = request.POST.get('email', '')
+        
+        request.user.first_name = first_name
+        request.user.last_name = last_name
+        request.user.email = email
+        request.user.save()
+        return redirect('profile')
+        
+    return render(request, "house/profile.html")

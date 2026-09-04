@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{% static 'css/volgo.css' %}">
   {% block head %}{% endblock %}
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <script src="{% static 'js/password-toggle.js' %}" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -32,8 +33,7 @@
         <!-- Mobile-only menu items -->
         <a href="/acquisition/" class="mobile-menu-only" style="margin-top: 40px;"><span class="nav-idx" aria-hidden="true">04</span>Acquisition</a>
         {% if user.is_authenticated %}
-          <form id="logout-form-mobile" action="{% url 'logout' %}" method="post" style="display: none;">{% csrf_token %}</form>
-          <a href="#" onclick="document.getElementById('logout-form-mobile').submit(); return false;" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">05</span>Logout</a>
+          <a href="/profile/" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">05</span>Profile</a>
         {% else %}
           <a href="{% url 'login' %}" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">05</span>Sign In</a>
         {% endif %}
