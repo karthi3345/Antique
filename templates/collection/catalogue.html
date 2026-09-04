@@ -4,49 +4,255 @@
 {% block title %}The Collection — VOLGO{% endblock %}
 
 {% block content %}
-<section class="section" style="padding-top:160px;">
+<!-- Premium Dark Vault Background (Hero-like) -->
+<div class="vault-background" id="vault-bg">
+  <div class="vault-spotlight"></div>
+  <div class="dust-particles" id="vault-dust"></div>
+</div>
+
+<section class="section collection-stage" style="padding-top:160px; position: relative; z-index: 10;">
   <div class="container">
-    <p class="label-number">La Collection</p>
-    <h1 style="font-size:clamp(44px,6vw,88px);">Catalogue</h1>
-    <p class="lede" style="max-width:60ch; margin-top:24px;">
-      The collection is small by intention. Each object is catalogued, photographed in full rotation, and offered once.
-    </p>
+    
+    <div class="collection-header reveal">
+      <p class="label-number" style="justify-content: flex-start; color: var(--gold-pale);">La Collection</p>
+      <h1 class="vault-title" style="font-size:clamp(44px,6vw,88px);">Catalogue</h1>
+      <p class="lede" style="max-width:60ch; margin-top:24px; color: rgba(241, 235, 221, 0.8);">
+        The collection is small by intention. Each object is catalogued, photographed in full rotation, and offered once.
+      </p>
+    </div>
 
-    <hr class="rule" style="margin: var(--s7) 0 var(--s5);">
+    <hr class="rule" style="margin: var(--s7) 0 var(--s5); border-color: rgba(195,162,75,0.2);">
 
-    <!-- Filters — restrained, archival -->
-    <div class="catalogue-controls" id="catalogue-controls" style="display:flex; flex-wrap:wrap; gap:var(--s5); align-items:flex-end;">
-      <div class="field" style="margin:0; min-width:180px;">
+    <!-- Premium Glass-Morphic Filters -->
+    <div class="catalogue-controls glass-panel reveal" id="catalogue-controls">
+      <div class="field">
         <label for="f-region">Region</label>
-        <select id="f-region"><option value="">All regions</option></select>
+        <select id="f-region" class="premium-select"><option value="">All regions</option></select>
       </div>
-      <div class="field" style="margin:0; min-width:180px;">
+      <div class="field">
         <label for="f-category">Category</label>
-        <select id="f-category"><option value="">All categories</option></select>
+        <select id="f-category" class="premium-select"><option value="">All categories</option></select>
       </div>
-      <div class="field" style="margin:0; min-width:180px;">
+      <div class="field">
         <label for="f-material">Material</label>
-        <select id="f-material"><option value="">All materials</option></select>
+        <select id="f-material" class="premium-select"><option value="">All materials</option></select>
       </div>
-      <div class="field" style="margin:0; min-width:200px;">
+      <div class="field search-field">
         <label for="f-q">Search</label>
-        <input type="search" id="f-q" placeholder="Name, region, maker…" autocomplete="off">
+        <input type="search" id="f-q" class="premium-input" placeholder="Name, region, maker…" autocomplete="off">
       </div>
-      <div class="field" style="margin:0; min-width:180px;">
+      <div class="field">
         <label for="f-sort">Order</label>
-        <select id="f-sort">
+        <select id="f-sort" class="premium-select">
           <option value="number">By accession number</option>
           <option value="period">Oldest first</option>
           <option value="-period">Newest first</option>
         </select>
       </div>
-      <button class="btn" id="f-clear" style="align-self:center;">Clear</button>
+      <button class="btn btn--gold" id="f-clear" style="align-self: flex-end; height: 42px; padding: 0 24px;">Clear</button>
     </div>
 
-    <p class="meta" id="catalogue-count" style="margin-top:var(--s6);"></p>
-    <div class="grid-objects" id="catalogue-grid" style="margin-top:var(--s6);"></div>
+    <p class="meta reveal" id="catalogue-count" style="margin-top:var(--s6); color: var(--gold-pale); letter-spacing: 0.1em;"></p>
+    
+    <!-- The Object Grid -->
+    <div class="grid-objects reveal" id="catalogue-grid" style="margin-top:var(--s6);"></div>
+  
   </div>
 </section>
+{% endblock %}
+
+{% block head %}
+<style>
+  /* Premium Vault Aesthetic for the Products/Catalogue */
+  body {
+    background: #0a0806;
+    color: #FBF8F1;
+  }
+
+  .vault-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .vault-spotlight {
+    position: absolute;
+    top: -20%; left: 50%;
+    width: 150vw; height: 100vh;
+    background: radial-gradient(ellipse at top, rgba(195,162,75,0.08) 0%, transparent 60%);
+    transform: translateX(-50%);
+    animation: slowBreathe 8s infinite alternate ease-in-out;
+  }
+
+  .vault-title {
+    font-family: var(--font-display);
+    color: #FBF8F1;
+    line-height: 1.1;
+    font-weight: 400;
+    position: relative;
+    display: inline-block;
+  }
+
+  .vault-title::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-20deg);
+    animation: shineSweep 8s infinite;
+  }
+
+  /* Glass Panel Filters */
+  .glass-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s5);
+    align-items: flex-end;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(195, 162, 75, 0.2);
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .glass-panel .field {
+    margin: 0;
+    min-width: 160px;
+    flex: 1;
+  }
+
+  .glass-panel .search-field {
+    flex: 2;
+    min-width: 200px;
+  }
+
+  .glass-panel label {
+    color: rgba(195, 162, 75, 0.8);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .premium-select, .premium-input {
+    width: 100%;
+    background: rgba(0,0,0,0.4) !important;
+    border: 1px solid rgba(195,162,75,0.3) !important;
+    color: #FBF8F1 !important;
+    padding: 10px 14px !important;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .premium-select:focus, .premium-input:focus {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 10px rgba(195, 162, 75, 0.2) !important;
+    outline: none;
+  }
+
+  /* Catalogue Grid Item Overrides for Premium Feel */
+  .grid-objects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 40px;
+  }
+
+  /* Since the grid items are generated by JS, we style the classes it creates */
+  #catalogue-grid .card {
+    background: transparent !important;
+    border: none !important;
+  }
+  
+  #catalogue-grid .card-figure {
+    background: radial-gradient(circle at center, rgba(30,24,18,0.8), #0a0806);
+    border: 1px solid rgba(195, 162, 75, 0.15);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+  
+  #catalogue-grid .card-figure::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  #catalogue-grid .object-label .name {
+    color: #FBF8F1 !important;
+  }
+
+  /* Animations */
+  @keyframes slowBreathe {
+    0% { opacity: 0.5; transform: translateX(-50%) scale(0.95); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+  }
+
+  @keyframes shineSweep {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; }
+  }
+  
+  .particle {
+    position: absolute;
+    background: rgba(195, 162, 75, 0.4);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(195, 162, 75, 0.2);
+    animation: floatDust linear infinite;
+  }
+  
+  @keyframes floatDust {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.8; }
+    100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: royalFadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .reveal:nth-child(1) { animation-delay: 0.1s; }
+  .reveal:nth-child(2) { animation-delay: 0.3s; }
+  .reveal:nth-child(3) { animation-delay: 0.5s; }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Generate Dust Particles for the Vault
+    const stage = document.getElementById('vault-dust');
+    if (stage) {
+      const particleCount = 40;
+      for (let i = 0; i < particleCount; i++) {
+        let p = document.createElement('div');
+        p.className = 'particle';
+        let size = Math.random() * 3 + 1; 
+        let posX = Math.random() * 100;
+        let posY = Math.random() * 100;
+        let duration = Math.random() * 15 + 10; 
+        let delay = Math.random() * 5;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = posX + '%';
+        p.style.top = posY + '%';
+        p.style.animationDuration = duration + 's';
+        p.style.animationDelay = delay + 's';
+        stage.appendChild(p);
+      }
+    }
+  });
+</script>
 {% endblock %}
 
 {% block scripts %}
