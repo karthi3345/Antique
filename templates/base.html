@@ -96,41 +96,32 @@
   </main>
 
   <!-- Footer -->
-  <footer class="site-footer">
+    <footer class="site-footer">
     <div class="container">
-      <div class="footer-top">
-        <a href="/" class="wordmark">VOLGO</a>
-        <a href="#top" class="back-to-top">Return to top <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor"><path d="M6 11V1M1 6l5-5 5 5"/></svg></a>
+      <div class="footer-col">
+        <span class="wordmark">VOLGO</span>
+        <p class="meta" style="margin-top:12px">Maison d'Antiquit&eacute;s &middot; EST. MMXXVI</p>
       </div>
-      <hr class="rule">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>The House</h4>
-          <a href="/the-house/">About Volgo</a>
-          <a href="/acquisition/">Private Acquisition</a>
-          <a href="/contact/">Enquiries</a>
-        </div>
-        <div class="footer-col">
-          <h4>Collection</h4>
-          <a href="/collection/">All Objects</a>
-          <a href="/collection/?sort=-period">Recent Acquisitions</a>
-          <a href="/chronicles/">Chronicles (Journal)</a>
-        </div>
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <a href="#">Terms of Sale</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Provenance Guarantee</a>
-        </div>
+      <div class="footer-col">
+        <span class="meta gold">The House</span>
+        <p>Every object examined, documented, and offered with its history intact &mdash; including what is not known.</p>
       </div>
-      <div class="footer-bottom">
-        <p class="meta">© 2026 Volgo Antiquities. Privately held.</p>
-        <p class="meta" style="color: var(--text-muted); font-size: 11px;">The objects presented are guaranteed authentic. Photography remains the property of the house.</p>
+      <div class="footer-col">
+        <span class="meta gold">Enquiries</span>
+        <p><a href="/acquisition/">Private acquisition</a> &middot; <a href="/contact/">Contact the house</a></p>
+      </div>
+      <div class="footer-col">
+        <span class="meta gold">Rooms</span>
+        <p><a href="/collection/">The collection</a> &middot; <a href="/chronicles/">The journal</a></p>
+      </div>
+      <div class="footer-bottom" style="flex-basis:100%;">
+        <span class="meta">&copy; {% now "Y" %} Volgo &middot; Objects of distinction, privately acquired.</span>
+        <span class="meta">By appointment only</span>
       </div>
     </div>
   </footer>
 
-  <script src="{% static 'js/volgo.js' %}"></script>
+  <script src="{% static 'js/app.js' %}" defer></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const savedPic = localStorage.getItem('userProfilePic');
