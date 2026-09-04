@@ -1,203 +1,46 @@
 {% extends "base.html" %}
-{% block title %}{{ article.title }} - Chronicles — VOLGO{% endblock %}
+{% block title %}{{ article.title }} - VOLGO{% endblock %}
 
 {% block content %}
-<!-- Premium Animated Journal Background -->
-<div class="archive-background" id="archive-bg">
-  <div class="paper-base"></div>
-  <div class="paper-texture"></div>
-  <div class="paper-foxing"></div>
-  <div class="archive-light"></div>
-
-  <div class="parallax-container" id="parallax-container">
-    <div class="watermark-silhouette parallax-layer" data-speed="0.01">
-      <svg viewBox="0 0 200 200" opacity="0.03" fill="#3a2a1a"><path d="M100 20 C140 20 180 60 180 100 C180 140 140 180 100 180 C60 180 20 140 20 100 C20 60 60 20 100 20 Z" /><circle cx="100" cy="100" r="60" fill="none" stroke="#3a2a1a" stroke-width="2"/></svg>
-    </div>
-
-    <div class="ghost-handwriting parallax-layer" data-speed="0.02">
-      <svg width="100%" height="100%" class="cursive-path">
-        <path d="M 10,150 Q 50,50 100,100 T 200,80 T 300,120 T 400,60" fill="none" stroke="#2a1f16" stroke-width="1.5"/>
-        <path d="M 600,300 Q 650,200 700,250 T 800,220" fill="none" stroke="#2a1f16" stroke-width="1"/>
-      </svg>
-      <div class="annotation-text num-1">Cat. No. 402/B</div>
-      <div class="annotation-text num-2">Fig 1. Detail of the escapement</div>
-    </div>
-
-    <div class="ghost-sketches parallax-layer" data-speed="0.03">
-      <div class="sketch sketch-1">
-        <svg viewBox="0 0 100 100" stroke="#3a2f26" stroke-width="0.5" fill="none"><circle cx="50" cy="50" r="40"/><circle cx="50" cy="50" r="30"/><line x1="50" y1="10" x2="50" y2="90"/><line x1="10" y1="50" x2="90" y2="50"/></svg>
-      </div>
-      <div class="sketch sketch-2">
-        <svg viewBox="0 0 100 100" stroke="#3a2f26" stroke-width="0.3" fill="none"><rect x="20" y="20" width="60" height="60"/><path d="M20 20 L80 80 M20 80 L80 20"/></svg>
-      </div>
-    </div>
-
-    <div class="archival-dust parallax-layer" id="archival-dust" data-speed="0.06"></div>
-  </div>
-</div>
-
-<article class="reading-room" style="position: relative; z-index: 10;">
+<section class="section" style="padding-top: calc(var(--nav-h) + 60px); padding-bottom: 80px; min-height: 100vh; background: #0a0806;">
   <div class="container narrow">
-    <div class="journal-content-layer reveal">
-      
-      <!-- Animated Antiquarian Top Ornament (The "GIF/Animation") -->
-      <div class="journal-ornament">
-        <svg viewBox="0 0 100 100" class="spinning-astrolabe">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="#8A7336" stroke-width="0.5" stroke-dasharray="2 4"/>
-          <circle cx="50" cy="50" r="35" fill="none" stroke="#8A7336" stroke-width="1" class="gear-ring"/>
-          <path d="M50 15 L50 85 M15 50 L85 50 M25 25 L75 75 M25 75 L75 25" stroke="rgba(138,115,54,0.4)" stroke-width="0.5" class="astrolabe-lines"/>
-          <circle cx="50" cy="50" r="4" fill="#8A7336"/>
-        </svg>
+    <div class="reveal">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <span class="meta" style="color: var(--gold); font-family: var(--font-utility); letter-spacing: 0.15em;">{{ article.published_at|date:"j F Y" }} &mdash; {{ article.reading_minutes }} min read</span>
+        <h1 style="font-size:clamp(36px,5vw,64px); color: #FBF8F1; font-family: var(--font-display); line-height: 1.1; margin: 20px 0;">{{ article.title }}</h1>
+        {% if article.standfirst %}
+        <p style="color: rgba(241, 235, 221, 0.7); font-size: 20px; line-height: 1.6; max-width: 60ch; margin: 0 auto;">{{ article.standfirst }}</p>
+        {% endif %}
       </div>
 
-      <p class="meta" style="text-align: center; margin-bottom: 24px;">
-        <a href="/chronicles/" style="color: #6a5745; text-decoration: none; border-bottom: 1px solid rgba(139,107,74,0.3); padding-bottom: 2px;">Chronicles</a> 
-        <span style="margin: 0 10px; color: #8A7336;">&bull;</span> {{ article.published_at|date:"j F Y" }} 
-        <span style="margin: 0 10px; color: #8A7336;">&bull;</span> {{ article.reading_minutes }} min read
-      </p>
-      
-      <h1 style="font-size:clamp(40px,5.5vw,76px); color: #1a1612; font-family: var(--font-display); line-height: 1.1; text-align: center;">{{ article.title }}</h1>
-      
-      {% if article.standfirst %}
-      <p class="lede" style="margin:32px auto 0; text-align: center; color: #3c3228; font-size: 22px; font-style: italic; max-width: 50ch;">
-        {{ article.standfirst }}
-      </p>
-      {% endif %}
-      
-      <div class="journal-divider">
-        <svg width="200" height="20" viewBox="0 0 200 20"><line x1="0" y1="10" x2="200" y2="10" stroke="rgba(139,107,74,0.3)" stroke-width="1"/><circle cx="100" cy="10" r="4" fill="#8A7336"/></svg>
-      </div>
-      
-      <div class="article-body">
-        {% autoescape off %}
-        {{ article.body_rendered|default:article.body|linebreaks }}
-        {% endautoescape %}
-      </div>
-      
-      {% if article.object_ref %}
-      <div class="journal-divider">
-        <svg width="200" height="20" viewBox="0 0 200 20"><line x1="0" y1="10" x2="200" y2="10" stroke="rgba(139,107,74,0.3)" stroke-width="1"/><circle cx="100" cy="10" r="4" fill="#8A7336"/></svg>
-      </div>
-      <p class="label-number" style="color: #6a5745; text-align: center;">Referenced Object</p>
-      <a href="/objects/{{ article.object_ref.object_number }}/" class="referenced-object-card">
-        <h3 style="margin: 0; font-family: var(--font-display); color: #1a1612;">{{ article.object_ref.label_number }} &mdash; {{ article.object_ref.name }}</h3>
-        <p class="meta" style="margin-top:12px; color: #6a5745;">{{ article.object_ref.region }} &bull; {{ article.object_ref.period }} &bull; {{ article.object_ref.material }}</p>
-      </a>
-      {% endif %}
-      
-      <!-- Animated Signature/Quill at the bottom -->
-      <div class="journal-signature" style="margin-top: 60px; text-align: center;">
-        <svg width="150" height="60" viewBox="0 0 150 60" class="signature-svg">
-          <path d="M10,40 C30,10 40,50 60,30 C80,10 90,50 110,40 C120,35 130,45 140,30" fill="none" stroke="#8A7336" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <p style="font-family: 'Times New Roman', serif; font-style: italic; color: #6a5745; font-size: 14px; margin-top: 8px;">Volgo Antiquities</p>
+      <div class="article-body" style="border-top: 1px solid rgba(195,162,75,0.15); padding-top: 60px;">
+        {{ article.body_html|safe }}
       </div>
 
-      <div style="text-align: center; margin-top: 60px;">
-        <a href="/chronicles/" class="btn journal-btn">Return to the reading room</a>
+      {% if article.referenced_object %}
+      <div style="margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(195,162,75,0.15);">
+        <p class="label-number" style="color: var(--gold); margin-bottom: 24px;">Object in Focus</p>
+        <a href="/objects/{{ article.referenced_object.object_number }}/" class="referenced-object-card" style="display:block; padding: 30px; text-align: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(195, 162, 75, 0.2); border-radius: 4px; text-decoration: none; transition: transform 0.3s ease;">
+          <h3 style="color: #FBF8F1; font-family: var(--font-display); font-size: 28px; margin-bottom: 12px; font-weight: 400;">{{ article.referenced_object.name }}</h3>
+          <span class="meta" style="color: rgba(241, 235, 221, 0.6);">{{ article.referenced_object.region }} &mdash; {{ article.referenced_object.period }}</span>
+        </a>
+      </div>
+      {% endif %}
+
+      <div style="margin-top: 80px; text-align: center;">
+        <a href="/chronicles/" class="btn btn--outline" style="border-color: rgba(195,162,75,0.4); color: var(--gold);">Return to the reading room</a>
       </div>
     </div>
   </div>
-</article>
+</section>
 
-{% endblock %}
-
-{% block head %}
 <style>
-  /* ----------------------------------------------------
-     PREMIUM JOURNAL ARCHIVE BACKGROUND & ANIMATIONS
-     ---------------------------------------------------- */
-  body { background: #E8E2D2; color: #1a1612; }
-  
-  .archive-background { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-  .paper-base { position: absolute; inset: -5%; background: #F4F0E6; animation: paperBreathe 12s infinite alternate ease-in-out; }
-  .paper-texture { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E"); mix-blend-mode: multiply; opacity: 0.35; }
-  .paper-foxing { position: absolute; inset: 0; background: radial-gradient(circle at 10% 20%, rgba(139,107,74,0.08) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(100,70,50,0.06) 0%, transparent 50%), radial-gradient(ellipse at center, transparent 40%, rgba(90,70,50,0.15) 100%); mix-blend-mode: multiply; animation: edgeFlutter 10s infinite alternate ease-in-out; }
-  .archive-light { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at center, rgba(255,250,230,0.4) 0%, transparent 50%); mix-blend-mode: overlay; animation: sweepSunlight 25s infinite alternate linear; }
-  .parallax-container { position: absolute; inset: 0; }
-  .parallax-layer { position: absolute; inset: -5%; }
-  .watermark-silhouette { display: flex; justify-content: center; align-items: center; opacity: 0.7; }
-  .watermark-silhouette svg { width: 60%; height: 60%; transform: rotate(-5deg); }
-  .ghost-handwriting { opacity: 0.25; mix-blend-mode: multiply; }
-  .cursive-path path { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: drawInk 12s infinite alternate ease-in-out; }
-  .annotation-text { position: absolute; font-family: 'Times New Roman', serif; font-style: italic; color: rgba(42, 31, 22, 0.4); font-size: 14px; letter-spacing: 0.05em; }
-  .num-1 { top: 15%; right: 10%; animation: fadeGhost 10s infinite alternate 2s; }
-  .num-2 { bottom: 20%; left: 15%; animation: fadeGhost 14s infinite alternate; }
-  .sketch { position: absolute; width: 250px; height: 250px; opacity: 0.15; mix-blend-mode: multiply; }
-  .sketch-1 { top: 10%; left: 5%; transform: rotate(15deg); animation: drawSketch 16s infinite alternate ease-in-out; }
-  .sketch-2 { bottom: 5%; right: 10%; transform: rotate(-10deg); animation: drawSketch 14s infinite alternate ease-in-out 3s; }
-  .dust-particle { position: absolute; background: rgba(139, 107, 74, 0.4); border-radius: 50%; filter: blur(1px); animation: floatArchiveDust linear infinite; }
-
-  /* Content Box */
-  .reading-room { padding-top: 140px; padding-bottom: 120px; min-height: 100vh; }
-  .journal-content-layer { background: rgba(244, 240, 230, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 80px 10%; border-radius: 4px; border: 1px solid rgba(139,107,74,0.15); box-shadow: 0 20px 60px rgba(90,70,50,0.1); }
-  
-  /* The "GIF" Animations */
-  .journal-ornament { display: flex; justify-content: center; margin-bottom: 32px; }
-  .spinning-astrolabe { width: 80px; height: 80px; animation: astrolabeRotate 40s infinite linear; }
-  .gear-ring { animation: gearRingRotate 20s infinite linear reverse; transform-origin: 50px 50px; }
-  .astrolabe-lines { animation: pulseLines 4s infinite alternate ease-in-out; }
-  
-  .journal-divider { display: flex; justify-content: center; margin: 40px 0; opacity: 0.5; }
-  
-  .signature-svg path { stroke-dasharray: 400; stroke-dashoffset: 400; animation: signSignature 6s forwards; animation-delay: 1s; }
-
-  /* Article Body Styling */
-  .article-body { font-size: 19px; line-height: 1.8; color: #2c2621; }
+  /* Article Body Styling for Dark Theme */
+  .article-body { font-size: 19px; line-height: 1.8; color: rgba(241, 235, 221, 0.85); }
   .article-body p { margin-bottom: 24px; }
-  .article-body h2 { font-family: var(--font-display); font-size: 32px; margin: 40px 0 20px; color: #1a1612; }
-  .article-body blockquote { font-family: 'Times New Roman', serif; font-style: italic; font-size: 24px; border-left: 2px solid #8A7336; padding-left: 24px; margin: 40px 0; color: #4a4138; }
-  .article-body img { width: 100%; height: auto; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 40px 0; filter: sepia(0.2) contrast(1.05); }
-
-  .referenced-object-card { display:block; padding: 30px; text-align: center; background: rgba(255,255,255,0.4); border: 1px solid rgba(139, 107, 74, 0.2); border-radius: 4px; transition: all 0.4s ease; text-decoration: none; }
-  .referenced-object-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.6); border-color: rgba(139, 107, 74, 0.4); box-shadow: 0 15px 40px rgba(139,107,74,0.1); }
-  
-  .journal-btn { border: 1px solid rgba(139,107,74,0.5); color: #4a4138; background: transparent; padding: 12px 30px; }
-  .journal-btn:hover { background: #1a1612; color: #E8E2D2; border-color: #1a1612; }
-
-  @keyframes paperBreathe { 0% { transform: scale(1); filter: brightness(1); } 100% { transform: scale(1.02); filter: brightness(0.97); } }
-  @keyframes edgeFlutter { 0% { opacity: 0.8; } 100% { opacity: 1; } }
-  @keyframes sweepSunlight { 0% { transform: translate(0, 0); } 100% { transform: translate(30%, 20%); } }
-  @keyframes drawInk { 0% { stroke-dashoffset: 1000; opacity: 0; } 20% { opacity: 0.8; } 80% { stroke-dashoffset: 0; opacity: 0.8; } 100% { stroke-dashoffset: 0; opacity: 0; } }
-  @keyframes drawSketch { 0% { opacity: 0; transform: scale(0.95) rotate(0deg); } 50% { opacity: 0.15; } 100% { opacity: 0; transform: scale(1.05) rotate(5deg); } }
-  @keyframes fadeGhost { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
-  @keyframes floatArchiveDust { 0% { transform: translateY(0) translateX(0); opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { transform: translateY(-80px) translateX(30px); opacity: 0; } }
-  
-  @keyframes astrolabeRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  @keyframes gearRingRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  @keyframes pulseLines { 0% { opacity: 0.4; } 100% { opacity: 1; } }
-  @keyframes signSignature { 0% { stroke-dashoffset: 400; } 100% { stroke-dashoffset: 0; } }
-
-  .reveal { opacity: 0; transform: translateY(20px); animation: royalFadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-  @media (max-width: 720px) { .journal-content-layer { padding: 40px 20px; } }
+  .article-body h2 { font-family: var(--font-display); font-size: 32px; margin: 40px 0 20px; color: #FBF8F1; font-weight: 400; }
+  .article-body blockquote { font-family: 'Times New Roman', serif; font-style: italic; font-size: 24px; border-left: 2px solid var(--gold); padding-left: 24px; margin: 40px 0; color: rgba(241, 235, 221, 0.7); }
+  .article-body img { width: 100%; height: auto; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 40px 0; border: 1px solid rgba(195,162,75,0.1); }
+  .referenced-object-card:hover { transform: translateY(-5px); border-color: rgba(195, 162, 75, 0.4); }
 </style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const dustStage = document.getElementById('archival-dust');
-    if (dustStage) {
-      for (let i = 0; i < 30; i++) {
-        let p = document.createElement('div');
-        p.className = 'dust-particle';
-        let size = Math.random() * 2 + 1;
-        let posX = Math.random() * 100;
-        let posY = Math.random() * 100;
-        let duration = Math.random() * 15 + 10; 
-        let delay = Math.random() * 10;
-        p.style.width = size + 'px'; p.style.height = size + 'px'; p.style.left = posX + '%'; p.style.top = posY + '%'; p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
-        dustStage.appendChild(p);
-      }
-    }
-    const parallaxLayers = document.querySelectorAll('.parallax-layer');
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth) - 0.5;
-      const y = (e.clientY / window.innerHeight) - 0.5;
-      parallaxLayers.forEach(layer => {
-        const speed = layer.getAttribute('data-speed');
-        const xOffset = x * speed * 100; const yOffset = y * speed * 100;
-        layer.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-      });
-    });
-  });
-</script>
 {% endblock %}
