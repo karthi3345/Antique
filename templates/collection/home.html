@@ -52,6 +52,12 @@
     <div class="hero-image reveal">
       <div class="image-wrapper">
         
+        <!-- 
+          INSTRUCTIONS FOR CINEMATIC VIDEO:
+          When you generate your video, save it as "hero_cinematic.mp4" in the "static/img/" folder.
+          Then, uncomment the video tag below and remove the img tag!
+        -->
+        <!--
         <video 
           src="/static/img/hero_cinematic.mp4" 
           poster="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp"
@@ -60,6 +66,9 @@
           onmouseover="this.style.transform='scale(1.03)'"
           onmouseout="this.style.transform='scale(1)'">
         </video>
+        -->
+        <img src="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp" 
+             alt="{{ hero.name }}" fetchpriority="high">
 
       </div>
     </div>
