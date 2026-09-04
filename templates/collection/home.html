@@ -49,169 +49,25 @@
     </div>
 
     <!-- Right: Pure, sharp artifact image -->
-    <!-- Right: Cinematic Video Presentation (Simulated via Advanced CSS/JS) -->
-    <div class="hero-cinematic-stage reveal">
-      
-      <!-- Atmospheric Spotlight -->
-      <div class="cinematic-spotlight"></div>
-      
-      <!-- Floating Dust Particles -->
-      <div class="dust-particles" id="dust-particles"></div>
+    <!-- Right: Actual MP4 Video Playing -->
+    <div class="hero-image reveal">
+      <div class="image-wrapper" style="box-shadow: 0 40px 100px rgba(0,0,0,0.8); border: 1px solid rgba(195,162,75,0.2); border-radius: 4px; overflow: hidden;">
+        
+        <video 
+          src="/static/img/hero_cinematic.mp4" 
+          poster="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp"
+          autoplay loop muted playsinline
+          style="width: 100%; height: auto; display: block; transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);"
+          onmouseover="this.style.transform='scale(1.03)'"
+          onmouseout="this.style.transform='scale(1)'">
+        </video>
 
-      <div class="cinematic-wrapper">
-        <!-- The Antique Object with Dolly-in & 360 Lighting Simulation -->
-        <div class="cinematic-object">
-          <img src="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp" 
-               alt="{{ hero.name }}" fetchpriority="high" id="cinematic-img">
-          
-          <!-- Moving Lighting Highlight -->
-          <div class="cinematic-lighting"></div>
-        </div>
       </div>
-
     </div>
 
   </div>
 </section>
 
-<!-- Cinematic Script & CSS -->
-<style>
-  .hero-cinematic-stage {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    height: 700px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background: radial-gradient(circle at center, rgba(30, 20, 15, 0.4) 0%, #0a0806 70%);
-    border: 1px solid rgba(195,162,75,0.15);
-    border-radius: 8px;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.9), inset 0 0 40px rgba(0,0,0,0.8);
-  }
-
-  .cinematic-spotlight {
-    position: absolute;
-    top: -20%; left: 50%;
-    width: 150%; height: 150%;
-    background: radial-gradient(ellipse at top, rgba(195,162,75,0.15) 0%, transparent 60%);
-    transform: translateX(-50%);
-    z-index: 1;
-    animation: spotlightSweep 12s infinite alternate ease-in-out;
-    pointer-events: none;
-  }
-
-  .cinematic-wrapper {
-    position: relative;
-    width: 80%;
-    height: 80%;
-    z-index: 5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  /* Dolly-In Animation */
-  .cinematic-object {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: dollyIn 12s infinite alternate ease-in-out;
-  }
-
-  .cinematic-object img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    filter: contrast(1.1) brightness(0.95) drop-shadow(0 30px 40px rgba(0,0,0,0.8));
-  }
-
-  /* Moving Light/Reflection (Simulates 360 Orbit) */
-  .cinematic-lighting {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.15) 50%, transparent 80%);
-    background-size: 200% 200%;
-    mix-blend-mode: overlay;
-    z-index: 10;
-    animation: lightOrbit 12s infinite alternate ease-in-out;
-    pointer-events: none;
-  }
-
-  /* Dust Particles */
-  .dust-particles {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .particle {
-    position: absolute;
-    background: rgba(195, 162, 75, 0.6);
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(195, 162, 75, 0.4);
-    animation: floatDust linear infinite;
-  }
-
-  @keyframes dollyIn {
-    0% { transform: scale(1) translateY(0); filter: saturate(1); }
-    100% { transform: scale(1.25) translateY(10px); filter: saturate(1.15); }
-  }
-
-  @keyframes spotlightSweep {
-    0% { transform: translateX(-60%) translateY(0); opacity: 0.6; }
-    100% { transform: translateX(-40%) translateY(20px); opacity: 1; }
-  }
-
-  @keyframes lightOrbit {
-    0% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-  }
-
-  @keyframes floatDust {
-    0% { transform: translateY(0) translateX(0); opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.8; }
-    100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
-  }
-</style>
-
-<script>
-  // Generate atmospheric dust particles for the cinematic video effect
-  document.addEventListener("DOMContentLoaded", () => {
-    const stage = document.getElementById('dust-particles');
-    if (!stage) return;
-    const particleCount = 40;
-    
-    for (let i = 0; i < particleCount; i++) {
-      let p = document.createElement('div');
-      p.className = 'particle';
-      
-      // Random properties
-      let size = Math.random() * 3 + 1; // 1px to 4px
-      let posX = Math.random() * 100; // 0% to 100%
-      let posY = Math.random() * 100;
-      let duration = Math.random() * 8 + 6; // 6s to 14s
-      let delay = Math.random() * 5;
-      
-      p.style.width = size + 'px';
-      p.style.height = size + 'px';
-      p.style.left = posX + '%';
-      p.style.top = posY + '%';
-      p.style.animationDuration = duration + 's';
-      p.style.animationDelay = delay + 's';
-      
-      stage.appendChild(p);
-    }
-  });
-</script>
 
 
   </div>
