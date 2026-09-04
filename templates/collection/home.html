@@ -51,8 +51,16 @@
     <!-- Right: Pure, sharp artifact image -->
     <div class="hero-image reveal">
       <div class="image-wrapper">
-        <img src="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp" 
-             alt="{{ hero.name }}" fetchpriority="high">
+        
+        <video 
+          src="/static/img/hero_cinematic.mp4" 
+          poster="/static/img/objects/{{ hero.object_number|stringformat:'03d' }}/{{ hero.hero_frame|stringformat:'02d' }}.webp"
+          autoplay loop muted playsinline
+          style="width: 100%; height: auto; display: block; box-shadow: 0 40px 100px rgba(0,0,0,0.8); border: 1px solid rgba(195,162,75,0.2); border-radius: 4px; transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);"
+          onmouseover="this.style.transform='scale(1.03)'"
+          onmouseout="this.style.transform='scale(1)'">
+        </video>
+
       </div>
     </div>
 
