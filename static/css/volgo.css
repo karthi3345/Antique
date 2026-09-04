@@ -321,14 +321,14 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   padding: 16px 40px; border: 0;
 }
 .btn--solid::after { display: none; }
-.btn--solid:hover { background: var(--gold-pale); color: #14110A; }
+.btn--solid:hover { background: var(--gold-pale); color: #14110A !important; }
 .btn--gold {
   background: var(--ivory); color: #14110A;
   padding: 17px 42px; border: 0; letter-spacing: 0.18em;
   transition: background var(--t-medium) var(--ease), transform var(--t-medium) var(--ease);
 }
 .btn--gold::after { display: none; }
-.btn--gold:hover { background: var(--gold-pale); }
+.btn--gold:hover { background: var(--gold-pale); color: #14110A !important; }
 .btn--outline {
   border: 1px solid rgba(241, 235, 221, 0.5);
   padding: 16px 38px;
