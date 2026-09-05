@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block head %}
@@ -6,921 +6,380 @@
 <script src="{% static 'js/post.js' %}" defer></script>
 
 <style>
-  /* Premium overrides for Examine section */
-  .examine-photo {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 10px 40px rgba(195,162,75,0.1) !important;
-    border-radius: 4px;
-    position: relative;
-    max-width: 700px !important;
-    margin: 40px auto !important;
-  }
-  .examine-photo::before {
-    content: '';
-    position: absolute;
-    inset: -150px;
-    background: radial-gradient(circle at center, rgba(195,162,75,0.15) 0%, transparent 60%);
-    z-index: -1;
-    pointer-events: none;
-  }
-  .examine-photo img {
-    border-radius: 2px;
-  }
-  .inspect-list { 
-    background: rgba(16, 13, 10, 0.8) !important; 
-    padding: 40px !important; 
-    border-radius: 8px !important; 
-    border: 1px solid rgba(195, 162, 75, 0.15) !important;
-    backdrop-filter: blur(10px);
-  }
-
-  /* Floating Relic Animation */
-  .examine-photo {
-    animation: floatRelic 8s ease-in-out infinite;
-  }
-  @keyframes floatRelic {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-    100% { transform: translateY(0); }
-  }
-
-  /* Sweeping Glass Shine */
-  .examine-photo::after {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: rotate(30deg);
-    pointer-events: none;
-    animation: sweepShine 7s infinite linear;
-    z-index: 5;
-  }
-  @keyframes sweepShine {
-    0% { transform: rotate(30deg) translateY(-100%) translateX(-100%); }
-    20% { transform: rotate(30deg) translateY(100%) translateX(100%); }
-    100% { transform: rotate(30deg) translateY(100%) translateX(100%); }
-  }
-
-  /* Relic Aura Pulse */
-  .examine-photo::before {
-    animation: pulseAura 4s infinite alternate ease-in-out;
-  }
-  @keyframes pulseAura {
-    0% { opacity: 0.5; transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1.1); }
-  }
-
-
-  /* 90s ROYAL PREMIUM PAGE-WIDE EFFECTS */
-  
-  /* Vintage Film Grain across entire page */
-  body {
-    background: radial-gradient(circle at 50% 150px, #2a1c15 0%, #0a0806 100%) !important;
-  }
-  
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    mix-blend-mode: overlay;
-    animation: filmJitter 0.3s infinite steps(2);
-  }
-
-  /* VHS Scanlines across entire page */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0) 2px,
-      rgba(0, 0, 0, 0.3) 3px,
-      rgba(0, 0, 0, 0.3) 4px
-    );
-    pointer-events: none;
-    z-index: 9998;
-  }
-
-  @keyframes filmJitter {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(2px, 2px); }
-  }
-
-  /* Royal Title styling with subtle 90s Chromatic Aberration */
-  header .name {
-    display: inline-block;
-    color: #FBF8F1;
-    font-family: var(--font-display);
-    text-align: center;
-    text-shadow: 
-      2px 0 0 rgba(200, 20, 20, 0.7), 
-      -2px 0 0 rgba(20, 20, 200, 0.7),
-      0 0 40px rgba(195, 162, 75, 0.5);
-    animation: rgbGlitch 5s infinite alternate;
-  }
-
-  @keyframes rgbGlitch {
-    0% { text-shadow: 2px 0 0 rgba(200, 20, 20, 0.7), -2px 0 0 rgba(20, 20, 200, 0.7), 0 0 40px rgba(195, 162, 75, 0.5); }
-    10% { text-shadow: -2px 0 0 rgba(200, 20, 20, 0.7), 2px 0 0 rgba(20, 20, 200, 0.7), 0 0 40px rgba(195, 162, 75, 0.5); }
-    100% { text-shadow: 1px 0 0 rgba(200, 20, 20, 0.7), -1px 0 0 rgba(20, 20, 200, 0.7), 0 0 40px rgba(195, 162, 75, 0.5); }
-  }
-
-  /* Royal Label Block container */
-  header .object-label {
-    text-align: center;
-    background: rgba(16, 10, 8, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(195, 162, 75, 0.3);
-    padding: 60px 40px;
-    border-radius: 8px;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.9), inset 0 0 60px rgba(195, 162, 75, 0.05);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  /* Vintage film tracking bar */
-  header .object-label::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 8px;
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    pointer-events: none;
-    animation: trackingScroll 8s infinite linear;
-  }
-
-  @keyframes trackingScroll {
-    0% { top: -10%; opacity: 0; }
-    10% { opacity: 0.5; }
-    50% { opacity: 0.8; }
-    90% { opacity: 0.5; }
-    100% { top: 110%; opacity: 0; }
-  }
-
-  /* Deep Royal Sepia Tone for the Examine Photo */
-  .examine-photo img {
-    filter: sepia(0.65) contrast(1.25) brightness(0.85) hue-rotate(-15deg);
-    transition: filter 1s ease;
-  }
-  .examine-photo:hover img {
-    filter: sepia(0.2) contrast(1.1) brightness(1.1) hue-rotate(0deg);
-  }
-
-  /* Enquire Buttons Royal Styling */
-  header .btn--gold {
-    box-shadow: 0 0 30px rgba(195, 162, 75, 0.3);
-  }
-
-
   /* ----------------------------------------------------
-     90s ROYAL PREMIUM: STORY & DETAILS UPGRADE
+     CLEAN LUXURY E-COMMERCE LAYOUT (DAWN STYLE)
      ---------------------------------------------------- */
+  .product-page-container {
+    padding-top: calc(var(--nav-h) + 60px);
+    padding-bottom: 80px;
+  }
   
-  /* Glowing Gold Section Dividers (replaces flat border-top) */
-  .section, .section-tight {
-    border-top: none !important;
-    position: relative;
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
-  .section::before, .section-tight::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 10%; right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(195,162,75,0.4) 50%, transparent 100%);
+  @media (min-width: 992px) {
+    .product-grid {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
   }
 
-  /* The Story: Royal Cartouche */
-  #story .article-body {
-    background: rgba(16, 13, 10, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(195, 162, 75, 0.2);
-    box-shadow: 0 40px 100px rgba(0,0,0,0.8), inset 0 0 40px rgba(195, 162, 75, 0.05);
-    padding: 60px;
+  /* MEDIA SECTION */
+  .product-media {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  @media (min-width: 992px) {
+    .product-media {
+      position: sticky;
+      top: calc(var(--nav-h) + 40px);
+    }
+  }
+  .product-main-img-wrapper {
+    width: 100%;
     border-radius: 4px;
-    color: #F1EBDD;
-    font-size: 19px;
-    line-height: 1.8;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--hairline-strong);
   }
-  #story .article-body .lede {
-    color: var(--gold-pale);
-    font-size: 22px;
-    margin-bottom: 24px;
-    border-bottom: 1px solid rgba(195,162,75,0.2);
-    padding-bottom: 24px;
+  .product-main-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+  .product-thumbnails {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .product-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    border: 1px solid var(--hairline);
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.3s;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .product-thumb:hover, .product-thumb.active {
+    opacity: 1;
+    border-color: var(--gold);
   }
 
-  /* Provenance Timeline: Glowing Royal Ledger */
-  .timeline {
-    border-left: 2px solid rgba(195, 162, 75, 0.3) !important;
-    padding-left: 40px !important;
-    margin-top: 40px;
+  /* INFO SECTION */
+  .product-breadcrumbs {
+    font-family: var(--font-utility);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
   }
-  .timeline li {
-    position: relative;
-    padding-bottom: 40px;
+  .product-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 48px);
+    color: var(--ivory);
+    margin-bottom: 12px;
+    line-height: 1.1;
   }
-  /* The glowing dot */
-  .timeline li::before {
-    content: '';
-    position: absolute;
-    left: -46px; /* center on the 2px border */
-    top: 0;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--gold);
-    box-shadow: 0 0 15px var(--gold);
-    border: 2px solid #0a0806;
+  .product-meta {
+    font-family: var(--font-utility);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 32px;
   }
-  .timeline li .year {
+  
+  .product-price {
     font-family: var(--font-display);
     font-size: 24px;
-    color: var(--gold-pale);
-    margin-bottom: 8px;
-  }
-  .timeline li.is-current::before {
-    background: #FBF8F1;
-    box-shadow: 0 0 20px #FBF8F1, 0 0 40px var(--gold);
-    animation: pulseAura 2s infinite alternate;
+    color: var(--ivory);
+    margin-bottom: 32px;
   }
 
-  /* Specifications Ledger */
-  .spec-table dl {
-    background: rgba(16, 13, 10, 0.7);
-    border: 1px solid rgba(195, 162, 75, 0.2);
-    border-radius: 4px;
-    padding: 20px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  }
-  .spec-table dt {
-    padding: 12px 20px;
-    border-bottom: 1px solid rgba(195,162,75,0.1);
-    color: var(--gold);
-  }
-  .spec-table dd {
-    padding: 12px 20px;
-    border-bottom: 1px solid rgba(195,162,75,0.1);
-    color: #F1EBDD;
-  }
-
-  /* Acquisition Box */
-  #enquiry-cta {
-    background: radial-gradient(circle at center, rgba(195, 162, 75, 0.1) 0%, transparent 80%);
-    padding: 40px;
+  /* Enquiry CTA Block (Replaces Add to Cart) */
+  .enquiry-block {
+    background: rgba(16, 13, 10, 0.4);
     border: 1px solid rgba(195,162,75,0.3);
     border-radius: 4px;
-    text-align: center;
+    padding: 30px;
+    margin-bottom: 40px;
+  }
+  
+  /* Accordion */
+  .accordion {
+    border-top: 1px solid var(--hairline-strong);
     margin-top: 40px;
   }
+  .accordion-item {
+    border-bottom: 1px solid var(--hairline-strong);
+  }
+  .accordion-header {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--ivory);
+  }
+  .accordion-header svg {
+    transition: transform 0.3s;
+  }
+  .accordion-item.active .accordion-header svg {
+    transform: rotate(180deg);
+  }
+  .accordion-content {
+    display: none;
+    padding-bottom: 24px;
+    color: var(--text-main);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  .accordion-item.active .accordion-content {
+    display: block;
+  }
+  
+  /* Feature List in accordion */
+  .spec-list {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px 20px;
+  }
+  .spec-list dt { color: var(--gold); font-weight: 500; }
+  .spec-list dd { margin: 0; color: #F1EBDD; }
 
-  /* Related Objects 90s Vintage Sepia effect */
-  .grid-strip .card-img img {
-    filter: sepia(0.6) contrast(1.2) brightness(0.8);
-    transition: filter 0.8s ease, transform 0.8s ease;
+  /* Related Objects */
+  .related-section {
+    margin-top: 80px;
+    padding-top: 80px;
+    border-top: 1px solid var(--hairline-strong);
   }
-  .grid-strip .card:hover .card-img img {
-    filter: sepia(0.1) contrast(1.1) brightness(1.1);
-    transform: scale(1.05);
-  }
-  .grid-strip .card {
-    background: rgba(16, 13, 10, 0.8);
-    border: 1px solid rgba(195, 162, 75, 0.15);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .grid-strip .card-meta {
-    padding: 20px;
-  }
-
-
-  /* ----------------------------------------------------
-     PRODUCT PAGE ENHANCEMENTS (GALLERY, FEATURES, DYK)
-     ---------------------------------------------------- */
-  .features-grid {
+  .related-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     margin-top: 40px;
   }
   @media (min-width: 768px) {
-    .features-grid {
+    .related-grid {
       grid-template-columns: repeat(4, 1fr);
     }
   }
-  .feature-item {
-    text-align: center;
-    padding: 30px 20px;
-    background: rgba(16, 13, 10, 0.6);
-    border: 1px solid rgba(195, 162, 75, 0.15);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-  }
-  .feature-item:hover {
-    border-color: rgba(195, 162, 75, 0.5);
-    background: rgba(16, 13, 10, 0.9);
-    transform: translateY(-5px);
-  }
-  .feature-icon {
-    color: var(--gold);
-    margin-bottom: 16px;
-  }
-  .feature-text {
+  .related-card {
+    text-decoration: none;
     display: block;
-    font-family: var(--font-display);
-    font-size: 18px;
-    color: var(--gold-pale);
-    letter-spacing: 0.05em;
   }
-
-  .product-gallery {
-    margin-bottom: 20px;
-  }
-  .thumbnail-row {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-    justify-content: center;
-  }
-  .thumbnail-item {
-    width: 80px;
-    height: 80px;
-    border-radius: 4px;
-    border: 1px solid rgba(195, 162, 75, 0.2);
-    cursor: pointer;
-    opacity: 0.6;
-    transition: all 0.3s;
+  .related-card img {
+    width: 100%;
+    aspect-ratio: 1;
     object-fit: cover;
-    background: #000;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    transition: opacity 0.3s;
   }
-  .thumbnail-item:hover, .thumbnail-item.active {
-    opacity: 1;
-    border-color: var(--gold);
-    box-shadow: 0 0 15px rgba(195,162,75,0.3);
+  .related-card:hover img {
+    opacity: 0.8;
   }
-
-  .dyk-box {
-    background: linear-gradient(145deg, #110d0a, #0a0806);
-    border: 1px solid rgba(195,162,75,0.3);
-    border-radius: 8px;
-    padding: 60px 40px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .dyk-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .dyk-title {
+  .related-title {
     font-family: var(--font-display);
-    font-size: 32px;
-    color: var(--gold);
-    margin: 20px 0;
-  }
-  .dyk-text {
+    color: var(--ivory);
     font-size: 18px;
-    line-height: 1.8;
-    color: #F1EBDD;
-    max-width: 800px;
-    margin: 0 auto;
+    margin-bottom: 4px;
   }
-  
-  .essentials-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-top: 40px;
+  .related-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
-  @media (min-width: 768px) {
-    .essentials-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  .essential-card {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    padding: 30px;
-    background: rgba(20, 16, 12, 0.5);
-    border: 1px solid rgba(195,162,75,0.1);
-    border-radius: 6px;
-    transition: transform 0.3s;
-  }
-  .essential-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(195,162,75,0.3);
-  }
-  .essential-icon-wrapper {
-    flex-shrink: 0;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(195,162,75,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gold);
-  }
-  .essential-content h3 {
-    font-family: var(--font-display);
-    font-size: 22px;
-    color: var(--gold-pale);
-    margin-bottom: 10px;
-    margin-top: 0;
-  }
-  .essential-content p {
-    font-size: 15px;
-    color: var(--text-main);
-    line-height: 1.6;
-    margin: 0;
-  }
+
 </style>
-
-
 {% endblock %}
 
-{% block title %}{{ artifact.label_number }} — {{ artifact.name }} · VOLGO{% endblock %}
-{% block description %}{{ artifact.name }} — {{ artifact.region }}, {{ artifact.period }}. {{ artifact.story|truncatewords:24 }}{% endblock %}
+{% block title %}{{ artifact.label_number }} - {{ artifact.name }}  VOLGO{% endblock %}
+{% block description %}{{ artifact.name }} - {{ artifact.region }}, {{ artifact.period }}. {{ artifact.story|truncatewords:24 }}{% endblock %}
 
 {% block content %}
-<article class="artifact" data-object-number="{{ artifact.object_number }}" data-frame-count="{{ artifact.frame_count }}">
-
-  <!-- LABEL BLOCK -->
-  <header class="section" style="padding-top:160px;">
-    <div class="container">
-      <div class="object-label">
-        <span class="label-number">{{ artifact.label_number }}</span>
-        <span class="name" style="font-size:clamp(34px,5vw,64px);">{{ artifact.name }}</span>
-        <span class="meta meta-line">{{ artifact.region }}<span class="sep">·</span>{{ artifact.period }}<span class="sep">·</span>{{ artifact.material }}</span>
-        {% if artifact.attribution %}<span class="meta">{{ artifact.attribution }}</span>{% endif %}
-        {% if artifact.status != 'available' %}<span class="meta status">{{ artifact.status_line }}</span>{% endif %}
+<main class="product-page-container container" data-object-number="{{ artifact.object_number }}" data-frame-count="{{ artifact.frame_count }}">
+  <div class="product-grid">
+    
+    <!-- LEFT: GALLERY MEDIA -->
+    <div class="product-media">
+      <div class="product-main-img-wrapper">
+        <img id="mainGalleryImage" class="product-main-img" src="/static/img/objects/{{ artifact.object_number|stringformat:'03d' }}/{{ artifact.hero_frame|stringformat:'02d' }}.webp" alt="{{ artifact.name }}">
       </div>
-      <div style="display:flex; flex-wrap:wrap; gap:var(--s6); align-items:center; margin-top:var(--s5);">
+      <div class="product-thumbnails" id="thumbnailRow">
+        <!-- Thumbnails injected by JS -->
+      </div>
+    </div>
+    
+    <!-- RIGHT: PRODUCT INFO -->
+    <div class="product-info">
+      <a href="/collection/" class="product-breadcrumbs">Collection / {{ artifact.category|default:"Antiquities" }}</a>
+      <h1 class="product-title">{{ artifact.name }}</h1>
+      <div class="product-meta">
+        {{ artifact.region }}  {{ artifact.period }}  {{ artifact.material }}
+      </div>
+      
+      <!-- Status & Enquiry Block -->
+      <div class="enquiry-block">
         {% if artifact.status == 'available' %}
-        <a href="#enquire" class="btn btn--gold">Enquire about this object</a>
+          <p style="margin-bottom: 24px; color: var(--gold); font-family: var(--font-utility); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">Available for Private Acquisition</p>
         {% elif artifact.status == 'reserved' %}
-        <span class="meta status" style="font-style:italic;">{{ artifact.status_line }}</span>
+          <p style="margin-bottom: 24px; color: var(--text-muted); font-family: var(--font-utility); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">Currently Reserved</p>
         {% endif %}
-        <a href="#enquire" class="btn" style="margin-left:auto;">Enquire privately</a>
+        
+        <!-- Native Enquiry Form Box -->
+        <div id="enquiry-cta"></div>
       </div>
-      <p class="meta" style="margin-top:20px; color:var(--text-muted);">Accession {{ artifact.accession_code }}</p>
-    </div>
-  </header>
+      
+      <!-- Details Accordion -->
+      <div class="accordion">
+        
+        <!-- 1. Description -->
+        {% if artifact.story %}
+        <div class="accordion-item active">
+          <div class="accordion-header">
+            <span>The Story</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="accordion-content">
+            {% if artifact.story_lede %}<p style="font-weight: 500; color: var(--gold-pale);">{{ artifact.story_lede }}</p>{% endif %}
+            {{ artifact.story|linebreaks }}
+          </div>
+        </div>
+        {% endif %}
 
+        <!-- 2. Specifications -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>Specifications</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="accordion-content">
+            <dl class="spec-list">
+              <dt>Object No.</dt><dd>{{ artifact.label_number }}</dd>
+              <dt>Accession</dt><dd>{{ artifact.accession_code }}</dd>
+              {% if artifact.maker %}<dt>Maker</dt><dd>{{ artifact.maker }}</dd>{% endif %}
+              <dt>Period</dt><dd>{{ artifact.period }}</dd>
+              <dt>Region</dt><dd>{{ artifact.region }}</dd>
+              <dt>Materials</dt><dd>{{ artifact.material }}</dd>
+              {% if artifact.dimensions %}<dt>Dimensions</dt><dd>{{ artifact.dimensions }}</dd>{% endif %}
+              {% if artifact.weight %}<dt>Weight</dt><dd>{{ artifact.weight }}</dd>{% endif %}
+            </dl>
+          </div>
+        </div>
+
+        <!-- 3. Condition & Provenance -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>Condition & Provenance</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="accordion-content">
+            <h4 style="color: var(--gold); margin-bottom: 8px;">Condition</h4>
+            {{ artifact.condition|default:"Condition photographs are available on request."|linebreaks }}
+            
+            {% if artifact.provenance.all %}
+            <h4 style="color: var(--gold); margin-top: 24px; margin-bottom: 12px;">Provenance</h4>
+            <ul style="padding-left: 16px; margin: 0;">
+              {% for p in artifact.provenance.all %}
+              <li style="margin-bottom: 8px;">
+                <strong>{{ p.year }}</strong>: {{ p.event }}
+                {% if p.evidence %}<br><span style="color: var(--text-muted); font-size: 13px;">{{ p.evidence }}</span>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- 4. Shipping & Handling -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>Private Delivery</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="accordion-content">
+            <p>Acquisitions are conducted personally. We arrange secure, private delivery globally through our network of specialized fine art handlers. Every piece is fully insured while in transit.</p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
   
-  <!-- CHARACTERISTICS (Features Grid) -->
-  <section class="section-tight" style="padding-top:0;">
-    <div class="container">
-      <div class="features-grid reveal">
-        <div class="feature-item">
-          <svg class="feature-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polygon points="12 2 15 8 22 9 17 14 18 21 12 17 6 21 7 14 2 9 9 8 12 2"></polygon>
-          </svg>
-          <span class="feature-text">Authentic</span>
-        </div>
-        <div class="feature-item">
-          <svg class="feature-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-          </svg>
-          <span class="feature-text">Aged Patina</span>
-        </div>
-        <div class="feature-item">
-          <svg class="feature-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-            <polyline points="21 15 16 10 5 21"></polyline>
-          </svg>
-          <span class="feature-text">Collectible</span>
-        </div>
-        <div class="feature-item">
-          <svg class="feature-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-          </svg>
-          <span class="feature-text">Handmade</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXAMINE -->
-
-  <section class="section-tight" id="examine">
-    <div class="container">
-      <p class="label-number" style="margin-bottom:var(--s4);">Examine</p>
-      
-      
-            <div class="product-gallery">
-        <figure class="examine-photo" id="mainGalleryContainer">
-          <img id="mainGalleryImage" src="/static/img/objects/{{ artifact.object_number|stringformat:'03d' }}/{{ artifact.hero_frame|stringformat:'02d' }}.webp"
-               alt="{{ artifact.name }}" loading="lazy" decoding="async">
-        </figure>
-        <div class="thumbnail-row reveal" id="thumbnailRow">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-
-
-      {% if artifact.image_source %}
-      <p class="img-credit">
-        Reference photograph — <a href="{{ artifact.image_source_url }}" rel="noopener" target="_blank">{{ artifact.image_source }}</a>
-        {% if artifact.image_license %} · {{ artifact.image_license }}{% endif %}
-        {% if artifact.image_credit %} · {{ artifact.image_credit }}{% endif %}
-      </p>
-      {% endif %}
-      {% if artifact.inspection_points.all %}
-      <div class="inspect-list" style="margin-top:var(--s5);">
-        <p class="label-number reveal" style="margin-bottom:var(--s4);">Inspection Notes</p>
-        <ul>
-          {% for ip in artifact.inspection_points.all %}
-          <li class="reveal">
-            <span class="meta gold">{{ ip.kind }}</span>
-            <p style="margin:6px 0 0;"><strong>{{ ip.label }}</strong></p>
-            <p class="meta" style="margin:4px 0 0;">{{ ip.detail }}</p>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% endif %}
-    </div>
-  </section>
-
-  <!-- STORY -->
-  {% if artifact.story %}
-  <section class="section" id="story">
-    <div class="container narrow">
-      <p class="label-number reveal">The Story</p>
-      <h2 class="reveal" style="margin:16px 0 var(--s5);">A record of this object</h2>
-      <div class="article-body reveal">
-        {% if artifact.story_lede %}<p class="lede">{{ artifact.story_lede }}</p>{% endif %}
-        {{ artifact.story|linebreaks }}
-      </div>
-    </div>
-  </section>
-  {% endif %}
-
-  <!-- PROVENANCE -->
-  {% if artifact.provenance.all %}
-  <section class="section" id="provenance" style="border-top:1px solid var(--hairline-dark);">
-    <div class="container narrow">
-      <p class="label-number reveal">Provenance</p>
-      <h2 class="reveal" style="margin:16px 0 var(--s6);">The record of keepers</h2>
-      <ol class="timeline">
-        {% for p in artifact.provenance.all %}
-        <li class="reveal {% if forloop.last %}is-current{% endif %}">
-          <div class="year">{{ p.year }}</div>
-          <p style="margin-bottom:6px;">{{ p.event }}</p>
-          {% if p.evidence %}<p class="evidence">{{ p.evidence }}</p>{% endif %}
-          {% if p.undocumented %}<p class="evidence undocumented">This passage of the record is not documented.</p>{% endif %}
-        </li>
-        {% endfor %}
-      </ol>
-      <p class="form-note" style="margin-top:var(--s6);">Where documentation is absent, the entry says so plainly.</p>
-    </div>
-  </section>
-  {% endif %}
-
-  
-  <!-- DID YOU KNOW -->
-  <section class="section" id="did-you-know">
-    <div class="container text-center">
-      <div class="dyk-box reveal">
-        <div class="dyk-ornament">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)"><path d="M12 2L15 8L22 9L17 14L18 21L12 17L6 21L7 14L2 9L9 8L12 2Z"/></svg>
-        </div>
-        <h2 class="dyk-title">Curator's Insight</h2>
-        <p class="dyk-text">
-          Objects of this caliber often hold secrets beneath their patina. Every mark, abrasion, and stylistic choice represents a chapter in a centuries-spanning narrative. Whether originally commissioned for a noble estate or crafted by a master artisan whose name is lost to time, this piece carries the indisputable weight of history and cultural heritage.
-        </p>
-        <div class="dyk-ornament" style="margin-top:20px; transform:rotate(180deg);">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)"><path d="M12 2L15 8L22 9L17 14L18 21L12 17L6 21L7 14L2 9L9 8L12 2Z"/></svg>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MATERIAL ESSENTIALS -->
-  <section class="section" id="material-essentials" style="background:rgba(16, 13, 10, 0.4); border-top:1px solid var(--hairline-dark);">
-    <div class="container">
-      <h2 class="reveal text-center" style="font-family:var(--font-display); font-size:36px; margin-bottom:60px; color:var(--gold-pale);">
-        The Essence of Antiquity
-      </h2>
-      
-      <div class="essentials-grid">
-        <div class="essential-card reveal">
-          <div class="essential-icon-wrapper">
-             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
-          </div>
-          <div class="essential-content">
-            <h3>Enduring & Stylish</h3>
-            <p>Forged to outlast generations, carrying an aesthetic that transcends passing trends to anchor any sophisticated space.</p>
-          </div>
-        </div>
-        <div class="essential-card reveal" style="transition-delay:0.1s;">
-          <div class="essential-icon-wrapper">
-             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          </div>
-          <div class="essential-content">
-            <h3>Historical Resonance</h3>
-            <p>Each interaction connects you to the period of its creation, preserving the tangible touch of the past.</p>
-          </div>
-        </div>
-        <div class="essential-card reveal" style="transition-delay:0.2s;">
-          <div class="essential-icon-wrapper">
-             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-          </div>
-          <div class="essential-content">
-            <h3>Versatile Presence</h3>
-            <p>Equally commanding in a minimalist modern environment or a traditional classic interior.</p>
-          </div>
-        </div>
-        <div class="essential-card reveal" style="transition-delay:0.3s;">
-          <div class="essential-icon-wrapper">
-             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-          </div>
-          <div class="essential-content">
-            <h3>Sustainable Legacy</h3>
-            <p>Acquiring historical artifacts is the ultimate form of sustainable curation, breathing life into extant masterpieces.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONDITION & SPECIFICATIONS -->
-  <section class="section" id="condition" style="border-top:1px solid var(--hairline-dark);">
-    <div class="container two-col">
-      <div>
-        <p class="label-number reveal">Condition</p>
-        <h2 class="reveal" style="font-size:clamp(26px,3vw,36px); margin:16px 0 var(--s4);">{% if artifact.condition_grade %}{{ artifact.condition_grade }}{% else %}Condition report{% endif %}</h2>
-        <div class="reveal">{{ artifact.condition|default:"Condition photographs are available on request."|linebreaks }}</div>
-      </div>
-      <div>
-        <p class="label-number reveal">Specifications</p>
-        <h2 class="reveal" style="font-size:clamp(26px,3vw,36px); margin:16px 0 var(--s4);">Object details</h2>
-        <div class="reveal spec-table">
-          <dl style="display:grid; grid-template-columns:auto 1fr; gap:14px var(--s5); margin:0;">
-            <dt class="meta">Object</dt><dd style="margin:0;">{{ artifact.label_number }}</dd>
-            <dt class="meta">Accession</dt><dd style="margin:0;">{{ artifact.accession_code }}</dd>
-            {% if artifact.maker %}<dt class="meta">Maker</dt><dd style="margin:0;">{{ artifact.maker }}</dd>{% endif %}
-            {% if artifact.attribution %}<dt class="meta">Attribution</dt><dd style="margin:0;">{{ artifact.attribution }}</dd>{% endif %}
-            <dt class="meta">Period</dt><dd style="margin:0;">{{ artifact.period }}</dd>
-            <dt class="meta">Region</dt><dd style="margin:0;">{{ artifact.region }}</dd>
-            <dt class="meta">Materials</dt><dd style="margin:0;">{{ artifact.material }}</dd>
-            {% if artifact.dimensions %}<dt class="meta">Dimensions</dt><dd style="margin:0;">{{ artifact.dimensions }}</dd>{% endif %}
-            {% if artifact.weight %}<dt class="meta">Weight</dt><dd style="margin:0;">{{ artifact.weight }}</dd>{% endif %}
-          </dl>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ACQUISITION -->
-  <section class="section" id="enquire" style="border-top:1px solid var(--hairline-dark);">
-    <div class="container narrow">
-      <p class="label-number reveal">Acquisition</p>
-      <h2 class="reveal" style="margin:16px 0 var(--s4);">Private acquisition</h2>
-      <p class="reveal">Acquisitions are conducted personally. Enquire, and a member of the house will respond — usually within one working day — to discuss the object, its documentation, and private delivery.</p>
-      <div class="reveal" style="margin-top:var(--s5);" id="enquiry-cta"></div>
-    </div>
-  </section>
-
   <!-- RELATED OBJECTS -->
   {% if related %}
-  <section class="section-tight" style="border-top:1px solid var(--hairline-dark);">
-    <div class="container">
-      <p class="label-number">Related objects</p>
-      <div class="grid-strip reveal" style="margin-top:var(--s5);">
-        {% for r in related %}
-        <a href="{{ r.get_absolute_url }}" class="card">
-          <div class="card-img"><img src="/static/img/objects/{{ r.object_number|stringformat:'03d' }}/00.webp" alt="{{ r.name }} — {{ r.region }}, {{ r.period }}" loading="lazy" decoding="async"></div>
-          <div class="card-meta">
-            <span class="meta gold">{{ r.category }}</span>
-            <span class="card-name">{{ r.name }}</span>
-            <span class="meta">{{ r.region }} · {{ r.period }}</span>
-          </div>
-        </a>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-  {% endif %}
-
-  <!-- Related chronicle -->
-  {% with chronicle=artifact.chronicles.first %}
-  {% if chronicle %}
-  <section class="section-tight" style="border-top:1px solid var(--hairline-dark);">
-    <div class="container narrow">
-      <p class="label-number">Related chronicle</p>
-      <a href="/chronicles/{{ chronicle.slug }}/" class="reveal" style="display:block; margin-top:12px;">
-        <h3 style="font-size:clamp(24px,3vw,32px);">{{ chronicle.title }}</h3>
-        <p class="meta" style="margin-top:8px;">{{ chronicle.published_at }} · {{ chronicle.reading_minutes }} min read</p>
+  <div class="related-section">
+    <h2 style="font-family: var(--font-display); font-size: 32px; color: var(--ivory); text-align: center;">You May Also Like</h2>
+    <div class="related-grid">
+      {% for r in related %}
+      <a href="{{ r.get_absolute_url }}" class="related-card">
+        <img src="/static/img/objects/{{ r.object_number|stringformat:'03d' }}/00.webp" alt="{{ r.name }}" loading="lazy">
+        <div class="related-title">{{ r.name }}</div>
+        <div class="related-meta">{{ r.region }} &bull; {{ r.period }}</div>
       </a>
+      {% endfor %}
     </div>
-  </section>
+  </div>
   {% endif %}
-  {% endwith %}
-</article>
+  
+</main>
 {% endblock %}
 
 {% block scripts %}
   <script src="{% static 'js/enquiry.js' %}" defer></script>
-  
   <script>
-  (function() {
+  document.addEventListener('DOMContentLoaded', () => {
+    // Accordion Logic
+    const headers = document.querySelectorAll('.accordion-header');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        item.classList.toggle('active');
+      });
+    });
 
     // Gallery Thumbnails Logic
     const frameCount = parseInt("{{ artifact.frame_count|default:1 }}", 10);
     const objNumStr = "{{ artifact.object_number|stringformat:'03d' }}";
     const heroFrame = parseInt("{{ artifact.hero_frame|default:0 }}", 10);
     
-    if (frameCount > 1) {
-      const thumbRow = document.getElementById('thumbnailRow');
-      const mainImg = document.getElementById('mainGalleryImage');
-      
+    const row = document.getElementById('thumbnailRow');
+    const mainImg = document.getElementById('mainGalleryImage');
+    
+    if (row && mainImg && frameCount > 0) {
       for (let i = 0; i < frameCount; i++) {
         const frameStr = i.toString().padStart(2, '0');
-        const imgSrc = '/static/img/objects/' + objNumStr + '/' + frameStr + '.webp';
+        const src = /static/img/objects//.webp;
         
-        const imgEl = document.createElement('img');
-        imgEl.src = imgSrc;
-        imgEl.className = 'thumbnail-item';
-        if (i === heroFrame) {
-          imgEl.classList.add('active');
-        }
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'product-thumb';
+        if (i === heroFrame) img.classList.add('active');
         
-        imgEl.addEventListener('click', () => {
-          mainImg.src = imgSrc;
-          document.querySelectorAll('.thumbnail-item').forEach(el => el.classList.remove('active'));
-          imgEl.classList.add('active');
+        img.addEventListener('click', () => {
+          document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
+          img.classList.add('active');
+          mainImg.src = src;
         });
         
-        thumbRow.appendChild(imgEl);
+        row.appendChild(img);
       }
     }
-
-  })();
+  });
   </script>
-  <script>
-  (function () {
-
-    if (!window.speechSynthesis) return;
-
-    // Build the narration text from page content
-    const name = "{{ artifact.name|escapejs }}";
-    const label = "{{ artifact.label_number|escapejs }}";
-    const region = "{{ artifact.region|escapejs }}";
-    const period = "{{ artifact.period|escapejs }}";
-    const material = "{{ artifact.material|escapejs }}";
-    const attribution = "{{ artifact.attribution|escapejs }}";
-    const condition = "{{ artifact.condition_grade|escapejs }}";
-    const conditionDetail = "{{ artifact.condition|escapejs|truncatechars:300 }}";
-    const story = document.querySelector('#story .article-body')?.innerText?.replace(/\s+/g,' ').trim() || '';
-    const accession = "{{ artifact.accession_code|escapejs }}";
-    const maker = "{{ artifact.maker|escapejs }}";
-    const dimensions = "{{ artifact.dimensions|escapejs }}";
-
-    
-    const narrator = [
-      `Welcome to Volgo. You are now listening to a guided narration of object ${label}.`,
-      `This piece is known as: ${name}.`,
-      region ? `It originates from ${region}.` : '',
-      period ? `Dating to ${period}.` : '',
-      material ? `The materials used are: ${material}.` : '',
-      attribution ? `Attribution: ${attribution}.` : '',
-      maker ? `Maker: ${maker}.` : '',
-      dimensions ? `Dimensions: ${dimensions}.` : '',
-      story ? `Here is the story of this object. ${story}` : '',
-      condition ? `Condition: ${condition}. ${conditionDetail}` : '',
-      `Accession number: ${accession}.`,
-      `To enquire about this object privately, scroll down and use the acquisition form, or contact the house directly. Thank you.`
-    ].filter(Boolean).join(' ');
-
-    // Inject the voice button into the header action bar
-    const labelBlock = document.querySelector('.object-label');
-    if (!labelBlock) return;
-
-    const voiceBtn = document.createElement('button');
-    voiceBtn.id = 'voice-btn';
-    voiceBtn.innerHTML = `
-      <span class="voice-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" class="wave-outer"/>
-          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" class="wave-inner"/>
-        </svg>
-      </span>
-      <span class="voice-label">Listen to this object</span>
-    `;
-
-    voiceBtn.style.cssText = `
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 32px;
-      padding: 14px 28px;
-      background: transparent;
-      border: 1px solid rgba(195, 162, 75, 0.4);
-      color: var(--gold, #C3A24B);
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      transition: all 0.3s ease;
-    `;
-
-    voiceBtn.onmouseenter = () => {
-      voiceBtn.style.background = 'rgba(195,162,75,0.1)';
-      voiceBtn.style.boxShadow = '0 0 20px rgba(195,162,75,0.2)';
-    };
-    voiceBtn.onmouseleave = () => {
-      if (!speechSynthesis.speaking) {
-        voiceBtn.style.background = 'transparent';
-        voiceBtn.style.boxShadow = 'none';
-      }
-    };
-
-    let utterance = null;
-    let playing = false;
-
-    voiceBtn.addEventListener('click', () => {
-      if (playing) {
-        speechSynthesis.cancel();
-        playing = false;
-        voiceBtn.querySelector('.voice-label').textContent = 'Listen to this object';
-        voiceBtn.style.background = 'transparent';
-        voiceBtn.style.boxShadow = 'none';
-        voiceBtn.style.borderColor = 'rgba(195,162,75,0.4)';
-        return;
-      }
-
-      utterance = new SpeechSynthesisUtterance(narrator);
-      utterance.rate = 0.88;
-      utterance.pitch = 0.95;
-      utterance.volume = 1;
-
-      // Pick a premium-sounding voice if available
-      const voices = speechSynthesis.getVoices();
-      const preferred = voices.find(v =>
-        /Google UK|Daniel|Samantha|Karen|Moira|en-GB|en-AU/.test(v.name + v.lang)
-      );
-      if (preferred) utterance.voice = preferred;
-
-      utterance.onstart = () => {
-        playing = true;
-        voiceBtn.querySelector('.voice-label').textContent = 'Stop narration';
-        voiceBtn.style.background = 'rgba(195,162,75,0.15)';
-        voiceBtn.style.boxShadow = '0 0 30px rgba(195,162,75,0.3)';
-        voiceBtn.style.borderColor = 'rgba(195,162,75,0.8)';
-        voiceBtn.querySelector('.wave-outer').style.animation = 'wavePulse 1.2s infinite';
-        voiceBtn.querySelector('.wave-inner').style.animation = 'wavePulse 0.8s infinite alternate';
-      };
-
-      utterance.onend = utterance.onerror = () => {
-        playing = false;
-        voiceBtn.querySelector('.voice-label').textContent = 'Listen to this object';
-        voiceBtn.style.background = 'transparent';
-        voiceBtn.style.boxShadow = 'none';
-        voiceBtn.style.borderColor = 'rgba(195,162,75,0.4)';
-      };
-
-      speechSynthesis.speak(utterance);
-    });
-
-    labelBlock.appendChild(voiceBtn);
-
-    // CSS wave animation
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes wavePulse {
-        0% { opacity: 0.4; }
-        100% { opacity: 1; }
-      }
-      #voice-btn svg path { transition: opacity 0.3s; }
-    `;
-    document.head.appendChild(style);
-  })();
-  </script>
-  {% endblock %}
-
-
-
-
-
-
+{% endblock %}
