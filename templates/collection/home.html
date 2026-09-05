@@ -158,13 +158,19 @@
           <a href="/contact/" class="btn">Contact the house</a>
         </div>
       </div>
-      <figure class="pa-image reveal-clip" aria-hidden="true">
-        <span class="reveal-clip-media" style="display:block; height:100%;">
-          <img src="/static/img/objects/043/00.webp"
-               alt="A medieval bronze aquamanile in the form of a unicorn — one of the house's reference objects"
-               loading="lazy" width="800" height="1000" decoding="async" style="height:100%; object-fit:cover;">
-        </span>
-      </figure>
+      <figure class="pa-image reveal-clip" aria-hidden="true" style="background:transparent; border:none; box-shadow:none;">
+          <span class="reveal-clip-media" style="display:block; height:100%; position:relative;">
+            <div style="position:relative; width:100%; aspect-ratio:846/988;">
+              <img src="/static/img/objects/043/00.webp"
+                   alt="A medieval bronze aquamanile in the form of a unicorn — one of the house's reference objects"
+                   loading="lazy" decoding="async" style="position:absolute; top:16.8%; bottom:15.8%; left:19%; right:19%; width:62%; height:67.4%; object-fit:cover;">
+              <!-- glass effect -->
+              <div style="position:absolute; top:16.8%; bottom:15.8%; left:19%; right:19%; width:62%; height:67.4%; backdrop-filter: blur(3px) brightness(1.05) contrast(0.95); box-shadow: inset 0 0 15px rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); pointer-events:none;"></div>
+              <!-- ornate frame overlay -->
+              <img src="/static/img/ornate-frame-cropped.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none; z-index:2;" loading="lazy">
+            </div>
+          </span>
+        </figure>
     </div>
   </div>
 </section>
@@ -343,12 +349,18 @@
 <section class="section" id="house-strip">
   <div class="container">
     <div class="house-strip-layout">
-      <figure class="house-strip-image reveal-clip" aria-hidden="true">
-        <span class="reveal-clip-media" style="display:block; height:100%;">
-          <img src="/static/img/objects/013/00.webp" alt="A Renaissance marble bust of Emperor Antoninus Pius in the house's viewing room"
-               loading="lazy" width="720" height="960" decoding="async" style="height:100%; object-fit:cover;">
-        </span>
-      </figure>
+      <figure class="house-strip-image reveal-clip" aria-hidden="true" style="background:transparent; border:none; box-shadow:none;">
+          <span class="reveal-clip-media" style="display:block; height:100%; position:relative;">
+            <div style="position:relative; width:100%; aspect-ratio:846/988;">
+              <img src="/static/img/objects/013/00.webp" alt="A Renaissance marble bust of Emperor Antoninus Pius in the house's viewing room"
+                   loading="lazy" decoding="async" style="position:absolute; top:16.8%; bottom:15.8%; left:19%; right:19%; width:62%; height:67.4%; object-fit:cover;">
+              <!-- glass effect -->
+              <div style="position:absolute; top:16.8%; bottom:15.8%; left:19%; right:19%; width:62%; height:67.4%; backdrop-filter: blur(3px) brightness(1.05) contrast(0.95); box-shadow: inset 0 0 15px rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); pointer-events:none;"></div>
+              <!-- ornate frame overlay -->
+              <img src="/static/img/ornate-frame-cropped.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none; z-index:2;" loading="lazy">
+            </div>
+          </span>
+        </figure>
       <div class="reveal">
         <p class="label-number">La Maison</p>
         <h2 style="margin-top:16px; font-size:clamp(30px,3.6vw,48px);">A young house<br>with an old discipline</h2>
