@@ -16,6 +16,49 @@
   <script src="{% static 'js/password-toggle.js' %}" defer></script>
 <style>
 
+
+  
+  /* Comprehensive Mobile UI Fixes */
+  @media (max-width: 991px) {
+    /* Menu alignment */
+    .site-nav {
+      justify-content: flex-start !important;
+      padding-top: 120px !important;
+    }
+    .site-nav.is-open a { 
+      display: flex !important; 
+      align-items: center; 
+      gap: 20px; 
+      text-decoration: none;
+      margin-bottom: 30px;
+    }
+    .site-nav.is-open a .nav-idx {
+      margin-right: 0 !important;
+      vertical-align: middle !important;
+      font-size: 14px !important;
+      padding-top: 4px;
+    }
+    /* Mobile-only items */
+    a.mobile-menu-only {
+      display: flex !important;
+    }
+    
+    /* Search overlay spacing */
+    .search-overlay {
+      padding-top: 100px !important;
+    }
+    .search-hints button {
+      margin-right: 12px;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    .search-close {
+      top: 20px !important;
+      right: 20px !important;
+      padding: 15px !important;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -34,7 +77,7 @@
         <a href="/chronicles/" data-nav="chronicles"><span class="nav-idx" aria-hidden="true">03</span>Journal</a>
         
         <!-- Mobile-only menu items -->
-        <a href="/acquisition/" class="mobile-menu-only" style="margin-top: 40px;"><span class="nav-idx" aria-hidden="true">04</span>Acquisition</a>
+        <a href="/acquisition/" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">04</span>Acquisition</a>
         {% if user.is_authenticated %}
           <a href="/profile/" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">05</span>Profile</a>
         {% else %}
@@ -142,5 +185,7 @@
   {% block scripts %}{% endblock %}
 </body>
 </html>
+
+
 
 
