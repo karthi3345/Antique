@@ -59,6 +59,45 @@
     }
   }
 
+
+  /* Gemini Pro Style Spinning Border */
+  .gemini-pro-border {
+    position: relative;
+    border-radius: 50%;
+    padding: 3px;
+    z-index: 1;
+    overflow: hidden;
+    display: inline-block;
+  }
+  .gemini-pro-border::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, #1b62f2, #9452f1, #24bbfb, #1b62f2);
+    animation: spin-gemini 4s linear infinite;
+    z-index: -2;
+  }
+  .gemini-pro-border::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: #0a0806;
+    border-radius: 50%;
+    z-index: -1;
+  }
+  .gemini-pro-border img, .gemini-pro-border svg {
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    display: block;
+  }
+  @keyframes spin-gemini {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
 </style>
 </head>
 <body>
@@ -185,6 +224,7 @@
   {% block scripts %}{% endblock %}
 </body>
 </html>
+
 
 
 
