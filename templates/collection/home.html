@@ -350,13 +350,44 @@
 </script>
 
 
-<!-- ============ THE HOUSE — MINIMAL ============ -->
+<!-- ============ THE HOUSE ============ -->
 <section class="section" id="the-house" style="border-top:1px solid rgba(195,162,75,0.15); text-align:center;">
-  <div class="container narrow reveal">
+  <div class="container reveal">
     <p class="label-number" style="justify-content:center;">The House</p>
     <h2 style="margin-top:16px; font-size:clamp(28px,3.5vw,48px);">A private antiquities house</h2>
     <p style="margin-top:var(--s4); color:rgba(241,235,221,0.7); max-width:52ch; margin-inline:auto; line-height:1.8;">Founded in 2026. We examine, document, and place objects with their next keepers — one collector at a time.</p>
-    <div style="margin-top:var(--s5);"><a href="/acquisition/" class="btn btn--gold">Private Acquisition</a></div>
+
+    <!-- Stat tiles -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s4); margin-top:var(--s6);">
+      <div style="padding:36px 24px; border:1px solid rgba(195,162,75,0.2); border-radius:4px; background:rgba(16,13,10,0.5);">
+        <p style="font-family:var(--font-display); font-size:clamp(36px,4vw,52px); color:var(--gold); margin:0;">150</p>
+        <p style="font-family:var(--font-utility); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(241,235,221,0.5); margin-top:8px;">Objects, max at any time</p>
+      </div>
+      <div style="padding:36px 24px; border:1px solid rgba(195,162,75,0.2); border-radius:4px; background:rgba(16,13,10,0.5);">
+        <p style="font-family:var(--font-display); font-size:clamp(36px,4vw,52px); color:var(--gold); margin:0;">100%</p>
+        <p style="font-family:var(--font-utility); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(241,235,221,0.5); margin-top:8px;">Personally examined</p>
+      </div>
+      <div style="padding:36px 24px; border:1px solid rgba(195,162,75,0.2); border-radius:4px; background:rgba(16,13,10,0.5);">
+        <p style="font-family:var(--font-display); font-size:clamp(36px,4vw,52px); color:var(--gold); margin:0;">1 day</p>
+        <p style="font-family:var(--font-utility); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(241,235,221,0.5); margin-top:8px;">Response, usually</p>
+      </div>
+    </div>
+
+    <!-- Two-col philosophy -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--s5); margin-top:var(--s5); text-align:left;">
+      <div style="padding:40px; background:rgba(16,13,10,0.6); border:1px solid rgba(195,162,75,0.15); border-radius:4px;">
+        <p class="label-number">Philosophy</p>
+        <h3 style="margin:12px 0 16px; font-size:clamp(20px,2vw,26px);">The record is the luxury</h3>
+        <p style="color:rgba(241,235,221,0.65); line-height:1.8; font-size:15px;">An object survives; a record proves it. We treat documentation as half of every object we offer. We decline to sell — we present, verify, and step back.</p>
+      </div>
+      <div style="padding:40px; background:rgba(16,13,10,0.6); border:1px solid rgba(195,162,75,0.15); border-radius:4px;">
+        <p class="label-number">Curatorial approach</p>
+        <h3 style="margin:12px 0 16px; font-size:clamp(20px,2vw,26px);">Small by intention</h3>
+        <p style="color:rgba(241,235,221,0.65); line-height:1.8; font-size:15px;">Each object is examined in person, photographed in full rotation, and catalogued honestly — attribution is never rounded up to certainty. Rarity is proven by restraint.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:var(--s6);"><a href="/acquisition/" class="btn btn--gold">Private Acquisition</a></div>
   </div>
 </section>
 {% endblock %}
