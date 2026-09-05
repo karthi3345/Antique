@@ -4,58 +4,54 @@
 {% block title %}The Collection — VOLGO{% endblock %}
 
 {% block content %}
-<!-- Premium Dark Vault Background (Hero-like) -->
-<div class="vault-background" id="vault-bg">
-  <div class="vault-spotlight"></div>
-  <div class="dust-particles" id="vault-dust"></div>
-</div>
-
-<section class="section collection-stage" style="padding-top:160px; position: relative; z-index: 10;">
+<section class="section collection-stage" style="padding-top: 120px;">
   <div class="container">
     
-    <div class="collection-header reveal">
-      <p class="label-number" style="justify-content: flex-start; color: var(--gold-pale);">La Collection</p>
-      <h1 class="vault-title" style="font-size:clamp(44px,6vw,88px);">Catalogue</h1>
-      <p class="lede" style="max-width:60ch; margin-top:24px; color: rgba(241, 235, 221, 0.8);">
-        The collection is small by intention. Each object is catalogued, photographed in full rotation, and offered once.
+    <div class="collection-header" style="margin-bottom: 40px;">
+      <h1 class="h2" style="font-size: clamp(32px, 5vw, 48px); margin-bottom: 16px;">The Collection</h1>
+      <p style="color: rgba(241, 235, 221, 0.7); max-width: 60ch;">
+        A curated selection of antiquities. Each object is catalogued, authenticated, and offered once.
       </p>
     </div>
 
-    <hr class="rule" style="margin: var(--s7) 0 var(--s5); border-color: rgba(195,162,75,0.2);">
-
-    <!-- Premium Glass-Morphic Filters -->
-    <div class="catalogue-controls glass-panel reveal" id="catalogue-controls">
-      <div class="field">
-        <label for="f-region">Region</label>
-        <select id="f-region" class="premium-select"><option value="">All regions</option></select>
+    <!-- Dawn-style Facet / Filter Bar -->
+    <div class="catalogue-toolbar">
+      <div class="toolbar-filters">
+        <div class="field">
+          <select id="f-region" class="dawn-select" aria-label="Filter by Region"><option value="">All Regions</option></select>
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"></path></svg>
+        </div>
+        <div class="field">
+          <select id="f-category" class="dawn-select" aria-label="Filter by Category"><option value="">All Categories</option></select>
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"></path></svg>
+        </div>
+        <div class="field">
+          <select id="f-material" class="dawn-select" aria-label="Filter by Material"><option value="">All Materials</option></select>
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"></path></svg>
+        </div>
       </div>
-      <div class="field">
-        <label for="f-category">Category</label>
-        <select id="f-category" class="premium-select"><option value="">All categories</option></select>
+      
+      <div class="toolbar-search-sort">
+        <div class="field search-field">
+          <input type="search" id="f-q" class="dawn-input" placeholder="Search objects..." autocomplete="off">
+        </div>
+        <div class="field">
+          <span class="sort-label">Sort by:</span>
+          <select id="f-sort" class="dawn-select" aria-label="Sort">
+            <option value="number">Accession Number</option>
+            <option value="period">Oldest</option>
+            <option value="-period">Newest</option>
+          </select>
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"></path></svg>
+        </div>
+        <button class="btn-clear" id="f-clear">Clear</button>
       </div>
-      <div class="field">
-        <label for="f-material">Material</label>
-        <select id="f-material" class="premium-select"><option value="">All materials</option></select>
-      </div>
-      <div class="field search-field">
-        <label for="f-q">Search</label>
-        <input type="search" id="f-q" class="premium-input" placeholder="Name, region, maker…" autocomplete="off">
-      </div>
-      <div class="field">
-        <label for="f-sort">Order</label>
-        <select id="f-sort" class="premium-select">
-          <option value="number">By accession number</option>
-          <option value="period">Oldest first</option>
-          <option value="-period">Newest first</option>
-        </select>
-      </div>
-      <button class="btn btn--gold" id="f-clear" style="align-self: flex-end; height: 42px; padding: 0 24px;">Clear</button>
     </div>
 
-    <p class="meta reveal" id="catalogue-count" style="margin-top:var(--s6); color: var(--gold-pale); letter-spacing: 0.1em;"></p>
+    <p class="catalogue-count" id="catalogue-count"></p>
     
     <!-- The Object Grid -->
-    <div class="grid-objects reveal" id="catalogue-grid" style="margin-top:var(--s6);"></div>
+    <div class="dawn-grid" id="catalogue-grid"></div>
   
   </div>
 </section>
@@ -63,196 +59,195 @@
 
 {% block head %}
 <style>
-  /* Premium Vault Aesthetic for the Products/Catalogue */
+  /* Dawn-like E-commerce Styling mapped to Dark Theme */
   body {
     background: #0a0806;
     color: #FBF8F1;
   }
 
-  .vault-background {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
+  .collection-stage {
+    min-height: 80vh;
   }
 
-  .vault-spotlight {
-    position: absolute;
-    top: -20%; left: 50%;
-    width: 150vw; height: 100vh;
-    background: radial-gradient(ellipse at top, rgba(195,162,75,0.08) 0%, transparent 60%);
-    transform: translateX(-50%);
-    animation: slowBreathe 8s infinite alternate ease-in-out;
-  }
-
-  .vault-title {
-    font-family: var(--font-display);
-    color: #FBF8F1;
-    line-height: 1.1;
-    font-weight: 400;
-    position: relative;
-    display: inline-block;
-  }
-
-  .vault-title::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transform: skewX(-20deg);
-    animation: shineSweep 8s infinite;
-  }
-
-  /* Glass Panel Filters */
-  .glass-panel {
+  .catalogue-toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--s5);
-    align-items: flex-end;
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(195, 162, 75, 0.2);
-    border-radius: 8px;
-    padding: 30px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
-  .glass-panel .field {
-    margin: 0;
-    min-width: 160px;
-    flex: 1;
+  .toolbar-filters, .toolbar-search-sort {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
   }
 
-  .glass-panel .search-field {
-    flex: 2;
+  .field {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sort-label {
+    font-size: 14px;
+    margin-right: 8px;
+    color: rgba(241, 235, 221, 0.7);
+  }
+
+  .dawn-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    color: #FBF8F1;
+    font-size: 14px;
+    padding: 8px 24px 8px 0;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  
+  .dawn-select:focus {
+    outline: none;
+    text-decoration: underline;
+  }
+  
+  .dawn-select option {
+    background: #1a1816;
+    color: #FBF8F1;
+  }
+
+  .icon-caret {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    pointer-events: none;
+  }
+
+  .dawn-input {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #FBF8F1;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 2px;
     min-width: 200px;
+    transition: border-color 0.2s;
+  }
+  
+  .dawn-input:focus {
+    outline: none;
+    border-color: #FBF8F1;
   }
 
-  .glass-panel label {
-    color: rgba(195, 162, 75, 0.8);
+  .btn-clear {
+    background: transparent;
+    border: none;
+    color: rgba(241, 235, 221, 0.7);
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .btn-clear:hover {
+    color: #FBF8F1;
+  }
+
+  .catalogue-count {
+    font-size: 13px;
+    color: rgba(241, 235, 221, 0.7);
+    margin-bottom: 24px;
+  }
+
+  /* Grid and Cards */
+  .dawn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .dawn-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dawn-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+  }
+
+  /* JS overrides the container HTML, we target classes inside */
+  .dawn-grid .card {
+    text-decoration: none;
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+  
+  .dawn-grid .card:hover .card-figure img {
+    transform: scale(1.03);
+  }
+
+  .dawn-grid .card-figure {
+    position: relative;
+    width: 100%;
+    padding-bottom: 125%; /* 4:5 aspect ratio */
+    background: #111;
+    overflow: hidden;
+    margin-bottom: 16px;
+    border-radius: 2px;
+  }
+
+  .dawn-grid .card-figure img {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .dawn-grid .object-label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .dawn-grid .label-number {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 8px;
-    display: block;
+    color: rgba(241, 235, 221, 0.5);
   }
 
-  .premium-select, .premium-input {
-    width: 100%;
-    background: rgba(0,0,0,0.4) !important;
-    border: 1px solid rgba(195,162,75,0.3) !important;
-    color: #FBF8F1 !important;
-    padding: 10px 14px !important;
-    border-radius: 4px;
-    font-size: 14px;
-    transition: all 0.3s ease;
+  .dawn-grid .name {
+    font-size: 16px;
+    color: #FBF8F1;
+    font-weight: 500;
+    line-height: 1.3;
   }
 
-  .premium-select:focus, .premium-input:focus {
-    border-color: var(--gold) !important;
-    box-shadow: 0 0 10px rgba(195, 162, 75, 0.2) !important;
-    outline: none;
+  .dawn-grid .meta {
+    font-size: 13px;
+    color: rgba(241, 235, 221, 0.7);
   }
 
-  /* Catalogue Grid Item Overrides for Premium Feel */
-  .grid-objects {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 40px;
+  .dawn-grid .status {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #c3a24b; /* var(--gold) */
+    margin-top: 4px;
   }
-
-  /* Since the grid items are generated by JS, we style the classes it creates */
-  #catalogue-grid .card {
-    background: transparent !important;
-    border: none !important;
-  }
-  
-  #catalogue-grid .card-figure {
-    background: radial-gradient(circle at center, rgba(30,24,18,0.8), #0a0806);
-    border: 1px solid rgba(195, 162, 75, 0.15);
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-  }
-  
-  #catalogue-grid .card-figure::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 6px;
-    pointer-events: none;
-  }
-
-  #catalogue-grid .object-label .name {
-    color: #FBF8F1 !important;
-  }
-
-  /* Animations */
-  @keyframes slowBreathe {
-    0% { opacity: 0.5; transform: translateX(-50%) scale(0.95); }
-    100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
-  }
-
-  @keyframes shineSweep {
-    0% { left: -100%; }
-    20% { left: 200%; }
-    100% { left: 200%; }
-  }
-  
-  .particle {
-    position: absolute;
-    background: rgba(195, 162, 75, 0.4);
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(195, 162, 75, 0.2);
-    animation: floatDust linear infinite;
-  }
-  
-  @keyframes floatDust {
-    0% { transform: translateY(0) translateX(0); opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.8; }
-    100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: royalFadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  .reveal:nth-child(1) { animation-delay: 0.1s; }
-  .reveal:nth-child(2) { animation-delay: 0.3s; }
-  .reveal:nth-child(3) { animation-delay: 0.5s; }
 </style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Generate Dust Particles for the Vault
-    const stage = document.getElementById('vault-dust');
-    if (stage) {
-      const particleCount = 40;
-      for (let i = 0; i < particleCount; i++) {
-        let p = document.createElement('div');
-        p.className = 'particle';
-        let size = Math.random() * 3 + 1; 
-        let posX = Math.random() * 100;
-        let posY = Math.random() * 100;
-        let duration = Math.random() * 15 + 10; 
-        let delay = Math.random() * 5;
-        p.style.width = size + 'px';
-        p.style.height = size + 'px';
-        p.style.left = posX + '%';
-        p.style.top = posY + '%';
-        p.style.animationDuration = duration + 's';
-        p.style.animationDelay = delay + 's';
-        stage.appendChild(p);
-      }
-    }
-  });
-</script>
 {% endblock %}
 
 {% block scripts %}

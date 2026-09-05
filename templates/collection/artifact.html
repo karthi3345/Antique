@@ -233,6 +233,17 @@
         {{ artifact.region }}  {{ artifact.period }}  {{ artifact.material }}
       </div>
       
+      <!-- Audio Player (Text-to-Speech Curator Guide) -->
+      <div class="product-audio" style="margin-bottom: 32px; background: rgba(16, 13, 10, 0.4); padding: 16px 20px; border: 1px solid var(--hairline-strong); border-radius: 4px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <p style="font-family: var(--font-utility); font-size: 11px; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; margin: 0 0 4px 0;">Curator's Audio Guide</p>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Listen to the history of this object</p>
+        </div>
+        <button id="playAudioGuide" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='var(--gold)'; this.style.color='#000';" onmouseout="this.style.background='transparent'; this.style.color='var(--gold)';">
+          <svg id="audioIconPlay" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        </button>
+      </div>
+
       <!-- Status & Enquiry Block -->
       <div class="enquiry-block">
         {% if artifact.status == 'available' %}
@@ -364,7 +375,7 @@
     if (row && mainImg && frameCount > 0) {
       for (let i = 0; i < frameCount; i++) {
         const frameStr = i.toString().padStart(2, '0');
-        const src = /static/img/objects//.webp;
+        const src = `/static/img/objects/${objNumStr}/${frameStr}.webp`;
         
         const img = document.createElement('img');
         img.src = src;
@@ -379,6 +390,49 @@
         
         row.appendChild(img);
       }
+    }
+
+    // Audio Guide (Text-to-Speech) Logic
+    const audioBtn = document.getElementById('playAudioGuide');
+    const audioIcon = document.getElementById('audioIconPlay');
+    if (audioBtn) {
+      // Decode HTML entities from Django template safely
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = `{{ artifact.name|escapejs }}. {{ artifact.story|striptags|escapejs }}`;
+      const textToRead = tempDiv.textContent || tempDiv.innerText || "";
+      
+      let utterance = new SpeechSynthesisUtterance(textToRead);
+      utterance.lang = 'en-GB';
+      utterance.rate = 0.95;
+      utterance.pitch = 0.95;
+
+      audioBtn.addEventListener('click', () => {
+        const synth = window.speechSynthesis;
+        
+        if (synth.speaking && !synth.paused) {
+          synth.pause();
+          // Pause icon (two vertical bars)
+          audioIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+        } else if (synth.paused) {
+          synth.resume();
+          // Playing icon (could use pause icon to indicate clicking will pause)
+          audioIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+        } else {
+          synth.speak(utterance);
+          // Playing icon
+          audioIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+        }
+      });
+
+      utterance.onend = () => {
+        // Reset to play icon
+        audioIcon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+      };
+      
+      // Stop speaking when user leaves the page
+      window.addEventListener("beforeunload", () => {
+        window.speechSynthesis.cancel();
+      });
     }
   });
   </script>
