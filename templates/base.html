@@ -1,4 +1,4 @@
-﻿{% load static %}<!DOCTYPE html>
+{% load static %}<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -104,15 +104,14 @@
       <!-- 2nd Column: Centered Navigation (Desktop) / Fullscreen Drawer (Mobile) -->
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <a href="/collection/" data-nav="collection"><span class="nav-idx" aria-hidden="true">01</span>Collection</a>
-        <a href="/the-house/" data-nav="the-house"><span class="nav-idx" aria-hidden="true">02</span>The House</a>
-        <a href="/chronicles/" data-nav="chronicles"><span class="nav-idx" aria-hidden="true">03</span>Journal</a>
+        <a href="/chronicles/" data-nav="chronicles"><span class="nav-idx" aria-hidden="true">02</span>Journal</a>
         
         <!-- Mobile-only menu items -->
-        <a href="/acquisition/" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">04</span>Acquisition</a>
+        <a href="/acquisition/" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">03</span>Acquisition</a>
         {% if user.is_authenticated %}
-          <a href="/profile/" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">05</span>Profile</a>
+          <a href="/profile/" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">04</span>Profile</a>
         {% else %}
-          <a href="{% url 'login' %}" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">05</span>Sign In</a>
+          <a href="{% url 'login' %}" class="mobile-menu-only"><span class="nav-idx" aria-hidden="true">04</span>Sign In</a>
         {% endif %}
       </nav>
 
