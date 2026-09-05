@@ -13,8 +13,9 @@
   
   .profile-grid {
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 40px;
+    grid-template-columns: 320px 1fr;
+    gap: 60px;
+    align-items: start;
   }
   
   @media (max-width: 768px) {
@@ -230,6 +231,14 @@
     <section class="profile-content">
       <h2 class="content-title">Account Settings</h2>
       
+      {% if messages %}
+        <div style="background: rgba(195,162,75,0.1); border: 1px solid var(--gold); padding: 15px; margin-bottom: 30px; border-radius: 4px; color: var(--gold);">
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        </div>
+      {% endif %}
+      
       <form method="post" class="settings-form">
         {% csrf_token %}
         <div class="row-2">
@@ -250,8 +259,8 @@
         
         <div class="field">
           <label for="password">Change Password</label>
-          <input type="password" id="password" placeholder="Leave blank to keep current password" disabled style="opacity: 0.5; cursor: not-allowed;">
-          <span style="font-size: 11px; color: var(--text-muted);">Password changes must be done via recovery right now.</span>
+          <input type="password" id="password" name="password" placeholder="Leave blank to keep current password" autocomplete="new-password">
+          <span style="font-size: 11px; color: var(--text-muted); margin-top: 6px; display: inline-block;">Enter a new password here if you wish to change it.</span>
         </div>
 
         <button type="submit" class="btn-save">Save Changes</button>

@@ -1,4 +1,4 @@
-"""House app ?" The House, Chronicles, Private Acquisition, Contact, Auth."""
+﻿"""House app ?" The House, Chronicles, Private Acquisition, Contact, Auth."""
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_http_methods
@@ -70,11 +70,25 @@ def profile_view(request):
         first_name = request.POST.get('first_name', '')
         last_name = request.POST.get('last_name', '')
         email = request.POST.get('email', '')
+        password = request.POST.get('password', '')
         
         request.user.first_name = first_name
         request.user.last_name = last_name
         request.user.email = email
-        request.user.save()
+        
+        if password:
+            request.user.set_password(password)
+            request.user.save()
+            from django.contrib.auth import update_session_auth_hash
+            update_session_auth_hash(request, request.user)
+            from django.contrib import messages
+            messages.success(request, "Profile and password updated successfully.")
+        else:
+            request.user.save()
+            from django.contrib import messages
+            messages.success(request, "Profile updated successfully.")
         return redirect('profile')
         
     return render(request, "house/profile.html")
+
+
