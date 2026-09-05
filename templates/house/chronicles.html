@@ -2,36 +2,290 @@
 {% block title %}Chronicles - VOLGO{% endblock %}
 
 {% block content %}
-<section class="section" style="padding-top: calc(var(--nav-h) + 60px); min-height: 80vh; background: #0a0806;">
-  <div class="container narrow">
-    <div class="reveal">
-      <p class="label-number" style="border-bottom: 1px solid rgba(195,162,75,0.2); padding-bottom: 12px; margin-bottom: 40px; color: var(--gold);">Chronicles</p>
-      <h1 style="font-size:clamp(44px,6vw,84px); color: #FBF8F1; font-family: var(--font-display); line-height: 1.1;">The Archive<br>Reading Room</h1>
-      <p class="lede" style="margin-top:24px; max-width:58ch; color: rgba(241, 235, 221, 0.8); font-size: 22px;">
-        Essays on craftsmanship, provenance, and the long lives of objects.
-      </p>
-      
-      <div class="chronicle-index" style="margin-top: 80px;">
-        {% for c in articles %}
-        <a href="/chronicles/{{ c.slug }}/" class="chronicle-entry" style="display:block; padding: 40px 0; border-top: 1px solid rgba(195,162,75,0.15); text-decoration: none; transition: transform 0.3s ease;">
-          <span class="meta" style="display:block; margin-bottom:12px; color: var(--gold); font-family: var(--font-utility); letter-spacing: 0.15em;">{{ c.published_at|date:"j F Y" }} &mdash; {{ c.reading_minutes }} min read</span>
-          <h3 style="font-size:clamp(26px,3vw,36px); color: #FBF8F1; font-weight: 400; margin-bottom: 12px;">{{ c.title }}</h3>
-          {% if c.standfirst %}<p style="color: rgba(241, 235, 221, 0.7); font-size: 18px; line-height: 1.6;">{{ c.standfirst }}</p>{% endif %}
-        </a>
-        {% empty %}
-        <p class="form-note" style="color: rgba(241, 235, 221, 0.5); font-style: italic;">The first chronicle is being prepared by the house.</p>
-        {% endfor %}
-      </div>
+<style>
+  /* ----------------------------------------------------
+     RICH GSAP JOURNAL LANDING PAGE
+     ---------------------------------------------------- */
+  body {
+    background: #0a0806;
+  }
+  
+  /* Hero Section */
+  .journal-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .journal-video-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.4;
+  }
+  .journal-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(10,8,6,0.2) 0%, #0a0806 100%);
+    z-index: 1;
+  }
+  .journal-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .slide-text-wrapper {
+    overflow: hidden;
+    margin: 10px 0;
+  }
+  .j-title-1 {
+    font-family: var(--font-display);
+    font-size: clamp(60px, 8vw, 140px);
+    color: var(--ivory);
+    text-transform: uppercase;
+    display: block;
+    line-height: 0.9;
+    white-space: nowrap;
+    margin: 0;
+  }
+  .j-title-2 {
+    font-family: var(--font-display);
+    font-size: clamp(60px, 8vw, 140px);
+    color: transparent;
+    -webkit-text-stroke: 1px var(--gold);
+    text-transform: uppercase;
+    display: block;
+    line-height: 0.9;
+    white-space: nowrap;
+    margin: 0;
+  }
+  .j-subtitle {
+    margin-top: 40px;
+    font-size: clamp(16px, 2vw, 22px);
+    color: var(--gold-pale);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  
+  /* Scroll Down Indicator */
+  .j-scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--gold);
+  }
+  .j-scroll-text {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
+
+  /* Articles Cards Section */
+  .journal-articles {
+    position: relative;
+    z-index: 3;
+    padding: 100px 0;
+    background: #0a0806;
+  }
+  
+  .j-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  @media (min-width: 992px) {
+    .j-card-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .j-card-grid .j-card:nth-child(even) {
+      transform: translateY(100px);
+    }
+  }
+
+  .j-card {
+    display: block;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    background: rgba(20, 16, 12, 0.5);
+    border: 1px solid rgba(195,162,75,0.1);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    transition: border-color 0.4s;
+  }
+  .j-card:hover {
+    border-color: rgba(195,162,75,0.4);
+  }
+  .j-card-image-wrap {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+  }
+  .j-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .j-card:hover .j-card-img {
+    transform: scale(1.05);
+  }
+  .j-card-content {
+    padding: 40px;
+    position: relative;
+  }
+  .j-card-meta {
+    font-family: var(--font-utility);
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .j-card-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 36px);
+    color: #FBF8F1;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .j-card-desc {
+    color: rgba(241, 235, 221, 0.7);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  /* GSAP Trigger Classes */
+  .gsap-fade-up { opacity: 0; transform: translateY(50px); }
+</style>
+
+<!-- HERO SECTION -->
+<section class="journal-hero">
+  <video class="journal-video-bg" src="//bombayantiques.com/cdn/shop/videos/c/vp/1a4e596243a246959e684f57344d4e5b/1a4e596243a246959e684f57344d4e5b.SD-480p-1.2Mbps-91041083.mp4?v=0" autoplay muted loop playsinline></video>
+  <div class="journal-hero-overlay"></div>
+  
+  <div class="journal-hero-content">
+    <div class="slide-text-wrapper">
+      <h1 class="j-title-1" id="j-title-left">The Archive</h1>
     </div>
+    <div class="slide-text-wrapper">
+      <h1 class="j-title-2" id="j-title-right">Chronicles</h1>
+    </div>
+    <p class="j-subtitle gsap-fade-up" id="j-subtitle">Essays on craftsmanship & provenance</p>
+  </div>
+  
+  <div class="j-scroll-indicator">
+    <div class="j-scroll-text">s c r o l l</div>
   </div>
 </section>
 
-<style>
-  .chronicle-entry:hover {
-    transform: translateX(10px);
-  }
-  .chronicle-entry:hover h3 {
-    color: var(--gold);
-  }
-</style>
+<!-- ARTICLES SECTION -->
+<section class="journal-articles">
+  <div class="container">
+    <div class="j-card-grid">
+      {% for c in articles %}
+      <a href="/chronicles/{{ c.slug }}/" class="j-card gsap-fade-up">
+        <div class="j-card-image-wrap">
+          {% if c.object_ref %}
+          <img class="j-card-img" src="/static/img/objects/{{ c.object_ref.object_number|stringformat:'03d' }}/{{ c.object_ref.hero_frame|stringformat:'02d' }}.webp" alt="{{ c.title }}">
+          {% else %}
+          <div class="j-card-img" style="background: radial-gradient(circle at center, #2a1c15, #0a0806);"></div>
+          {% endif %}
+        </div>
+        <div class="j-card-content">
+          <span class="j-card-meta">{{ c.published_at|date:"j F Y" }} &mdash; {{ c.reading_minutes }} min read</span>
+          <h3 class="j-card-title">{{ c.title }}</h3>
+          {% if c.standfirst %}<p class="j-card-desc">{{ c.standfirst }}</p>{% endif %}
+        </div>
+      </a>
+      {% empty %}
+      <p class="form-note" style="color: rgba(241, 235, 221, 0.5); font-style: italic; grid-column: 1/-1; text-align: center;">The first chronicle is being prepared by the house.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<!-- External GSAP Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollTrigger.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof gsap !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero Title Animation
+      const tl = gsap.timeline();
+      tl.fromTo("#j-title-left", { x: -200, opacity: 0 }, { x: 0, opacity: 1, duration: 1.2, ease: "power3.out" })
+        .fromTo("#j-title-right", { x: 200, opacity: 0 }, { x: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, "-=1")
+        .to("#j-subtitle", { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=0.5");
+
+      // Parallax text on scroll
+      gsap.to("#j-title-left", {
+        x: -150,
+        scrollTrigger: {
+          trigger: ".journal-hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: 1
+        }
+      });
+      gsap.to("#j-title-right", {
+        x: 150,
+        scrollTrigger: {
+          trigger: ".journal-hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: 1
+        }
+      });
+
+      // Cards reveal animation
+      gsap.utils.toArray('.j-card').forEach((card, i) => {
+        // Find if this is an even child to adjust base transform for staggered layout
+        const isEven = (i % 2 !== 0); 
+        let yOffset = window.innerWidth >= 992 && isEven ? 100 : 0;
+        
+        gsap.fromTo(card, 
+          { opacity: 0, y: yOffset + 100 },
+          {
+            opacity: 1,
+            y: yOffset,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      });
+    }
+  });
+</script>
 {% endblock %}
