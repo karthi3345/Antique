@@ -1,4 +1,4 @@
-/* Volgo - The Letter & The Post.
+﻿/* Volgo - The Letter & The Post.
    4-scene code animation (form > letter > envelope > INTERNATIONAL POST) fired after
    a successful enquiry. Pure DOM/SVG/canvas/WebAudio. Exposes VolgoPost.fire(). */
 (function (global) {
@@ -141,7 +141,6 @@
       '<!-- INTERNATIONAL POST band -->' +
       '<rect x="32" y="196" width="236" height="54" fill="#F3E4C0" opacity=".96"/>' +
       '<text x="150" y="221" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="700" letter-spacing="3" fill="#7c1410">INTERNATIONAL POST</text>' +
-      '
       '<!-- collection plate -->' +
       '<rect x="60" y="270" width="180" height="34" rx="6" fill="#F3E4C0" opacity=".9"/>' +
       '<text x="150" y="292" text-anchor="middle" font-family="Georgia, serif" font-size="13" letter-spacing="2" fill="#7c1410">LETTER BOX</text>' +
@@ -449,3 +448,5 @@
     _internal: { clampText: clampText, wrapLines: wrapLines, formatNumber: formatNumber },
   };
 })(window);
+
+

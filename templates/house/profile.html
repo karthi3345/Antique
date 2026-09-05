@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% load static %}
 
 {% block title %}Client Profile - VOLGO{% endblock %}
@@ -36,7 +36,7 @@
     height: 120px;
     margin: 0 auto 20px;
     border-radius: 50%;
-    border: 2px solid var(--gold);
+    border: none;
     padding: 4px;
     cursor: pointer;
     transition: transform 0.3s;
@@ -195,7 +195,7 @@
     <!-- Sidebar -->
     <aside class="profile-sidebar">
       <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
-      <div class="profile-pic-wrapper" onclick="document.getElementById('profilePicInput').click();">
+      <div class="profile-pic-wrapper gemini-pro-border" onclick="document.getElementById('profilePicInput').click();">
         <img src="{% static 'img/default-avatar.png' %}" id="sidebarProfilePic" class="profile-pic" alt="Profile Picture" onerror="this.style.display='none'; document.getElementById('fallbackIcon').style.display='block';">
         <svg id="fallbackIcon" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="display:none; width:100%; height:100%; color: var(--gold); padding: 15px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <div class="profile-pic-overlay">Change</div>
@@ -295,3 +295,4 @@
   });
 </script>
 {% endblock %}
+
