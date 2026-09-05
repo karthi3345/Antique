@@ -15,35 +15,33 @@
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
   <script src="{% static 'js/password-toggle.js' %}" defer></script>
 <style>
-
-
-  
-  /* Comprehensive Mobile UI Fixes */
-  @media (max-width: 991px) {
-    /* Menu alignment */
-    .site-nav {
-      justify-content: flex-start !important;
-      padding-top: 120px !important;
+  /* Desktop overrides */
+  @media (min-width: 721px) {
+    .site-nav a .nav-idx {
+      display: none; /* Hide numbers on desktop */
     }
-    .site-nav.is-open a { 
-      display: flex !important; 
-      align-items: center; 
-      gap: 20px; 
-      text-decoration: none;
-      margin-bottom: 30px;
+    .mobile-menu-only {
+      display: none !important;
     }
-    .site-nav.is-open a .nav-idx {
+  }
+
+  /* Mobile overlay fixes (breakpoint matches volgo.css mobile menu) */
+  @media (max-width: 720px) {
+    .site-nav a {
+      display: flex !important;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .site-nav a .nav-idx {
       margin-right: 0 !important;
-      vertical-align: middle !important;
-      font-size: 14px !important;
-      padding-top: 4px;
+      vertical-align: baseline !important;
+      font-size: 16px !important;
+      transform: translateY(-2px); /* optical alignment */
     }
-    /* Mobile-only items */
     a.mobile-menu-only {
       display: flex !important;
     }
-    
-    /* Search overlay spacing */
     .search-overlay {
       padding-top: 100px !important;
     }
@@ -59,8 +57,6 @@
     }
   }
 
-
-  
   /* Authentic Gemini Pro Glowing Border */
   .gemini-pro-border {
     position: relative;
@@ -69,24 +65,18 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: #0C0A08; /* Match page background */
+    background: #0C0A08;
   }
-  
-  /* The animated gradient glow */
   .gemini-pro-border::before {
     content: '';
     position: absolute;
-    inset: -3px; /* How thick the border is outside the container */
+    inset: -3px;
     border-radius: 50%;
     background: conic-gradient(from 0deg, #1b62f2, #9452f1, #24bbfb, #1b62f2);
     animation: spin-gemini 3s linear infinite;
     z-index: -1;
-    /* Soft blur for the glow effect */
     filter: blur(1px);
   }
-  
-  /* Remove the old ::after since we are making the main div the background */
-  
   .gemini-pro-border img, .gemini-pro-border svg {
     border-radius: 50%;
     position: relative;
@@ -96,13 +86,10 @@
     height: 100%;
     object-fit: cover;
   }
-  
   @keyframes spin-gemini {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
-
-
 </style>
 </head>
 <body>
