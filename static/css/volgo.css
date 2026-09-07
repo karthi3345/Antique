@@ -1270,7 +1270,7 @@ hr.rule { border: 0; border-top: 1px solid var(--hero-rule, var(--hairline)); ma
   
     /* Mobile Header Fixes */
     .desktop-menu-only { display: none !important; }
-    .mobile-menu-only { display: block !important; }
+    .mobile-menu-only { display: flex !important; }
     .site-header .container { 
       grid-template-columns: 1fr auto !important; 
     }
