@@ -1448,6 +1448,7 @@ section:nth-child(3) { animation-delay: 0.5s; }
   background: rgba(10, 8, 6, 0.85);
   box-shadow: 0 0 40px rgba(0,0,0,0.8), inset 0 0 60px rgba(0,0,0,0.9);
   backdrop-filter: blur(8px);
+  box-sizing: border-box;
 }
 .bone-edge {
   position: absolute;
@@ -1455,6 +1456,7 @@ section:nth-child(3) { animation-delay: 0.5s; }
   box-shadow: 0 0 10px rgba(195, 162, 75, 0.5), inset 0 0 5px rgba(195, 162, 75, 0.8);
   animation: bone-flicker 4s infinite alternate;
   border-radius: 2px;
+  pointer-events: none;
 }
 .bone-edge.top { top: 0; left: 20px; right: 20px; height: 2px; }
 .bone-edge.bottom { bottom: 0; left: 20px; right: 20px; height: 2px; }
@@ -1467,6 +1469,7 @@ section:nth-child(3) { animation-delay: 0.5s; }
   border-radius: 50%;
   box-shadow: 0 0 15px rgba(195, 162, 75, 0.8);
   background: #0A0806;
+  pointer-events: none;
 }
 .bone-corner.top-left { top: -5px; left: -5px; }
 .bone-corner.top-right { top: -5px; right: -5px; }

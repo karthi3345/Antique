@@ -200,8 +200,8 @@
 
     if (searchBtnNode) {
       searchBtnNode.addEventListener("click", function() {
-        if (audioUserEnabled) {
-          searchAudio.play().catch(function(){});
+        if (true) {
+          searchAudio.volume = 0.4; searchAudio.play().then(()=>{iconOff.style.display='none';iconOn.style.display='block';audioUserEnabled=true;}).catch(function(){});
         }
       });
     }
