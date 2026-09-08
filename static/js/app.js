@@ -151,3 +151,91 @@
     img.removeAttribute("data-src");
   });
 })();
+
+  /* ------------------------------------------------------------------
+     Neon Atmosphere: Audio & Particles
+     ------------------------------------------------------------------ */
+  var searchOverlay = document.getElementById("search-overlay");
+  var searchAudio = document.getElementById("search-audio");
+  var soundToggle = document.getElementById("search-sound-toggle");
+  var particlesContainer = document.getElementById("particles-container");
+  var searchBtnNode = document.getElementById("nav-search");
+  var searchCloseNode = document.getElementById("search-close");
+
+  if (soundToggle && searchAudio) {
+    var iconOn = soundToggle.querySelector(".icon-sound-on");
+    var iconOff = soundToggle.querySelector(".icon-sound-off");
+    searchAudio.volume = 0.4;
+    var audioUserEnabled = false;
+
+    soundToggle.addEventListener("click", function() {
+      if (searchAudio.paused) {
+        searchAudio.volume = 0;
+        searchAudio.play().then(function() {
+          audioUserEnabled = true;
+          var fade = setInterval(function() {
+            if (searchAudio.volume < 0.35) {
+              searchAudio.volume += 0.05;
+            } else {
+              clearInterval(fade);
+            }
+          }, 100);
+          iconOff.style.display = "none";
+          iconOn.style.display = "block";
+        }).catch(function(e) { console.error("Audio play failed:", e); });
+      } else {
+        audioUserEnabled = false;
+        var fade = setInterval(function() {
+          if (searchAudio.volume > 0.05) {
+            searchAudio.volume -= 0.05;
+          } else {
+            clearInterval(fade);
+            searchAudio.pause();
+            iconOn.style.display = "none";
+            iconOff.style.display = "block";
+          }
+        }, 100);
+      }
+    });
+
+    if (searchBtnNode) {
+      searchBtnNode.addEventListener("click", function() {
+        if (audioUserEnabled) {
+          searchAudio.play().catch(function(){});
+        }
+      });
+    }
+    if (searchCloseNode) {
+      searchCloseNode.addEventListener("click", function() {
+        searchAudio.pause();
+      });
+    }
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && searchOverlay && searchOverlay.classList.contains("is-open")) {
+        searchAudio.pause();
+      }
+    });
+    if (searchOverlay) {
+      searchOverlay.addEventListener("click", function (e) {
+        if (e.target === searchOverlay) searchAudio.pause();
+      });
+    }
+  }
+  
+  if (particlesContainer && searchOverlay) {
+    function createParticle() {
+      if (!searchOverlay.classList.contains("is-open")) return;
+      var p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = Math.random() * 100 + "%";
+      p.style.top = (80 + Math.random() * 20) + "%";
+      var size = Math.random() * 3 + 1;
+      p.style.width = size + "px";
+      p.style.height = size + "px";
+      p.style.animationDuration = (Math.random() * 3 + 4) + "s";
+      particlesContainer.appendChild(p);
+      setTimeout(function() { p.remove(); }, 7000);
+    }
+    setInterval(createParticle, 400);
+  }
+

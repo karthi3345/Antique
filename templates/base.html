@@ -141,20 +141,50 @@
 
   <!-- Search overlay -->
   <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search the collection" hidden>
+    
+    <!-- Neon Atmosphere Elements -->
+    <div class="neon-fog"></div>
+    <div class="neon-particles" id="particles-container"></div>
+    
     <button class="search-close" id="search-close">Close</button>
-    <div class="search-panel">
-      <span class="label-number">The Archive</span>
-      <form id="search-form" role="search" action="/collection/" method="get">
-        <input type="search" id="search-input" name="q" placeholder="Name, region, maker, material…" autocomplete="off">
-      </form>
-      <div class="search-hints">
-        <button type="button" data-term="astrolabe">Astrolabe</button>
-        <button type="button" data-term="Persia">Persia</button>
-        <button type="button" data-term="15th century">15th century</button>
-        <button type="button" data-term="Brass">Brass</button>
+    
+    <div class="search-panel bone-border-container">
+      <div class="bone-edge top"></div>
+      <div class="bone-edge right"></div>
+      <div class="bone-edge bottom"></div>
+      <div class="bone-edge left"></div>
+      <div class="bone-corner top-left"></div>
+      <div class="bone-corner top-right"></div>
+      <div class="bone-corner bottom-left"></div>
+      <div class="bone-corner bottom-right"></div>
+      
+      <!-- Guitarist Visual -->
+      <div class="guitarist-visual">
+        <iframe class="guitarist-video" src="https://www.youtube.com/embed/p_Ln_bPXg0c?autoplay=1&loop=1&playlist=p_Ln_bPXg0c&controls=0&mute=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&disablekb=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+        <div class="neon-backlight"></div>
       </div>
-      <div class="search-results" id="search-results"></div>
+
+      <div class="search-content" style="position:relative; z-index:10;">
+        <span class="label-number neon-text">The Archive</span>
+        <form id="search-form" role="search" action="/collection/" method="get">
+          <input type="search" id="search-input" name="q" placeholder="Name, region, maker, material…" autocomplete="off">
+        </form>
+        <div class="search-hints">
+          <button type="button" data-term="astrolabe">Astrolabe</button>
+          <button type="button" data-term="Persia">Persia</button>
+          <button type="button" data-term="15th century">15th century</button>
+          <button type="button" data-term="Brass">Brass</button>
+        </div>
+        <div class="search-results" id="search-results"></div>
+      </div>
     </div>
+    
+    <!-- Audio controls -->
+    <button id="search-sound-toggle" class="sound-toggle" aria-label="Toggle Sound">
+      <svg class="icon-sound-off" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+      <svg class="icon-sound-on" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+    </button>
+    <audio id="search-audio" src="https://cdn.pixabay.com/audio/2022/01/18/audio_d0a13f69d2.mp3" loop crossorigin="anonymous" preload="auto"></audio>
   </div>
 
   <!-- Page Content -->

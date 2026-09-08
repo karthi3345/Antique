@@ -4,10 +4,12 @@
 {% block title %}VOLGO — Maison d'Antiquités · Objects That Remember{% endblock %}
 
 <style>
+  .stat-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); margin-top: var(--s6); }
+  .philosophy-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s5); margin-top: var(--s5); text-align: left; }
+  
   @media (max-width: 720px) {
-    #the-house .philosophy-cols {
-      grid-template-columns: 1fr !important;
-    }
+    .stat-tiles { grid-template-columns: 1fr; }
+    .philosophy-cols { grid-template-columns: 1fr; }
   }
 </style>
 
@@ -164,7 +166,7 @@
           <a href="/contact/" class="btn">Contact the house</a>
         </div>
       </div>
-      <figure class="pa-image reveal-clip" aria-hidden="true" style="background:transparent; border:none; box-shadow:none;">
+      <figure class="pa-image reveal-clip" aria-hidden="true" style="background:transparent; border:none; box-shadow:none; aspect-ratio: 846/988;">
           <span class="reveal-clip-media" style="display:block; height:100%; position:relative;">
             <div style="position:relative; width:100%; aspect-ratio:846/988;">
               <img src="/static/img/objects/043/00.webp"
@@ -358,7 +360,7 @@
     <p style="margin-top:var(--s4); color:rgba(241,235,221,0.7); max-width:52ch; margin-inline:auto; line-height:1.8;">Founded in 2026. We examine, document, and place objects with their next keepers — one collector at a time.</p>
 
     <!-- Stat tiles -->
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s4); margin-top:var(--s6);">
+    <div class="stat-tiles">
       <div style="padding:36px 24px; border:1px solid rgba(195,162,75,0.2); border-radius:4px; background:rgba(16,13,10,0.5);">
         <p style="font-family:var(--font-display); font-size:clamp(36px,4vw,52px); color:var(--gold); margin:0;">150</p>
         <p style="font-family:var(--font-utility); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(241,235,221,0.5); margin-top:8px;">Objects, max at any time</p>
@@ -374,7 +376,7 @@
     </div>
 
     <!-- Two-col philosophy -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--s5); margin-top:var(--s5); text-align:left;">
+    <div class="philosophy-cols">
       <div style="padding:40px; background:rgba(16,13,10,0.6); border:1px solid rgba(195,162,75,0.15); border-radius:4px;">
         <p class="label-number">Philosophy</p>
         <h3 style="margin:12px 0 16px; font-size:clamp(20px,2vw,26px);">The record is the luxury</h3>
